@@ -16,9 +16,9 @@ jobs:
       - name: Fetch API Data 📦
         uses: JamesIves/fetch-api-data-action@releases/v1
         with:
-          ENDPOINT: https://www.googleapis.com/youtube/v3/search?key=${{secrets.YOUTUBE_API_KEY}}&channelId=UCLIVVSFSj9kbYUJzGYIjiUg&part=snippet,id&order=date&maxResults=10
-          CONFIGURATION: '{ "method": "GET" }'
-          SAVE_NAME: youtube
+          endpoint:: https://www.googleapis.com/youtube/v3/search?key=${{secrets.YOUTUBE_API_KEY}}&channelId=UCLIVVSFSj9kbYUJzGYIjiUg&part=snippet,id&order=date&maxResults=10
+          configuration: '{ "method": "GET" }'
+          save-name: youtube
 
       - name: Build and Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v4
