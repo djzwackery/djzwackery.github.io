@@ -16,7 +16,7 @@ jobs:
       - name: Fetch API Data 📦
         uses: JamesIves/fetch-api-data-action@releases/v2
         with:
-          endpoint:: https://www.googleapis.com/youtube/v3/search?key=${{secrets.YOUTUBE_API_KEY}}&channelId=UCLIVVSFSj9kbYUJzGYIjiUg&part=snippet,id&order=date&maxResults=10
+          endpoint: https://www.googleapis.com/youtube/v3/search?key=${{secrets.YOUTUBE_API_KEY}}&channelId=UCLIVVSFSj9kbYUJzGYIjiUg&part=snippet,id&order=date&maxResults=10
           configuration: '{ "method": "GET" }'
           save-name: youtube
 
