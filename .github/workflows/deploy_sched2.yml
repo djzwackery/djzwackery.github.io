@@ -11,7 +11,7 @@ jobs:
           node-version: '10.19.0'
 
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         
       - name: Install
         run: |
@@ -19,7 +19,7 @@ jobs:
           npm run-script build
 
       - name: Build and Deploy Repo
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: master
           folder: 'public'
