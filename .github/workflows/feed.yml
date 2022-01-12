@@ -14,14 +14,14 @@ jobs:
           ref: 'dev' 
   
       - name: Fetch API Data 📦
-        uses: JamesIves/fetch-api-data-action@releases/v2
+        uses: JamesIves/fetch-api-data-action@v2
         with:
           endpoint: https://www.googleapis.com/youtube/v3/search?key=${{secrets.YOUTUBE_API_KEY}}&channelId=UCLIVVSFSj9kbYUJzGYIjiUg&part=snippet,id&order=date&maxResults=10
           configuration: '{ "method": "GET" }'
           save-name: youtube
 
       - name: Build and Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: dev
           folder: fetch-api-data-action
