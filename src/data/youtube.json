@@ -1,47 +1,13 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "N3-lbIRWIQU2p-z2YeydDeIF0uM",
+  "etag": "1dp3rMhl4auHOIgcHbJVMDTJKdQ",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 169,
+    "totalResults": 168,
     "resultsPerPage": 10
   },
   "items": [
-    {
-      "kind": "youtube#searchResult",
-      "etag": "iqgBqarRAplN6ZUhOmtLIdrEY24",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "iy3B6Z74a2Q"
-      },
-      "snippet": {
-        "publishedAt": "2022-02-25T01:00:09Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 79",
-        "description": "Let's all just calm down Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/iy3B6Z74a2Q/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/iy3B6Z74a2Q/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/iy3B6Z74a2Q/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-02-25T01:00:09Z"
-      }
-    },
     {
       "kind": "youtube#searchResult",
       "etag": "p-1dbwR3vWMwXyiTAKmXrIUGoe0",
@@ -346,6 +312,40 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2021-12-17T06:00:06Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "-QSxg7pBcR-dfBz7pGY8iU0L_QA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "FTcFqJQiwHE"
+      },
+      "snippet": {
+        "publishedAt": "2021-12-09T23:00:06Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 73",
+        "description": "Mistletoe Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/FTcFqJQiwHE/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/FTcFqJQiwHE/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/FTcFqJQiwHE/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2021-12-09T23:00:06Z"
       }
     }
   ]
