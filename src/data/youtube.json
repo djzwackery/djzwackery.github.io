@@ -1,13 +1,47 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "HNXwWnFVbINfbmKXEpAZP55ImuY",
+  "etag": "tQ45pI7Tb3RZCcp5UAn-Q27-AI8",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 173,
+    "totalResults": 174,
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "l8VzOvhH3u2IdmpDvFPMH6I6-Xc",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "SKEukBEDrBM"
+      },
+      "snippet": {
+        "publishedAt": "2022-04-08T07:00:15Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 85",
+        "description": "Yeah, totally sus Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/SKEukBEDrBM/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/SKEukBEDrBM/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/SKEukBEDrBM/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-04-08T07:00:15Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "qDU2P9u6BhFFbGpFxqOkMS2N92s",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-01-28T06:41:09Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "BZdwJ0VVeOxQFZIA3PibMz_rUU0",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "esnjOQwH8Ww"
-      },
-      "snippet": {
-        "publishedAt": "2022-01-14T01:00:09Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 75",
-        "description": "Super Market Wars Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/esnjOQwH8Ww/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/esnjOQwH8Ww/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/esnjOQwH8Ww/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-01-14T01:00:09Z"
       }
     }
   ]
