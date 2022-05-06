@@ -1,13 +1,47 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "pxbvkaS7d2S6TOAUp1zwUv_EcOM",
+  "etag": "LDa7VDNu02LrJHF2jwu7_E0Gwuw",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 176,
+    "totalResults": 177,
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "ZTCKDgX6ZtIJSJ_EHv8oUIamt_k",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "xfv38GHuuN4"
+      },
+      "snippet": {
+        "publishedAt": "2022-05-06T02:00:24Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 88",
+        "description": "When the tech bites back... Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/xfv38GHuuN4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/xfv38GHuuN4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/xfv38GHuuN4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-05-06T02:00:24Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "xVYQYezPI0xtU1HHwmdE-EC1sFw",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-02-18T01:00:10Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "aHrom5Wsc3IzESpth02N0YWOhls",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "bQdlGwTD3Eo"
-      },
-      "snippet": {
-        "publishedAt": "2022-02-11T06:00:17Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "Zwackery&#39;s Almost Birthday Mix",
-        "description": "Yes, it was almost my birthday Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/bQdlGwTD3Eo/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/bQdlGwTD3Eo/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/bQdlGwTD3Eo/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-02-11T06:00:17Z"
       }
     }
   ]
