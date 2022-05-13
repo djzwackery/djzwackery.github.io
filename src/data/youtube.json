@@ -1,13 +1,47 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "ly83YmQhctYUVQI9klg1T2TVa_w",
+  "etag": "zR9i-favIpX6h5GG8_MEjcNuDvQ",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 179,
+    "totalResults": 180,
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "WWHLrd4qvydEPda9Xyv5TfZEtCY",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "UbPA9tAiHio"
+      },
+      "snippet": {
+        "publishedAt": "2022-05-13T02:00:05Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 89",
+        "description": "Hitting the slopes Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/UbPA9tAiHio/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/UbPA9tAiHio/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/UbPA9tAiHio/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-05-13T02:00:05Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "l7Fsp5r3jXZbL-pPt7Qy6AHayFA",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-03-04T01:00:01Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "GLzUMHeaeVgte8AlFd7HlxuNSH8",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "hxjbbn3HRGU"
-      },
-      "snippet": {
-        "publishedAt": "2022-02-18T01:00:10Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 78",
-        "description": "That time we aired our grievances. Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/hxjbbn3HRGU/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/hxjbbn3HRGU/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/hxjbbn3HRGU/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-02-18T01:00:10Z"
       }
     }
   ]
