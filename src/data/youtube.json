@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "4dQhpjIF0tnAxRpzuYvUcessl_M",
+  "etag": "r6pE81ugsML33PZJdkuo_oY4kus",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -8,6 +8,40 @@
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "EI_4cBV0q72iG-LhMkIx0xqChPQ",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "f9Oz8Uteb7s"
+      },
+      "snippet": {
+        "publishedAt": "2022-06-17T02:30:20Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 93",
+        "description": "We are BACK from the dead Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/f9Oz8Uteb7s/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/f9Oz8Uteb7s/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/f9Oz8Uteb7s/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-06-17T02:30:20Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "NeuZLdZppDAz1-xUkCV-47hSSz4",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-04-01T06:00:01Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "Yxvfa_8P5eX6G5ia-Ki5IDYmnqk",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "FdQhwtEIMIo"
-      },
-      "snippet": {
-        "publishedAt": "2022-03-25T01:00:02Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 83",
-        "description": "Up, Dog? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/FdQhwtEIMIo/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/FdQhwtEIMIo/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/FdQhwtEIMIo/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-03-25T01:00:02Z"
       }
     }
   ]
