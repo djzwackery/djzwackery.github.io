@@ -1,10 +1,10 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "CL8Vu41QH-yNXbTUXoPMTn-7zP4",
+  "etag": "u51e4JJF2AfQsPvCLNvSxrvH--U",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 182,
+    "totalResults": 178,
     "resultsPerPage": 10
   },
   "items": [
@@ -316,36 +316,36 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "qDU2P9u6BhFFbGpFxqOkMS2N92s",
+      "etag": "Yxvfa_8P5eX6G5ia-Ki5IDYmnqk",
       "id": {
         "kind": "youtube#video",
-        "videoId": "5ymQMir_RhU"
+        "videoId": "FdQhwtEIMIo"
       },
       "snippet": {
-        "publishedAt": "2022-04-01T06:00:01Z",
+        "publishedAt": "2022-03-25T01:00:02Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 84",
-        "description": "Sus? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: https://www.youtube.com/djzwackery1 ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 83",
+        "description": "Up, Dog? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/5ymQMir_RhU/default.jpg",
+            "url": "https://i.ytimg.com/vi/FdQhwtEIMIo/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/5ymQMir_RhU/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/FdQhwtEIMIo/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/5ymQMir_RhU/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/FdQhwtEIMIo/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2022-04-01T06:00:01Z"
+        "publishTime": "2022-03-25T01:00:02Z"
       }
     }
   ]
