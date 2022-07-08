@@ -1,13 +1,47 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "ZriuT_cblOHmfDU-vPLLfSzvsu4",
+  "etag": "T-2KHGp9TS8HHbq-Z8tGXkvOnWs",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 185,
+    "totalResults": 186,
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "oXn8giwJYvJDvFMNwQnxD8ZMRWg",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "3ouZuwvII1I"
+      },
+      "snippet": {
+        "publishedAt": "2022-07-08T02:00:02Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 96",
+        "description": "Just smashing those bangers out Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/3ouZuwvII1I/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/3ouZuwvII1I/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/3ouZuwvII1I/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-07-08T02:00:02Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "qZYesfJ4gMKtfyQfjpqKiodRJYQ",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-04-22T02:00:03Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "CvbQS2nuCV2a1mrXktQWL454Rx8",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "sEaSOkZHv4I"
-      },
-      "snippet": {
-        "publishedAt": "2022-04-15T02:00:09Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 86",
-        "description": "The stink of the club... Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/sEaSOkZHv4I/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/sEaSOkZHv4I/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/sEaSOkZHv4I/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-04-15T02:00:09Z"
       }
     }
   ]
