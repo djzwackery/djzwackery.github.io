@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "OTJ6YaNJvPUDcqhS7iUCqxBfZ5c",
+  "etag": "mSQJ23XkpxULx9CvsVFLRH3Y7TQ",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -8,6 +8,40 @@
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "mZpbXHAAEHQz9T7sEDuTsxdiOTM",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "Uw9YdKZiYmU"
+      },
+      "snippet": {
+        "publishedAt": "2022-07-29T02:00:05Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 99",
+        "description": "All about that grind Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/Uw9YdKZiYmU/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/Uw9YdKZiYmU/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/Uw9YdKZiYmU/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-07-29T02:00:05Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "lloYX0uP7X1Ijnbcr98LMA1b8y4",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-05-20T02:00:08Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "VnXL1epsH6U_8Rmg6Wm9kjWtDYI",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "UbPA9tAiHio"
-      },
-      "snippet": {
-        "publishedAt": "2022-05-13T02:00:05Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 89",
-        "description": "Hitting the slopes Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/UbPA9tAiHio/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/UbPA9tAiHio/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/UbPA9tAiHio/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-05-13T02:00:05Z"
       }
     }
   ]
