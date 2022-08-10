@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "tr-ObEt1OcIY7bot1niiPQoTbc8",
+  "etag": "3Ydaw2nWkssgvLxbEzw3O_AWWQo",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -10,7 +10,7 @@
   "items": [
     {
       "kind": "youtube#searchResult",
-      "etag": "vsAC1A-mLiuTSTgAZg_jzKNSRTo",
+      "etag": "_D1jPg6YEp1gj1tJBEcyRJNVXKI",
       "id": {
         "kind": "youtube#video",
         "videoId": "HySK-eKSWGw"
