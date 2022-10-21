@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "5HcOATHGeQrQlTjhMrn3qVyyl_A",
+  "etag": "FX0HZLXSrbqWIBoziq_oph2c5Yo",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -8,6 +8,40 @@
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "CzDSHIsnMu_td91rGMACcmW3-Tw",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "BwRNkDuzWTk"
+      },
+      "snippet": {
+        "publishedAt": "2022-10-21T02:00:03Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 109",
+        "description": "What are your thoughts on the Queen? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/BwRNkDuzWTk/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/BwRNkDuzWTk/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/BwRNkDuzWTk/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-10-21T02:00:03Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "3p5INVh_bOd7W8jMOLvrUQQ2Zsk",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-08-05T02:00:03Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "WupfGthImTn9V_Sfv1PXKxd6XSQ",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "Uw9YdKZiYmU"
-      },
-      "snippet": {
-        "publishedAt": "2022-07-29T02:00:05Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 99",
-        "description": "All about that grind Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/Uw9YdKZiYmU/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/Uw9YdKZiYmU/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/Uw9YdKZiYmU/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-07-29T02:00:05Z"
       }
     }
   ]
