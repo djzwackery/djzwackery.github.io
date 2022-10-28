@@ -1,13 +1,47 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "J5J9WUxo0IU7wnToBnsgSvt8K4I",
+  "etag": "6A9jG8vMj2QvswB62_xboQGiHVY",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 199,
+    "totalResults": 200,
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "a5V4TSJZGEcH2620iCxMgeGYy-A",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "Ze1kCjV-UkI"
+      },
+      "snippet": {
+        "publishedAt": "2022-10-28T06:00:19Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 110",
+        "description": "Is this really the end? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/Ze1kCjV-UkI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/Ze1kCjV-UkI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/Ze1kCjV-UkI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-10-28T06:00:19Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "ni4blgbmIgG46ctB_NpQvots8Us",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-08-13T02:00:10Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "_D1jPg6YEp1gj1tJBEcyRJNVXKI",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "HySK-eKSWGw"
-      },
-      "snippet": {
-        "publishedAt": "2022-08-05T02:00:03Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 100",
-        "description": "LETS GOOOOOO Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/HySK-eKSWGw/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/HySK-eKSWGw/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/HySK-eKSWGw/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-08-05T02:00:03Z"
       }
     }
   ]
