@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "9biktXzCltrWQCKFkMWCQKzmgb8",
+  "etag": "VGwn8wQiosxQde1roL0drNqkFpI",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -8,6 +8,40 @@
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "j3_O9jTOypdhXIx8iQodDx1jpTk",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "16_XgLiUOik"
+      },
+      "snippet": {
+        "publishedAt": "2022-11-18T01:00:01Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 113",
+        "description": "Week 3, I am still alive, we WILL ENDURE! Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/16_XgLiUOik/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/16_XgLiUOik/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/16_XgLiUOik/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-11-18T01:00:01Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "8i9xaC2xSGWA4CHrqH1u5OlkPsE",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-08-26T02:00:04Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "Vo5AQD-MSXy_Wc1Lg0GYkyGLRiw",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "PDLbzqvRWgQ"
-      },
-      "snippet": {
-        "publishedAt": "2022-08-19T02:00:09Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 102",
-        "description": "On the move 3 + 4 Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/PDLbzqvRWgQ/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/PDLbzqvRWgQ/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/PDLbzqvRWgQ/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-08-19T02:00:09Z"
       }
     }
   ]
