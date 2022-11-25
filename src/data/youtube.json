@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "5BmRrVJgrQ2TPHzQZABXR-5DUag",
+  "etag": "WGF97UBxfT64V1jhmTsvgGT9Yyk",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -8,6 +8,40 @@
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "7ywYy1dZnxNdiY7rNNIJ1rCi2Ao",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "9ABRrXo_-tE"
+      },
+      "snippet": {
+        "publishedAt": "2022-11-25T01:00:02Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 114",
+        "description": "The final week of No Nut November, LET'S DO IT! Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/9ABRrXo_-tE/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/9ABRrXo_-tE/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/9ABRrXo_-tE/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-11-25T01:00:02Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "rVXtgvaWw0rp1guVs_Kln9MRZro",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-09-02T02:30:10Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "kxDZZeREO_3BV7dkCYYJiR6cIkM",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "LtxIYl3PL4Q"
-      },
-      "snippet": {
-        "publishedAt": "2022-08-26T02:00:04Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 103",
-        "description": "I'm not a witty guy Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/LtxIYl3PL4Q/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/LtxIYl3PL4Q/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/LtxIYl3PL4Q/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-08-26T02:00:04Z"
       }
     }
   ]
