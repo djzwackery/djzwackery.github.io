@@ -1,13 +1,47 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "kQ12F2tGAG2jLq1Z_xFYyPMI6ak",
+  "etag": "C7TAgaROVyYGoQP_d7y8tShodMU",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 211,
+    "totalResults": 212,
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "RwJ7FkwBZtHvtsy48pGAHdryOfw",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "l9ihRRF4OYI"
+      },
+      "snippet": {
+        "publishedAt": "2022-12-23T03:00:17Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s Christmas Carols 2022",
+        "description": "Jingle Bells Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/l9ihRRF4OYI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/l9ihRRF4OYI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/l9ihRRF4OYI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-12-23T03:00:17Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "kMnhF633bqqidLm7dQI--yFadpw",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2022-10-14T01:00:09Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "PwQw1GMVmdyNdvtXen9XwTifOJo",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "bTqh9ek0F6M"
-      },
-      "snippet": {
-        "publishedAt": "2022-09-23T03:00:22Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 107",
-        "description": "You can feel the heartbeats Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/bTqh9ek0F6M/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/bTqh9ek0F6M/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/bTqh9ek0F6M/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2022-09-23T03:00:22Z"
       }
     }
   ]
