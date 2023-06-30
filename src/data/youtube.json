@@ -1,13 +1,47 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "ZrO0gwbrSKTmoPQZSZ_qsgGWYEE",
+  "etag": "eOmWxPw7sYvgbtLht34frnb97yA",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 231,
+    "totalResults": 232,
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "1q8-zZqjKFLGJkHFWQFi-DVxA5w",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "j33sh37cBfM"
+      },
+      "snippet": {
+        "publishedAt": "2023-06-30T03:00:16Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 139",
+        "description": "We Jazzing in Silver Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/j33sh37cBfM/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/j33sh37cBfM/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/j33sh37cBfM/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-30T03:00:16Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "bDNg5yMPdmsMS0zap5e-mqe1TRE",
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-04-28T03:00:00Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "hta-efUXIvGZOuI9zukLRjNCRYU",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "igCWPiMja6s"
-      },
-      "snippet": {
-        "publishedAt": "2023-04-19T03:06:04Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s Big Vibe",
-        "description": "Little Jam to spread on your Bread Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/igCWPiMja6s/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/igCWPiMja6s/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/igCWPiMja6s/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-04-19T03:06:04Z"
       }
     }
   ]
