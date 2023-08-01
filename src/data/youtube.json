@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "_kg_UQzqgm0WbhIR63hQPoPNmcM",
+  "etag": "uaFnrN5uE3iY8ZJ4sL0Usi63Fxw",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -44,36 +44,36 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "snSf9-RegUcsk5yD7NNWMP21Zvg",
+      "etag": "vsUlgl66TxymaekjXdKXd0gu8Bk",
       "id": {
         "kind": "youtube#video",
-        "videoId": "5gOsKBmZcL0"
+        "videoId": "qD1Wh-bZFxI"
       },
       "snippet": {
-        "publishedAt": "2023-07-14T03:00:05Z",
+        "publishedAt": "2023-07-07T03:00:32Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 141",
-        "description": "What's holding you back? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 140",
+        "description": "We are hard stuck in Silver Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/default.jpg",
+            "url": "https://i.ytimg.com/vi/qD1Wh-bZFxI/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/qD1Wh-bZFxI/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/qD1Wh-bZFxI/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-07-14T03:00:05Z"
+        "publishTime": "2023-07-07T03:00:32Z"
       }
     },
     {
