@@ -1,10 +1,10 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "4LuUeaH_CxBQaa1gVK7RQL3aoOQ",
+  "etag": "OSgg9O04t_Z6DsiYeXmPrRe7s9w",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 238,
+    "totalResults": 237,
     "resultsPerPage": 10
   },
   "items": [
@@ -78,36 +78,36 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "vsUlgl66TxymaekjXdKXd0gu8Bk",
+      "etag": "snSf9-RegUcsk5yD7NNWMP21Zvg",
       "id": {
         "kind": "youtube#video",
-        "videoId": "qD1Wh-bZFxI"
+        "videoId": "5gOsKBmZcL0"
       },
       "snippet": {
-        "publishedAt": "2023-07-07T03:00:32Z",
+        "publishedAt": "2023-07-14T03:00:05Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 140",
-        "description": "We are hard stuck in Silver Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 141",
+        "description": "What's holding you back? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/qD1Wh-bZFxI/default.jpg",
+            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/qD1Wh-bZFxI/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/qD1Wh-bZFxI/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-07-07T03:00:32Z"
+        "publishTime": "2023-07-14T03:00:05Z"
       }
     },
     {
