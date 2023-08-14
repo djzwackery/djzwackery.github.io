@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "na2aNnCpj2CGP2seNt_sk_Q3srM",
+  "etag": "0zc_mid1iARuEFJ-GL8lu8BN6Sw",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -10,36 +10,36 @@
   "items": [
     {
       "kind": "youtube#searchResult",
-      "etag": "mSTyt13l25si_lJDaSKG3rDvkdY",
+      "etag": "cRIMqn_mBTifGdwSO-yqZ8ShU2E",
       "id": {
         "kind": "youtube#video",
-        "videoId": "STPq0F7kthE"
+        "videoId": "SdIdM5Ybj2k"
       },
       "snippet": {
-        "publishedAt": "2023-07-28T02:30:13Z",
+        "publishedAt": "2023-08-04T03:00:13Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 143",
-        "description": "NO TOMMY STOP, NAH DON'T SAY IT Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 144",
+        "description": "I'm making chocolate of course Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/default.jpg",
+            "url": "https://i.ytimg.com/vi/SdIdM5Ybj2k/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/SdIdM5Ybj2k/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/SdIdM5Ybj2k/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-07-28T02:30:13Z"
+        "publishTime": "2023-08-04T03:00:13Z"
       }
     },
     {
