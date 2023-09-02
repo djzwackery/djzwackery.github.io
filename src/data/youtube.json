@@ -1,10 +1,10 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "6BGt8IfELbMk589gJ2-vvslw_Co",
+  "etag": "cnSSMefUx_JigXZQl0XhAO1ocp4",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 240,
+    "totalResults": 241,
     "resultsPerPage": 10
   },
   "items": [
@@ -44,36 +44,36 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "L3GBrfYboPb0e-UhGftBgKALgYo",
+      "etag": "Yv9g0d3m_Hid_WQc3TXsi6GApgg",
       "id": {
         "kind": "youtube#video",
-        "videoId": "zytc-1IzI0E"
+        "videoId": "SdIdM5Ybj2k"
       },
       "snippet": {
-        "publishedAt": "2023-08-18T03:00:26Z",
+        "publishedAt": "2023-08-04T03:00:13Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 145",
-        "description": "I am frogging so hard right now Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 144",
+        "description": "I'm making chocolate of course Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/default.jpg",
+            "url": "https://i.ytimg.com/vi/SdIdM5Ybj2k/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/SdIdM5Ybj2k/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/SdIdM5Ybj2k/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-08-18T03:00:26Z"
+        "publishTime": "2023-08-04T03:00:13Z"
       }
     },
     {
