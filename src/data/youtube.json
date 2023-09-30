@@ -1,13 +1,47 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "2Njx-k48g3PWzsrs2Tj0pFNTNrg",
+  "etag": "8IUnvSa3OVmbOztb6K6MfqJdTNQ",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 242,
+    "totalResults": 243,
     "resultsPerPage": 10
   },
   "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "obfiG2wZI6jVa_VuNcKzuY6dwrM",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "0T2bNnd98Eg"
+      },
+      "snippet": {
+        "publishedAt": "2023-09-22T03:00:00Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 150",
+        "description": "Trust me, this is not a milestone Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/0T2bNnd98Eg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/0T2bNnd98Eg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/0T2bNnd98Eg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-09-22T03:00:00Z"
+      }
+    },
     {
       "kind": "youtube#searchResult",
       "etag": "ctI1zPsn8pKunWM3AG7SncukT5g",
@@ -108,40 +142,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-08-04T03:00:13Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "f64UU29S5KFgark1-sxhc-hXQLk",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "STPq0F7kthE"
-      },
-      "snippet": {
-        "publishedAt": "2023-07-28T02:30:13Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 143",
-        "description": "NO TOMMY STOP, NAH DON'T SAY IT Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-07-28T02:30:13Z"
       }
     },
     {
