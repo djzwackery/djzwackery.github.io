@@ -1,81 +1,13 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "QkdsQNR-EMV7l1foP7ldEg-9aIU",
+  "etag": "pe8bRxDae_aIohn-RAyRrod_f14",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 246,
+    "totalResults": 247,
     "resultsPerPage": 10
   },
   "items": [
-    {
-      "kind": "youtube#searchResult",
-      "etag": "WsIs5O3_uIg7FsF5jC8H-V08GAo",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "Vcgy601-ee0"
-      },
-      "snippet": {
-        "publishedAt": "2023-10-06T02:00:11Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 151",
-        "description": "I did not get knocked out Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/Vcgy601-ee0/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/Vcgy601-ee0/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/Vcgy601-ee0/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-10-06T02:00:11Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "obfiG2wZI6jVa_VuNcKzuY6dwrM",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "0T2bNnd98Eg"
-      },
-      "snippet": {
-        "publishedAt": "2023-09-22T03:00:00Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 150",
-        "description": "Trust me, this is not a milestone Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/0T2bNnd98Eg/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/0T2bNnd98Eg/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/0T2bNnd98Eg/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-09-22T03:00:00Z"
-      }
-    },
     {
       "kind": "youtube#searchResult",
       "etag": "ctI1zPsn8pKunWM3AG7SncukT5g",
@@ -112,36 +44,36 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "fguTRRUO_RLH4vNzzCqYmUUScvI",
+      "etag": "L3GBrfYboPb0e-UhGftBgKALgYo",
       "id": {
         "kind": "youtube#video",
-        "videoId": "oVClQvf-hmE"
+        "videoId": "zytc-1IzI0E"
       },
       "snippet": {
-        "publishedAt": "2023-08-25T03:00:32Z",
+        "publishedAt": "2023-08-18T03:00:26Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 146",
-        "description": "Who invited this guy? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 145",
+        "description": "I am frogging so hard right now Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/default.jpg",
+            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-08-25T03:00:32Z"
+        "publishTime": "2023-08-18T03:00:26Z"
       }
     },
     {
@@ -346,6 +278,74 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-06-16T03:00:02Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "VwVlU3JUNixAmlYndFDntGfVotM",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "8Dv3rMJIDJg"
+      },
+      "snippet": {
+        "publishedAt": "2023-06-09T04:00:06Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 136",
+        "description": "My Package Came In The Mail Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/8Dv3rMJIDJg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/8Dv3rMJIDJg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/8Dv3rMJIDJg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-09T04:00:06Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "6fBBH5CkiKsYSrNxn1VT2VPVucY",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "gecR5gZMrjA"
+      },
+      "snippet": {
+        "publishedAt": "2023-06-02T03:00:17Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 135",
+        "description": "Malenia might go down after this recording Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/gecR5gZMrjA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/gecR5gZMrjA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/gecR5gZMrjA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-02T03:00:17Z"
       }
     }
   ]
