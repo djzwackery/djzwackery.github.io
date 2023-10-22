@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "NV52abEGobrb0Dvv3sFI1DZeBTo",
+  "etag": "Ei9W9SiWQ1Mzzai6UZmFzERBUzs",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -40,6 +40,40 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-10-13T02:00:11Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "WsIs5O3_uIg7FsF5jC8H-V08GAo",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "Vcgy601-ee0"
+      },
+      "snippet": {
+        "publishedAt": "2023-10-06T02:00:11Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 151",
+        "description": "I did not get knocked out Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/Vcgy601-ee0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/Vcgy601-ee0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/Vcgy601-ee0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-10-06T02:00:11Z"
       }
     },
     {
@@ -108,40 +142,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-09-08T03:00:03Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "L3GBrfYboPb0e-UhGftBgKALgYo",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "zytc-1IzI0E"
-      },
-      "snippet": {
-        "publishedAt": "2023-08-18T03:00:26Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 145",
-        "description": "I am frogging so hard right now Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-08-18T03:00:26Z"
       }
     },
     {
