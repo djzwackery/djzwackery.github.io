@@ -1,45 +1,45 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "Q_s6sKovapwP1Q_lBWSwQxceEKY",
+  "etag": "jf9Tfj3ISS9-4-NK8wpV_NxjcL8",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 246,
+    "totalResults": 247,
     "resultsPerPage": 10
   },
   "items": [
     {
       "kind": "youtube#searchResult",
-      "etag": "eXF-zrxAJMNk5wdImWg-uYki7pI",
+      "etag": "X2bitkXJV4NE2fIQRYOVerQSNfs",
       "id": {
         "kind": "youtube#video",
-        "videoId": "_V5gQrK2SRQ"
+        "videoId": "EyfMJyvXyJ8"
       },
       "snippet": {
-        "publishedAt": "2023-10-27T02:00:23Z",
+        "publishedAt": "2023-11-03T02:00:11Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery In HELL 2023",
-        "description": "Plenty of Frozen Han Solo to go around! Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 153",
+        "description": "My ribs are falling out Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/_V5gQrK2SRQ/default.jpg",
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/_V5gQrK2SRQ/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/_V5gQrK2SRQ/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-10-27T02:00:23Z"
+        "publishTime": "2023-11-03T02:00:11Z"
       }
     },
     {
