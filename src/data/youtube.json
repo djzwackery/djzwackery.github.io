@@ -1,10 +1,10 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "lmPsGBcdCFd9tDiw2MclzhWrIVM",
+  "etag": "clTBFGfYBJS2fIimNfkFbMnWNBA",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 249,
+    "totalResults": 248,
     "resultsPerPage": 10
   },
   "items": [
@@ -180,40 +180,6 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "L3GBrfYboPb0e-UhGftBgKALgYo",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "zytc-1IzI0E"
-      },
-      "snippet": {
-        "publishedAt": "2023-08-18T03:00:26Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 145",
-        "description": "I am frogging so hard right now Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/zytc-1IzI0E/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-08-18T03:00:26Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
       "etag": "91FLkQd4qO-QOkz-DYG_4C-KeVk",
       "id": {
         "kind": "youtube#video",
@@ -346,6 +312,40 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-06-30T03:00:16Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "YFxgFAzeyfKnUJ3W3MnSCphF07k",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "PQ26EMN8Hhg"
+      },
+      "snippet": {
+        "publishedAt": "2023-06-23T03:00:08Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 138",
+        "description": "Phil from Phil's Fishing and Tackle Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/PQ26EMN8Hhg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/PQ26EMN8Hhg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/PQ26EMN8Hhg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-23T03:00:08Z"
       }
     }
   ]
