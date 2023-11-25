@@ -1,10 +1,10 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "-pUPPHzSuaAjkw-QhXHbMC_bEwI",
+  "etag": "x3zT_L6BVHBmQURBTUiIbHuFj7Y",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 252,
+    "totalResults": 253,
     "resultsPerPage": 10
   },
   "items": [
@@ -40,74 +40,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-11-24T02:00:17Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "hKVYGaMLMqfCIJE8ydaHNmRzKlo",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "i8ydTEaWtTk"
-      },
-      "snippet": {
-        "publishedAt": "2023-11-17T02:00:23Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 155",
-        "description": "The Fire Rises Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/i8ydTEaWtTk/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/i8ydTEaWtTk/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/i8ydTEaWtTk/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-11-17T02:00:23Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "ot1hZ3MCECqJKuzx3RsiiGt7GHw",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "EyfMJyvXyJ8"
-      },
-      "snippet": {
-        "publishedAt": "2023-11-03T02:00:11Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 153",
-        "description": "My ribs are falling out Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-11-03T02:00:11Z"
       }
     },
     {
@@ -180,40 +112,6 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "NBRqpK_eioy_cO26b_oV_x3b-b4",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "7ILayIT-2fE"
-      },
-      "snippet": {
-        "publishedAt": "2023-09-15T03:00:04Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 149",
-        "description": "Gale is the real MVP Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-09-15T03:00:04Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
       "etag": "ctI1zPsn8pKunWM3AG7SncukT5g",
       "id": {
         "kind": "youtube#video",
@@ -244,6 +142,40 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-09-08T03:00:03Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "fguTRRUO_RLH4vNzzCqYmUUScvI",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "oVClQvf-hmE"
+      },
+      "snippet": {
+        "publishedAt": "2023-08-25T03:00:32Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 146",
+        "description": "Who invited this guy? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-08-25T03:00:32Z"
       }
     },
     {
@@ -316,6 +248,40 @@
     },
     {
       "kind": "youtube#searchResult",
+      "etag": "QOcashicftykRh8vRY0oS3ZLFSI",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "STPq0F7kthE"
+      },
+      "snippet": {
+        "publishedAt": "2023-07-28T02:30:13Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 143",
+        "description": "NO TOMMY STOP, NAH DON'T SAY IT Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/STPq0F7kthE/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/STPq0F7kthE/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/STPq0F7kthE/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-07-28T02:30:13Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
       "etag": "Guk8_dxJDDdtu6fcRsfiEqRGRqs",
       "id": {
         "kind": "youtube#video",
@@ -346,6 +312,40 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-07-14T03:00:05Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "G5qidWF0E8eAMQdwfs5wHJ3UzQ0",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "j33sh37cBfM"
+      },
+      "snippet": {
+        "publishedAt": "2023-06-30T03:00:16Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 139",
+        "description": "We Jazzing in Silver Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/j33sh37cBfM/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/j33sh37cBfM/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/j33sh37cBfM/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-30T03:00:16Z"
       }
     }
   ]
