@@ -1,10 +1,10 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "wMyO1_U8fF4zLn5RQCccvyIJ8Ak",
+  "etag": "CJ2d2T4Fu9F8oj-sInMAbMuqGmU",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 255,
+    "totalResults": 254,
     "resultsPerPage": 10
   },
   "items": [
@@ -78,6 +78,40 @@
     },
     {
       "kind": "youtube#searchResult",
+      "etag": "jGz8pJgyFVsIy9VlmiZI5uME2-k",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "qsL5dj7WwZ4"
+      },
+      "snippet": {
+        "publishedAt": "2023-11-10T02:00:21Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 154",
+        "description": "Trust the Moon Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/qsL5dj7WwZ4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/qsL5dj7WwZ4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/qsL5dj7WwZ4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-11-10T02:00:21Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
       "etag": "guvAyBi8Q_eCtazOKhtqdoUoi0g",
       "id": {
         "kind": "youtube#video",
@@ -146,36 +180,36 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "NBRqpK_eioy_cO26b_oV_x3b-b4",
+      "etag": "OeWHoB0a4bwUa8dLf441eT-UrL4",
       "id": {
         "kind": "youtube#video",
-        "videoId": "7ILayIT-2fE"
+        "videoId": "oVClQvf-hmE"
       },
       "snippet": {
-        "publishedAt": "2023-09-15T03:00:04Z",
+        "publishedAt": "2023-08-25T03:00:32Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 149",
-        "description": "Gale is the real MVP Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 146",
+        "description": "Who invited this guy? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/default.jpg",
+            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-09-15T03:00:04Z"
+        "publishTime": "2023-08-25T03:00:32Z"
       }
     },
     {
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-07-14T03:00:05Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "G5qidWF0E8eAMQdwfs5wHJ3UzQ0",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "j33sh37cBfM"
-      },
-      "snippet": {
-        "publishedAt": "2023-06-30T03:00:16Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 139",
-        "description": "We Jazzing in Silver Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/j33sh37cBfM/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/j33sh37cBfM/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/j33sh37cBfM/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-06-30T03:00:16Z"
       }
     }
   ]
