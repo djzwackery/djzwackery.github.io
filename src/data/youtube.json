@@ -1,10 +1,10 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "34fU6EOr_WkI8h7HCwQhI6vF_Lo",
+  "etag": "P6w1-KTwY57zIag3Syi4triayxQ",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 254,
+    "totalResults": 255,
     "resultsPerPage": 10
   },
   "items": [
@@ -44,6 +44,40 @@
     },
     {
       "kind": "youtube#searchResult",
+      "etag": "imiW9-T-1Do5pqEtXEmdqoZEeQg",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "Aj2FoYrTAdo"
+      },
+      "snippet": {
+        "publishedAt": "2023-12-15T02:00:06Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 159",
+        "description": "Surely... You have an Anti Air Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-12-15T02:00:06Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
       "etag": "iNx8IEVyJDFBd_4qpXfLzX_L8xM",
       "id": {
         "kind": "youtube#video",
@@ -78,7 +112,7 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "jGz8pJgyFVsIy9VlmiZI5uME2-k",
+      "etag": "ZN6nGNolMGBvAQrkVNpYgTG4KxY",
       "id": {
         "kind": "youtube#video",
         "videoId": "qsL5dj7WwZ4"
@@ -146,36 +180,36 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "NBRqpK_eioy_cO26b_oV_x3b-b4",
+      "etag": "nyqRshoIWkYmK0x6o8XZyYm772Q",
       "id": {
         "kind": "youtube#video",
-        "videoId": "7ILayIT-2fE"
+        "videoId": "TtdWbeDD-cg"
       },
       "snippet": {
-        "publishedAt": "2023-09-15T03:00:04Z",
+        "publishedAt": "2023-10-13T02:00:11Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 149",
-        "description": "Gale is the real MVP Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 152",
+        "description": "Get close to me and I SPD Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/default.jpg",
+            "url": "https://i.ytimg.com/vi/TtdWbeDD-cg/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/TtdWbeDD-cg/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/7ILayIT-2fE/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/TtdWbeDD-cg/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-09-15T03:00:04Z"
+        "publishTime": "2023-10-13T02:00:11Z"
       }
     },
     {
@@ -312,40 +346,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-07-28T02:30:13Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "pkOf1L1_OXEHu4Sxjg6Cdk-61Os",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "5gOsKBmZcL0"
-      },
-      "snippet": {
-        "publishedAt": "2023-07-14T03:00:05Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 141",
-        "description": "What's holding you back? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/5gOsKBmZcL0/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-07-14T03:00:05Z"
       }
     }
   ]
