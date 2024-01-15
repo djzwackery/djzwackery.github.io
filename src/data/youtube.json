@@ -1,16 +1,16 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "FM-oaLBwQeuwH2wk8LNpaj5o3yE",
+  "etag": "T5TWHOdlt0BmWkvSngOtGPFwL7w",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
-    "totalResults": 255,
+    "totalResults": 256,
     "resultsPerPage": 10
   },
   "items": [
     {
       "kind": "youtube#searchResult",
-      "etag": "tckyh--EwBwZDIHk6ZcVadBSNyY",
+      "etag": "3mwAMV1p1Exr-popShoUuKz6jRU",
       "id": {
         "kind": "youtube#video",
         "videoId": "VEJ3BjxnlJ0"
@@ -40,6 +40,40 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2024-01-12T02:00:10Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "5Yz60KxQCxFMv_yLcKwe0vvMw5o",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "sSYhtQNzBts"
+      },
+      "snippet": {
+        "publishedAt": "2024-01-05T07:00:27Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 160",
+        "description": "I am that guy Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/sSYhtQNzBts/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/sSYhtQNzBts/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/sSYhtQNzBts/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-01-05T07:00:27Z"
       }
     },
     {
@@ -78,40 +112,6 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "LBGspNjaY5aSM8z8y--BEYfC6tQ",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "Aj2FoYrTAdo"
-      },
-      "snippet": {
-        "publishedAt": "2023-12-15T02:00:06Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 159",
-        "description": "Surely... You have an Anti Air Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-12-15T02:00:06Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
       "etag": "ZN6nGNolMGBvAQrkVNpYgTG4KxY",
       "id": {
         "kind": "youtube#video",
@@ -142,6 +142,40 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-11-10T02:00:21Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "guvAyBi8Q_eCtazOKhtqdoUoi0g",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "EyfMJyvXyJ8"
+      },
+      "snippet": {
+        "publishedAt": "2023-11-03T02:00:11Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 153",
+        "description": "My ribs are falling out Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-11-03T02:00:11Z"
       }
     },
     {
@@ -278,40 +312,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-08-04T03:00:13Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "QOcashicftykRh8vRY0oS3ZLFSI",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "STPq0F7kthE"
-      },
-      "snippet": {
-        "publishedAt": "2023-07-28T02:30:13Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 143",
-        "description": "NO TOMMY STOP, NAH DON'T SAY IT Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/STPq0F7kthE/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-07-28T02:30:13Z"
       }
     },
     {
