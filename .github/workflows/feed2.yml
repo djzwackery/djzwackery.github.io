@@ -26,3 +26,5 @@ jobs:
           branch: dev
           folder: fetch-api-data-action
           target-folder: src/data
+          git-config-name: Chook
+          git-config-email: Chooksta69@users.noreply.github.com
