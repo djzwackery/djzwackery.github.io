@@ -1,6 +1,6 @@
 {
   "kind": "youtube#searchListResponse",
-  "etag": "T0XzdniKIgLLWuvj8szBYnexaRg",
+  "etag": "NrL0Kx8mS-OSbXCh6H3i7Qa7pfA",
   "nextPageToken": "CAoQAA",
   "regionCode": "US",
   "pageInfo": {
@@ -44,70 +44,70 @@
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "LBGspNjaY5aSM8z8y--BEYfC6tQ",
+      "etag": "5Yz60KxQCxFMv_yLcKwe0vvMw5o",
       "id": {
         "kind": "youtube#video",
-        "videoId": "Aj2FoYrTAdo"
+        "videoId": "sSYhtQNzBts"
       },
       "snippet": {
-        "publishedAt": "2023-12-15T02:00:06Z",
+        "publishedAt": "2024-01-05T07:00:27Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 159",
-        "description": "Surely... You have an Anti Air Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 160",
+        "description": "I am that guy Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/default.jpg",
+            "url": "https://i.ytimg.com/vi/sSYhtQNzBts/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/sSYhtQNzBts/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/Aj2FoYrTAdo/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/sSYhtQNzBts/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-12-15T02:00:06Z"
+        "publishTime": "2024-01-05T07:00:27Z"
       }
     },
     {
       "kind": "youtube#searchResult",
-      "etag": "hKVYGaMLMqfCIJE8ydaHNmRzKlo",
+      "etag": "XKyyyw8w9TU5uGZsAt-mshLmkJY",
       "id": {
         "kind": "youtube#video",
-        "videoId": "i8ydTEaWtTk"
+        "videoId": "EUf6JuXZvLU"
       },
       "snippet": {
-        "publishedAt": "2023-11-17T02:00:23Z",
+        "publishedAt": "2023-12-22T02:00:05Z",
         "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 155",
-        "description": "The Fire Rises Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "title": "Zwackmas 2023",
+        "description": "I am so hot, please send help Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
         "thumbnails": {
           "default": {
-            "url": "https://i.ytimg.com/vi/i8ydTEaWtTk/default.jpg",
+            "url": "https://i.ytimg.com/vi/EUf6JuXZvLU/default.jpg",
             "width": 120,
             "height": 90
           },
           "medium": {
-            "url": "https://i.ytimg.com/vi/i8ydTEaWtTk/mqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/EUf6JuXZvLU/mqdefault.jpg",
             "width": 320,
             "height": 180
           },
           "high": {
-            "url": "https://i.ytimg.com/vi/i8ydTEaWtTk/hqdefault.jpg",
+            "url": "https://i.ytimg.com/vi/EUf6JuXZvLU/hqdefault.jpg",
             "width": 480,
             "height": 360
           }
         },
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
-        "publishTime": "2023-11-17T02:00:23Z"
+        "publishTime": "2023-12-22T02:00:05Z"
       }
     },
     {
@@ -146,6 +146,40 @@
     },
     {
       "kind": "youtube#searchResult",
+      "etag": "guvAyBi8Q_eCtazOKhtqdoUoi0g",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "EyfMJyvXyJ8"
+      },
+      "snippet": {
+        "publishedAt": "2023-11-03T02:00:11Z",
+        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
+        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 153",
+        "description": "My ribs are falling out Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/EyfMJyvXyJ8/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "DJZwackery1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-11-03T02:00:11Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
       "etag": "nyqRshoIWkYmK0x6o8XZyYm772Q",
       "id": {
         "kind": "youtube#video",
@@ -176,40 +210,6 @@
         "channelTitle": "DJZwackery1",
         "liveBroadcastContent": "none",
         "publishTime": "2023-10-13T02:00:11Z"
-      }
-    },
-    {
-      "kind": "youtube#searchResult",
-      "etag": "OeWHoB0a4bwUa8dLf441eT-UrL4",
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "oVClQvf-hmE"
-      },
-      "snippet": {
-        "publishedAt": "2023-08-25T03:00:32Z",
-        "channelId": "UCLIVVSFSj9kbYUJzGYIjiUg",
-        "title": "DJ Zwackery&#39;s House of Fun Season 2 Episode 146",
-        "description": "Who invited this guy? Website: https://djzwackery.com/ Twitch: https://www.twitch.tv/djzwackery1 Youtube: ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/oVClQvf-hmE/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "DJZwackery1",
-        "liveBroadcastContent": "none",
-        "publishTime": "2023-08-25T03:00:32Z"
       }
     },
     {
