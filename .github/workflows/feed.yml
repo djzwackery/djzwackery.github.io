@@ -24,5 +24,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: dev
+          git-config-name: Chook
+          git-config-email: Chooksta69@users.noreply.github.com
           folder: fetch-api-data-action
           target-folder: src/data
