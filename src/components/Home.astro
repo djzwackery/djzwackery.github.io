@@ -1,0 +1,22 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "./Hero.astro";
+import LiveStage from "./LiveStage.astro";
+import About from "./About.astro";
+import Gigs from "./Gigs.astro";
+import VideoWall from "./VideoWall.astro";
+import Contact from "./Contact.astro";
+import { getVideos } from "../lib/youtube";
+
+/** Fetched at build time (server-side); never requested from the browser. */
+const videos = await getVideos();
+---
+
+<Base videos={videos}>
+  <Hero />
+  <LiveStage />
+  <About />
+  <Gigs />
+  <VideoWall videos={videos} />
+  <Contact />
+</Base>

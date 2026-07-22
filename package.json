@@ -1,51 +1,26 @@
 {
-  "name": "dj-zwackery",
-  "private": true,
-  "description": "Homepage of Australian based happy hardcore DJ, Zwackery.",
-  "version": "0.1.0",
-  "author": "James Ives <iam@jamesiv.es> (https://jamesiv.es)",
+  "name": "",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
   "dependencies": {
-    "gatsby-plugin-twitter": "^2.3.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-helmet": "^6.0.0",
-    "sass-lint": "^1.13.1",
-    "timeago.js": "^4.0.2"
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/bungee": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "astro": "^7.1.3",
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
-    "gatsby": "^2.20.25",
-    "gatsby-image": "^2.3.4",
-    "gatsby-plugin-alias-imports": "^1.0.5",
-    "gatsby-plugin-manifest": "^2.3.5",
-    "gatsby-plugin-offline": "^3.1.4",
-    "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
-    "gatsby-plugin-react-helmet": "^3.2.4",
-    "gatsby-plugin-sass": "^2.2.3",
-    "gatsby-plugin-sharp": "^2.5.6",
-    "gatsby-source-filesystem": "^2.2.4",
-    "gatsby-transformer-sharp": "^2.4.6",
-    "node-sass": "^4.13.1",
-    "prettier": "2.0.4",
-    "prop-types": "^15.7.2"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write 'src/**/*.{js,jsx,scss,md}'",
-    "lint": "sass-lint './src/**/*.scss' 'src/**/**/*.scss' --no-exit -v && prettier -l 'src/**/*.{js,jsx,md}' 'src/**/**/*.(js,jsx,md)' 'src/**/**/*.spec.(js,jsx,md)' || (echo need formatting, use yarn format ; exit 1)",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chooksta69/chooksta69.github.io"
-  },
-  "bugs": {
-    "url": "https://github.com/chooksta69/chooksta69.github.io/issues"
+    "@astrojs/check": "^0.9.9",
+    "@rollup/plugin-yaml": "^5.0.0",
+    "typescript": "^6.0.3"
   }
 }

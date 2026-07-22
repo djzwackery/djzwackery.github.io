@@ -1,0 +1,41 @@
+---
+import { useTranslations, getLang } from "../i18n";
+
+interface Props {
+  id: string;
+  title: string;
+  thumb: string;
+  published: string;
+}
+const { id, title, thumb, published } = Astro.props;
+
+const t = useTranslations(Astro.currentLocale);
+const lang = getLang(Astro.currentLocale);
+const dateLocale = lang === "en" ? "en-GB" : lang;
+const date = new Date(published).toLocaleDateString(dateLocale, {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<a
+  class="card"
+  href={`https://www.youtube.com/watch?v=${id}`}
+  data-video-id={id}
+  aria-label={`${t("videos.play")}: ${title}`}
+>
+  <span class="card__thumb">
+    <img src={thumb} alt="" width="480" height="360" loading="lazy" decoding="async" />
+    <span class="card__play" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="46" fill="#ff1f8f" stroke="#0a0410" stroke-width="5"></circle>
+        <path d="M42 33 L72 50 L42 67 Z" fill="#0a0410"></path>
+      </svg>
+    </span>
+  </span>
+  <span class="card__body">
+    <span class="card__title">{title}</span>
+    <span class="card__date">{date}</span>
+  </span>
+</a>

@@ -1,0 +1,49 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { languages, flags } from "../i18n/ui";
+import { getLang, useTranslations } from "../i18n";
+
+const current = getLang(Astro.currentLocale);
+const t = useTranslations(Astro.currentLocale);
+---
+
+<details class="langs" data-langs>
+  <summary class="langs__current" aria-label={t("a11y.language")}>
+    <span class="langs__flag" aria-hidden="true">{flags[current]}</span>
+    <span class="langs__code">{current}</span>
+    <span class="langs__caret" aria-hidden="true"></span>
+  </summary>
+  <ul class="langs__menu" role="list">
+    {
+      Object.entries(languages).map(([code, label]) => (
+        <li>
+          <a
+            class:list={["langs__opt", { "is-current": code === current }]}
+            href={getRelativeLocaleUrl(code)}
+            hreflang={code}
+            aria-current={code === current ? "true" : undefined}
+          >
+            <span class="langs__flag" aria-hidden="true">{flags[code as keyof typeof flags]}</span>
+            <span>{label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</details>
+
+<script>
+  /**
+   * Progressive enhancement: close the language popover on outside click or
+   * Escape. It still opens/closes and navigates fine without JS.
+   */
+  const el = document.querySelector<HTMLDetailsElement>("[data-langs]");
+  if (el) {
+    document.addEventListener("click", (e) => {
+      if (el.open && !el.contains(e.target as Node)) el.open = false;
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && el.open) el.open = false;
+    });
+  }
+</script>

@@ -1,0 +1,34 @@
+---
+import VideoCard from "./VideoCard.astro";
+import { useTranslations, highlight } from "../i18n";
+
+interface Video {
+  id: string;
+  title: string;
+  thumb: string;
+  published: string;
+}
+interface Props {
+  videos: Video[];
+}
+const { videos } = Astro.props;
+const t = useTranslations(Astro.currentLocale);
+---
+
+<section class="section wrap" id="videos" aria-labelledby="videos-head">
+  <div class="section__head">
+    <h2 class="screamer" id="videos-head" set:html={highlight(t("videos.heading"))} />
+  </div>
+
+  {
+    videos.length > 0 ? (
+      <div class="wall">
+        {videos.map((v) => (
+          <VideoCard id={v.id} title={v.title} thumb={v.thumb} published={v.published} />
+        ))}
+      </div>
+    ) : (
+      <p class="hero__tagline">{t("videos.empty")}</p>
+    )
+  }
+</section>

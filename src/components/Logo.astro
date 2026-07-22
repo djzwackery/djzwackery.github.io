@@ -1,0 +1,21 @@
+---
+import logoRaw from "../assets/logo.svg?raw";
+
+interface Props {
+  class?: string;
+  title?: string;
+}
+const { class: className, title = "DJ Zwackery" } = Astro.props;
+
+/**
+ * Keep the brand's own two-tone wordmark, just remapped for the dark UI:
+ *   #f1f2f2 (face)   -> white
+ *   #414042 (shadow) -> a slightly lifted grey so it reads on the dark bg
+ */
+const svg = logoRaw
+  .replace(/#f1f2f2/gi, "#ffffff")
+  .replace(/#414042/gi, "#3d3a44")
+  .replace("<svg ", `<svg role="img" aria-label="${title}" class="logo__svg" `);
+---
+
+<span class={className} set:html={svg} />

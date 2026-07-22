@@ -1,0 +1,21 @@
+---
+/**
+ * The Twitch stage. Hidden until the client script sets data-live on <html>.
+ * The player and chat iframes are injected client-side (with the right
+ * parent=) only once he's actually live, so nothing loads for offline visitors.
+ */
+import { useTranslations, highlight } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+---
+
+<section class="stage wrap section" aria-label="Live Twitch stream" data-stage>
+  <div class="section__head">
+    <h2 class="screamer" set:html={highlight(t("live.heading"))} />
+    <span class="section__count" data-viewers></span>
+  </div>
+  <div class="stage__grid">
+    <div class="stage__player" data-twitch-player></div>
+    <div class="stage__chat" data-twitch-chat></div>
+  </div>
+</section>

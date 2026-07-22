@@ -1,0 +1,9 @@
+# Upcoming gigs.
+#
+# Each entry: date (ISO "YYYY-MM-DD"), venue, city, and an optional url for
+# tickets/details. Past dates are hidden automatically. If the list is empty,
+# the "Catch him in the flesh" section is removed from the site entirely.
+- date: "2026-09-26"
+  venue: Hardcore Evolution • Rubix Warehouse
+  city: Melbourne, AU
+  url: https://events.humanitix.com/hardcore-evolution/tickets

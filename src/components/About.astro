@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import { useTranslations, highlight } from "../i18n";
+import pose from "../assets/zwack-pose.png";
+
+const t = useTranslations(Astro.currentLocale);
+
+/**
+ * Quick-scan facts shown as a byline under the bio.
+ */
+const facts = ["Melbourne, AU", "Hardcore", "170+ BPM", "House of Fun"];
+---
+
+<section class="section wrap about" id="about" aria-labelledby="about-head">
+  <div class="section__head">
+    <h2 class="screamer" id="about-head" set:html={highlight(t("about.heading"))} />
+  </div>
+
+  <div class="about__grid">
+    <div class="about__body">
+      <p class="about__lead">{t("about.bio1")}</p>
+      <p class="about__text">{t("about.bio2")}</p>
+      <ul class="about__facts">
+        {facts.map((f) => <li>{f}</li>)}
+      </ul>
+    </div>
+
+    <div class="about__mascot" aria-hidden="true">
+      <Image src={pose} alt="" widths={[320, 480, 640]} sizes="360px" loading="lazy" />
+    </div>
+  </div>
+</section>

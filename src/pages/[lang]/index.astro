@@ -1,0 +1,13 @@
+---
+/**
+ * Localized home pages: /ja/, /de/, /nl/, /fr/. The default locale (en) is
+ * served from src/pages/index.astro, so it is not generated here.
+ */
+import Home from "../../components/Home.astro";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "ja" } }, { params: { lang: "de" } }, { params: { lang: "nl" } }, { params: { lang: "fr" } }];
+}
+---
+
+<Home />

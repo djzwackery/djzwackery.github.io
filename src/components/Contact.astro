@@ -1,0 +1,69 @@
+---
+import { CONTACT_ACCESS_KEY, BOOKING_EMAIL, DJ_NAME } from "../config";
+import { useTranslations, highlight } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+const configured = CONTACT_ACCESS_KEY !== "YOUR_WEB3FORMS_ACCESS_KEY";
+const reasons = [
+  t("contact.reason1"),
+  t("contact.reason2"),
+  t("contact.reason3"),
+  t("contact.reason4"),
+];
+---
+
+<section class="section wrap contact" id="contact" aria-labelledby="contact-head">
+  <div class="contact__grid">
+    <div class="contact__pitch">
+      <p class="hero__kicker">{t("contact.kicker")}</p>
+      <h2 class="screamer" id="contact-head" set:html={highlight(t("contact.heading"))} />
+      <p class="contact__blurb">{t("contact.blurb")}</p>
+      <p class="contact__direct">
+        {t("contact.orEmail")} <a href={`mailto:${BOOKING_EMAIL}`}>{BOOKING_EMAIL}</a>
+      </p>
+    </div>
+
+    <form
+      class="contact__form"
+      method="POST"
+      action="https://api.web3forms.com/submit"
+      data-contact-form
+      data-email={BOOKING_EMAIL}
+      data-msg-sending={t("contact.sending")}
+      data-msg-sent={t("contact.sent")}
+      data-msg-failed={t("contact.failed", { email: BOOKING_EMAIL })}
+    >
+      <input type="hidden" name="access_key" value={CONTACT_ACCESS_KEY} />
+      <input type="hidden" name="subject" value={`New message from djzwackery.com`} />
+      <input type="hidden" name="from_name" value={DJ_NAME} />
+      <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+
+      <div class="contact__row">
+        <label class="field">
+          <span>{t("contact.name")}</span>
+          <input type="text" name="name" required autocomplete="name" placeholder={t("contact.namePlaceholder")} />
+        </label>
+        <label class="field">
+          <span>{t("contact.email")}</span>
+          <input type="email" name="email" required autocomplete="email" placeholder="you@email.com" />
+        </label>
+      </div>
+
+      <label class="field">
+        <span>{t("contact.reasonLabel")}</span>
+        <select name="reason">
+          {reasons.map((r) => <option value={r}>{r}</option>)}
+        </select>
+      </label>
+
+      <label class="field">
+        <span>{t("contact.message")}</span>
+        <textarea name="message" required rows="4" placeholder={t("contact.messagePlaceholder")}></textarea>
+      </label>
+
+      <button type="submit" class="btn btn--acid contact__submit">{t("contact.send")}</button>
+      <p class="contact__status" data-contact-status role="status" aria-live="polite"></p>
+      {!configured && <p class="contact__note">{t("contact.note")}</p>}
+    </form>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+import { DJ_NAME } from "../config";
+import { useTranslations } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+---
+
+<Base title={`404 · ${DJ_NAME}`} index={false}>
+  <section class="section wrap" style="text-align: center; padding-block: clamp(4rem, 12vh, 8rem);">
+    <p class="hero__kicker">{t("notFound.error")}</p>
+    <p class="hero__tagline" style="margin-inline: auto;">{t("notFound.blurb")}</p>
+    <a class="btn btn--magenta" href="/?notfound">{t("notFound.back")}</a>
+  </section>
+
+  <script is:inline>
+    /* Send visitors home; the home page shows a "not found" toast. */
+    location.replace("/?notfound");
+  </script>
+</Base>

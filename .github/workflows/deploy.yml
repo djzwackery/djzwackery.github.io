@@ -1,27 +1,53 @@
-name: Deploy
+name: Deploy to GitHub Pages
+
 on:
-  push:	
-    branches:	
-      - dev
-jobs:  
-  deploy:
+  push:
+    branches: [dev]
+  schedule:
+    - cron: "0 6 * * *" # daily at 06:00 UTC — rebuild to refresh content
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; let a newer run cancel an in-progress one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '10.19.0'
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
 
-      - name: Checkout
-        uses: actions/checkout@v1
-        
-      - name: Install
-        run: |
-          npm install
-          npm run-script build
-
-      - name: Build and Deploy Repo
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+      - name: Restore content cache 💾
+        uses: actions/cache@v4
         with:
-          branch: master
-          folder: 'public'
-          clean: true
+          path: .cache
+          # rolling cache: unique key each run, restore the most recent one
+          key: content-cache-${{ github.run_id }}
+          restore-keys: |
+            content-cache-
+
+      - name: Build Astro 🏗️
+        uses: withastro/action@v3
+        with:
+          node-version: 22
+          package-manager: npm
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4

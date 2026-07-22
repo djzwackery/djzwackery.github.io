@@ -1,0 +1,103 @@
+---
+import { Image } from "astro:assets";
+import "../styles/global.css";
+import Seo from "../components/Seo.astro";
+import Marquee from "../components/Marquee.astro";
+import BackgroundVideo from "../components/BackgroundVideo.astro";
+import SocialRail from "../components/SocialRail.astro";
+import Logo from "../components/Logo.astro";
+import LangSwitcher from "../components/LangSwitcher.astro";
+import jivesFace from "../assets/bigjimjimo.webp";
+import { DJ_NAME, KOFI_URL } from "../config";
+import { useTranslations, getLang } from "../i18n";
+import { localeTags } from "../i18n/ui";
+import { getChannelEmotes } from "../lib/twitch-emotes";
+
+/** His channel emotes, fetched at build time and handed to the client script. */
+const channelEmotes = await getChannelEmotes();
+
+interface VideoLD {
+  id: string;
+  title: string;
+  thumb: string;
+  published: string;
+}
+interface Props {
+  /** Optional title override; omit to use the localized default. */
+  title?: string;
+  videos?: VideoLD[];
+  /** False on the 404 page: noindex and no hreflang alternates. */
+  index?: boolean;
+}
+const { title, videos = [], index = true } = Astro.props;
+const year = new Date().getFullYear();
+const t = useTranslations(Astro.currentLocale);
+const lang = getLang(Astro.currentLocale);
+---
+
+<!doctype html>
+<html lang={localeTags[lang]} data-live="false">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <Seo title={title} videos={videos} index={index} />
+  </head>
+  <body>
+    <a class="skip-link" href="#videos">Skip to sets</a>
+    <BackgroundVideo />
+    <Marquee />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer__top">
+          <Logo class="footer__logo" title={DJ_NAME} />
+          <SocialRail />
+        </div>
+        <div class="footer__meta">
+          <p class="footer__copy">© {year} {DJ_NAME}</p>
+          {
+            KOFI_URL && (
+              <a class="footer__kofi" href={KOFI_URL} target="_blank" rel="noopener noreferrer">
+                {t("footer.tip")}
+              </a>
+            )
+          }
+          <LangSwitcher />
+          <a class="footer__credit" href="https://jamesiv.es" target="_blank" rel="noopener noreferrer">
+            <span class="footer__credit-swap">
+              <span class="footer__credit-txt is-default">Site by Jives</span>
+              <span class="footer__credit-txt is-alt" aria-hidden="true">Site by bigjimjimo</span>
+            </span>
+            <Image src={jivesFace} alt="Big Jim Jimo" width={28} height={28} loading="lazy" />
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Emote rain (sits behind content) -->
+    <div id="emote-rain" aria-hidden="true"></div>
+
+    <!-- His channel emotes, fetched at build time; read by the client script -->
+    <script type="application/json" data-channel-emotes is:inline set:html={JSON.stringify(channelEmotes)} />
+
+    <!-- Not-found toast (shown by the client script after a 404 redirect) -->
+    <div class="toast" data-toast role="status" aria-live="polite">{t("toast.notFound")}</div>
+
+    <!-- Video lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player">
+      <button class="lightbox__close" id="lightbox-close" aria-label="Close video">✕ CLOSE</button>
+      <div class="lightbox__frame" id="lightbox-frame"></div>
+    </div>
+
+    <script src="../scripts/app.ts"></script>
+  </body>
+</html>

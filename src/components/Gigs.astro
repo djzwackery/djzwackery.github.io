@@ -1,0 +1,70 @@
+---
+import gigsData from "../../config/gigs.yaml";
+import { useTranslations, highlight } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+
+interface Gig {
+  date: string;
+  venue: string;
+  city: string;
+  url?: string;
+}
+
+/**
+ * Keep only gigs on or after today, soonest first. Empty means the whole
+ * section is skipped (see the render guard below).
+ */
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const upcoming = (gigsData as Gig[])
+  .filter((g) => new Date(g.date) >= today)
+  .sort((a, b) => a.date.localeCompare(b.date));
+
+/**
+ * Format an ISO date into a big day number and short month for the date tile.
+ */
+function fmt(iso: string) {
+  const d = new Date(iso);
+  return {
+    day: d.toLocaleDateString("en-GB", { day: "2-digit" }),
+    mon: d.toLocaleDateString("en-GB", { month: "short" }).toUpperCase(),
+  };
+}
+---
+
+{
+  upcoming.length > 0 && (
+    <section class="section wrap gigs" id="gigs" aria-labelledby="gigs-head">
+      <div class="section__head">
+        <h2 class="screamer" id="gigs-head" set:html={highlight(t("gigs.heading"))} />
+      </div>
+
+      <ul class="gig-list">
+        {upcoming.map((g) => {
+          const { day, mon } = fmt(g.date);
+          return (
+            <li class="gig">
+              <div class="gig__date">
+                <span class="gig__day">{day}</span>
+                <span class="gig__mon">{mon}</span>
+              </div>
+              <div class="gig__info">
+                <span class="gig__venue">{g.venue}</span>
+                <span class="gig__city">{g.city}</span>
+              </div>
+              {g.url ? (
+                <a class="btn btn--magenta gig__cta" href={g.url} target="_blank" rel="noopener">
+                  {t("gigs.details")}
+                </a>
+              ) : (
+                <span class="gig__tba">{t("gigs.onSale")}</span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  )
+}

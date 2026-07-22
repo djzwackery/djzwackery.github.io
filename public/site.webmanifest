@@ -1,0 +1,11 @@
+{
+  "name": "DJ Zwackery",
+  "short_name": "Zwackery",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#ff1f8f",
+  "background_color": "#0a0410",
+  "display": "standalone"
+}

@@ -1,0 +1,72 @@
+---
+import { Image } from "astro:assets";
+import Logo from "./Logo.astro";
+import { TWITCH_URL, YOUTUBE_URL } from "../config";
+import { useTranslations } from "../i18n";
+
+import fire from "../assets/hero-1-fire.jpg";
+import wall from "../assets/hero-2-wall.jpg";
+import magenta from "../assets/hero-3-magenta.jpg";
+import handsup from "../assets/hero-4-handsup.jpg";
+
+const t = useTranslations(Astro.currentLocale);
+
+/**
+ * The hero photo deck. Rendered back-to-front and auto-shuffled by the
+ * client script so every shot takes a turn at the front.
+ */
+const shots = [
+  { src: handsup, alt: "DJ Zwackery with hands in the air above the crowd" },
+  { src: magenta, alt: "DJ Zwackery on the decks bathed in hot magenta light" },
+  { src: wall, alt: "DJ Zwackery mixing in front of the giant ZWACKERY LED wall" },
+  { src: fire, alt: "DJ Zwackery mixing in front of a wall of flames" },
+];
+---
+
+<section class="hero wrap" aria-labelledby="wordmark">
+  <div class="hero__intro">
+    <div class="hero__eyebrow">
+      <p class="hero__kicker">{t("hero.kicker")}</p>
+      <p class="status" data-status>
+        <span class="status__dot"></span>
+        <span class="status__text status__text--offline">{t("status.offline")}</span>
+        <span class="status__text status__text--live">{t("status.live")}</span>
+      </p>
+    </div>
+    <h1 class="hero__wordmark" id="wordmark" data-party>
+      <Logo class="logo" title="DJ Zwackery" />
+      <span class="visually-hidden">DJ Zwackery</span>
+    </h1>
+    <p class="hero__tagline">{t("hero.tagline")}</p>
+
+    <div class="hero__actions">
+      <a class="btn btn--magenta" href={TWITCH_URL} target="_blank" rel="noopener">
+        {t("hero.followTwitch")}
+      </a>
+      <a class="btn btn--cyan" href={YOUTUBE_URL} target="_blank" rel="noopener">
+        {t("hero.subscribeYoutube")}
+      </a>
+    </div>
+    <a class="hero__jump" href="#videos">
+      {t("hero.watchSets")}<span aria-hidden="true">↓</span>
+    </a>
+  </div>
+
+  <div class="hero__fan" data-hero-fan aria-label="Photos of DJ Zwackery playing live">
+    {
+      shots.map((s, i) => (
+        <Image
+          class="fan__photo"
+          src={s.src}
+          alt={i === shots.length - 1 ? s.alt : ""}
+          widths={[520, 780, 1080, 1500]}
+          sizes="(max-width: 640px) 92vw, (max-width: 1040px) 42vw, 40vw"
+          quality={88}
+          format="webp"
+          loading={i >= shots.length - 2 ? "eager" : "lazy"}
+          fetchpriority={i === shots.length - 1 ? "high" : undefined}
+        />
+      ))
+    }
+  </div>
+</section>

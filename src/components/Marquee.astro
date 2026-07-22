@@ -1,0 +1,18 @@
+---
+import { MARQUEE_WORDS, MARQUEE_WORDS_LIVE } from "../config";
+
+/**
+ * The word lists are duplicated inline so the -50% keyframe loops seamlessly.
+ */
+const words = [...MARQUEE_WORDS, ...MARQUEE_WORDS];
+const liveWords = [...MARQUEE_WORDS_LIVE, ...MARQUEE_WORDS_LIVE, ...MARQUEE_WORDS_LIVE, ...MARQUEE_WORDS_LIVE];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track marquee__track--idle">
+    {words.map((w) => <span>{w}</span>)}
+  </div>
+  <div class="marquee__track marquee__track--live">
+    {liveWords.map((w) => <span>{w}</span>)}
+  </div>
+</div>
