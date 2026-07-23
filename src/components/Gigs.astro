@@ -1,5 +1,7 @@
 ---
-import gigsData from "../../config/gigs.yaml";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { load as parseYaml } from "js-yaml";
 import { useTranslations, highlight } from "../i18n";
 
 const t = useTranslations(Astro.currentLocale);
@@ -11,14 +13,11 @@ interface Gig {
   url?: string;
 }
 
-/**
- * Keep only gigs on or after today, soonest first. Empty means the whole
- * section is skipped (see the render guard below).
- */
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
-const upcoming = (gigsData as Gig[])
+const raw = readFileSync(resolve("config/gigs.yaml"), "utf8");
+const upcoming = ((parseYaml(raw) as Gig[] | null) ?? [])
   .filter((g) => new Date(g.date) >= today)
   .sort((a, b) => a.date.localeCompare(b.date));
 

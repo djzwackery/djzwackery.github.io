@@ -21,7 +21,7 @@ export type Lang = keyof typeof languages;
 
 /** Country flag emoji shown in the language switcher. */
 export const flags: Record<Lang, string> = {
-  en: "🇬🇧",
+  en: "🇦🇺",
   ja: "🇯🇵",
   de: "🇩🇪",
   nl: "🇳🇱",
@@ -103,7 +103,8 @@ export const ui = {
       "This page took a wrong turn on the way to the smoke machine. Let's get you back to the decks.",
     "notFound.back": "Back to the House of Fun",
     "notFound.stream": "Catch the stream",
-    "toast.notFound": "That page took a wrong turn. Back at the House of Fun.",
+    "toast.notFound":
+      "That page cannot be found. Let's take you back to the House of Fun.",
   },
 
   ja: {
@@ -171,7 +172,8 @@ export const ui = {
       "このページはスモークマシンへ向かう途中で道に迷いました。デッキまでお戻りください。",
     "notFound.back": "House of Funに戻る",
     "notFound.stream": "配信を観る",
-    "toast.notFound": "そのページは道に迷いました。House of Funに戻りました。",
+    "toast.notFound":
+      "そのページは見つかりません。House of Funへお連れします。",
   },
 
   de: {
@@ -240,7 +242,8 @@ export const ui = {
       "Diese Seite hat auf dem Weg zur Nebelmaschine falsch abgebogen. Zurück an die Decks.",
     "notFound.back": "Zurück ins House of Fun",
     "notFound.stream": "Zum Stream",
-    "toast.notFound": "Diese Seite hat sich verirrt. Zurück im House of Fun.",
+    "toast.notFound":
+      "Diese Seite wurde nicht gefunden. Zurück ins House of Fun.",
   },
 
   nl: {
@@ -308,7 +311,8 @@ export const ui = {
       "Deze pagina sloeg verkeerd af op weg naar de rookmachine. Terug naar de decks.",
     "notFound.back": "Terug naar het House of Fun",
     "notFound.stream": "Bekijk de stream",
-    "toast.notFound": "Die pagina is verdwaald. Terug in het House of Fun.",
+    "toast.notFound":
+      "Die pagina bestaat niet. We brengen je terug naar het House of Fun.",
   },
 
   fr: {
@@ -376,7 +380,8 @@ export const ui = {
       "Cette page s'est trompée de chemin vers la machine à fumée. Retournons aux platines.",
     "notFound.back": "Retour au House of Fun",
     "notFound.stream": "Voir le live",
-    "toast.notFound": "Cette page s'est perdue. Retour au House of Fun.",
+    "toast.notFound":
+      "Cette page est introuvable. On vous ramène au House of Fun.",
   },
 } as const;
 

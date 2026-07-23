@@ -56,6 +56,7 @@ export const TWITCH_LOGIN = "djzwackery1";
 /** Numeric Twitch user id - required by the 7TV emote API. */
 export const TWITCH_USER_ID = "6785771";
 export const TWITCH_URL = `https://www.twitch.tv/${TWITCH_LOGIN}`;
+export const TWITTER_HANDLE = "@djzwackery";
 /** Domains allowed to embed the Twitch player/chat. */
 export const TWITCH_PARENTS = [
   "djzwackery.com",

@@ -9,8 +9,8 @@ import {
 } from "../config";
 
 /**
- * His channel emotes are fetched at build time and injected into the page as a
- * JSON script tag; read them here (empty if unavailable).
+ * Channel emotes fetched at build time and injected as a JSON script tag;
+ * empty array if the build-time fetch failed.
  */
 const channelEmotes: { id: string; name: string }[] = (() => {
   try {
@@ -34,10 +34,7 @@ const parents = TWITCH_PARENTS.map((p) => `parent=${p}`).join("&");
  */
 document.addEventListener("touchstart", () => {}, { passive: true });
 
-/**
- * Not-found toast: the 404 page redirects home with ?notfound, and we show a
- * quick toast then tidy the URL.
- */
+/** 404 page redirects home with ?notfound; show a toast then clean the URL. */
 (() => {
   const params = new URLSearchParams(location.search);
   if (!params.has("notfound")) return;
@@ -50,24 +47,22 @@ document.addEventListener("touchstart", () => {}, { passive: true });
   setTimeout(() => toast.classList.remove("is-visible"), 5000);
 })();
 
-/**
- * 0. BACKGROUND VIDEO - play it (unless reduced motion → poster)
- */
 (() => {
   const vid = document.querySelector<HTMLVideoElement>("[data-bg-video]");
   if (!vid) return;
   if (reduceMotion) {
     vid.removeAttribute("autoplay");
     vid.pause();
-    return; // poster stays visible, no motion
+    return;
   }
   vid.play().catch(() => {
-    /* autoplay blocked - poster remains, no-op */
+    /* autoplay blocked — poster remains */
   });
 })();
 
 /**
- * 1. LIGHTBOX - click a card, load the YouTube iframe on demand
+ * Lightbox: cards are real links to YouTube (progressive enhancement). Intercept
+ * plain clicks to open an inline player; modifier/middle clicks still open YouTube.
  */
 (() => {
   const lightbox = document.getElementById("lightbox");
@@ -85,18 +80,13 @@ document.addEventListener("touchstart", () => {}, { passive: true });
   };
   const close = () => {
     lightbox.classList.remove("is-open");
-    // let the exit transition play before tearing down the iframe
+    // let the exit transition finish before tearing down the iframe
     setTimeout(() => {
       if (!lightbox.classList.contains("is-open")) frame.innerHTML = "";
     }, 260);
     lastFocused?.focus();
   };
 
-  /**
-   * The cards are real links to YouTube (so they work with no JS). When JS is
-   * on, intercept a plain click and open the inline player instead; modifier
-   * and middle clicks still open YouTube in a new tab.
-   */
   document
     .querySelectorAll<HTMLAnchorElement>("[data-video-id]")
     .forEach((card) => {
@@ -116,29 +106,24 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 })();
 
 /**
- * 1b. HERO FAN - shuffle the photo deck front-to-back. Moving the front card
- * to the back changes every card's nth-child index, so CSS animates them to
- * their new fan slot.
+ * Hero fan: moving the front card (last DOM child) to the back changes every
+ * card's nth-child index, which CSS uses to animate each photo to its new fan slot.
  */
 (() => {
   const fan = document.querySelector("[data-hero-fan]");
-  if (!fan || reduceMotion) return; // static fan if reduced motion
+  if (!fan || reduceMotion) return;
   const cards = fan.querySelectorAll(".fan__photo");
   if (cards.length < 2) return;
 
   setInterval(() => {
-    /**
-     * The front card is the last child; send it to the front of the DOM (the
-     * back of the fan) so the rest shuffle up a slot.
-     */
     fan.insertBefore(fan.lastElementChild!, fan.firstElementChild);
   }, 3500);
 })();
 
 /**
- * Booking form: submit inline via fetch, with a mailto fallback when no
- * Web3Forms key is configured. Status strings are localized server-side and
- * read off the form's data attributes.
+ * Booking form: posts to Web3Forms; falls back to a mailto: link when no API
+ * key is configured so the CTA still works. Status strings are localized
+ * server-side and read off the form's data attributes.
  */
 (() => {
   const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
@@ -154,9 +139,6 @@ document.addEventListener("touchstart", () => {}, { passive: true });
     const senderEmail = String(data.get("email") ?? "");
     const message = String(data.get("message") ?? "");
 
-    /**
-     * Not wired up yet: hand off to the DJ's inbox instead of failing silently.
-     */
     if (!configured) {
       const body = `Name: ${name}%0AEmail: ${senderEmail}%0A%0A${encodeURIComponent(message)}`;
       window.location.href = `mailto:${email}?subject=${encodeURIComponent(
@@ -189,12 +171,9 @@ document.addEventListener("touchstart", () => {}, { passive: true });
   });
 })();
 
-/**
- * 2. EMOTE RAIN - his real 7TV emotes, curated fallback
- */
 const emoteRain = (() => {
   const layer = document.getElementById("emote-rain");
-  let sources: string[] = []; // emote image urls
+  let sources: string[] = [];
   let fetched = false;
   let running = false;
   let spawnTimer: number | undefined;
@@ -202,9 +181,6 @@ const emoteRain = (() => {
   async function loadEmotes() {
     if (fetched) return;
     fetched = true;
-    /**
-     * His actual Twitch channel (subscriber) emotes, baked in at build time.
-     */
     const twitch = channelEmotes.map((e) => twitchEmoteUrl(e.id));
     let sevenTv: string[];
     try {
@@ -222,10 +198,7 @@ const emoteRain = (() => {
     } catch {
       sevenTv = [];
     }
-    /**
-     * His Twitch channel emotes are weighted heavier so they show up often,
-     * mixed with his 7TV channel emotes.
-     */
+    // Twitch emotes appear twice so they show up more often than 7TV emotes.
     sources = [...twitch, ...twitch, ...sevenTv];
   }
 
@@ -254,9 +227,6 @@ const emoteRain = (() => {
     layer.appendChild(el);
 
     if (reduceMotion) {
-      /**
-       * Reduced motion: dot a few emotes near the top, no falling.
-       */
       el.style.top = `${5 + Math.random() * 15}vh`;
       el.style.opacity = "0.9";
       setTimeout(() => el.remove(), 2500);
@@ -298,9 +268,6 @@ const emoteRain = (() => {
   return { start, stop };
 })();
 
-/**
- * 4. LIVE STAGE - inject Twitch player + chat only when live
- */
 function mountStage() {
   const playerEl = document.querySelector<HTMLElement>("[data-twitch-player]");
   const chatEl = document.querySelector<HTMLElement>("[data-twitch-chat]");
@@ -314,18 +281,12 @@ function mountStage() {
   }
 }
 
-/**
- * 5. STATE - flip the whole site between offline / live
- */
 let isLive = false;
 function setLive(live: boolean) {
   if (live === isLive) return;
   isLive = live;
   html.dataset.live = String(live);
 
-  /**
-   * Kick the background deck-cam up a gear while he's live for extra energy.
-   */
   const bg = document.querySelector<HTMLVideoElement>("[data-bg-video]");
   if (bg) bg.playbackRate = live ? 1.5 : 1;
 
@@ -342,9 +303,8 @@ function setLive(live: boolean) {
 }
 
 /**
- * Minimal shape of the `Twitch` global the embed player script (see
- * `loadTwitch` below) attaches to `window` — there's no official types
- * package for it.
+ * Minimal shape of the `Twitch` global the embed player script attaches to
+ * `window` — there's no official types package for it.
  */
 interface TwitchEmbedGlobal {
   Player: {
@@ -363,13 +323,11 @@ declare global {
 }
 
 /**
- * 6. DETECTION - a hidden Twitch embed's ONLINE/OFFLINE events. Client-side,
- * no secrets, works on static hosting.
+ * Live detection via a hidden Twitch embed's ONLINE/OFFLINE events — client-side,
+ * no secrets, works on static hosting without a backend.
  */
 function initTwitch() {
-  /**
-   * Hidden 1px player purely to receive online/offline events.
-   */
+  /** Hidden 1px player: only here to receive online/offline events. */
   const probe = document.createElement("div");
   probe.id = "twitch-probe";
   probe.style.cssText =
@@ -391,9 +349,8 @@ function initTwitch() {
 }
 
 /**
- * 7. PARTY BURST - an easter egg. Clicking the hero wordmark (or the Konami
- * code) rains his channel emotes and dayglo confetti out of the logo, with a
- * quick colour flash. Respects reduced motion.
+ * Easter egg: clicking the hero wordmark (or entering the Konami code) rains
+ * channel emotes and confetti from the logo. Respects reduced motion.
  */
 (() => {
   const trigger = document.querySelector<HTMLElement>("[data-party]");
@@ -423,11 +380,8 @@ function initTwitch() {
     const originX = r.left + r.width / 2;
     const originY = r.top + r.height / 2;
 
-    /**
-     * A quick brand-colour flash radiating from the logo. A flat full-page
-     * tint read as a muddy wash, so this is a radial gradient anchored to the
-     * click point instead.
-     */
+    // A flat full-page tint reads as a muddy wash; radial gradient anchored to
+    // the click point gives a real burst effect instead.
     if (!reduceMotion) {
       html.style.setProperty("--party-x", `${originX}px`);
       html.style.setProperty("--party-y", `${originY}px`);
@@ -458,7 +412,6 @@ function initTwitch() {
           Math.random() < 0.35 ? "50%" : `${5 + Math.random() * 8}px`;
       }
 
-      // Small spawn jitter so pieces don't all stack on the exact same point.
       const jitterX = (Math.random() - 0.5) * 32;
       const jitterY = (Math.random() - 0.5) * 32;
       p.style.left = `${originX + jitterX}px`;
@@ -481,9 +434,8 @@ function initTwitch() {
         continue;
       }
 
-      // Two-phase arc: a quick ease-out launch, then a gravity-style ease-in
-      // fall, so motion stays visible across the whole duration instead of
-      // front-loading into the first third and leaving a long dead tail.
+      // Two-phase arc: ease-out launch then ease-in fall keeps motion visible
+      // across the full duration instead of front-loading into the first third.
       const anim = p.animate(
         [
           {
@@ -512,9 +464,7 @@ function initTwitch() {
   trigger.style.cursor = "pointer";
   trigger.addEventListener("click", fire);
 
-  /**
-   * Konami code also sets it off, for the truly dedicated.
-   */
+  /** Konami code also sets it off, for the truly dedicated. */
   const seq = [
     "ArrowUp",
     "ArrowUp",
@@ -537,12 +487,44 @@ function initTwitch() {
   });
 })();
 
+/**
+ * Dutch easter egg: show the GIF meme whenever someone switches to NL.
+ * Fades in full-screen behind content, auto-dismisses after 3 s.
+ */
+(() => {
+  if (document.documentElement.lang !== "nl") return;
+  const overlay = document.createElement("div");
+  overlay.className = "dutch-meme";
+  const img = document.createElement("img");
+  img.src = "/dutch.gif";
+  img.alt = "";
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  const bgVideo = document.querySelector<HTMLElement>(".bg-video");
+
+  const dismiss = () => {
+    overlay.classList.remove("is-visible");
+    if (bgVideo) bgVideo.style.opacity = "";
+    overlay.addEventListener("transitionend", () => overlay.remove(), {
+      once: true,
+    });
+  };
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      overlay.classList.add("is-visible");
+      if (bgVideo) bgVideo.style.opacity = "0";
+    });
+  });
+
+  setTimeout(dismiss, 3000);
+})();
+
 (function loadTwitch() {
   /**
-   * Preview override: `?live` (or `?live=1`) forces the live takeover so the
-   * stream/emote-rain layout can be previewed without waiting for a real
-   * stream. `?live=0` / `?live=false` forces offline; anything else is real
-   * detection.
+   * `?live` / `?live=1` forces the live takeover so the layout can be previewed
+   * without a real stream. `?live=0` / `?live=false` forces offline.
    */
   const param = new URLSearchParams(location.search).get("live");
   if (param !== null) {

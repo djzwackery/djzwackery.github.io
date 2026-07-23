@@ -101,10 +101,8 @@ const lang = getLang(Astro.currentLocale);
       </div>
     </footer>
 
-    <!-- Emote rain (sits behind content) -->
     <div id="emote-rain" aria-hidden="true"></div>
 
-    <!-- His channel emotes, fetched at build time; read by the client script -->
     <script
       type="application/json"
       data-channel-emotes
@@ -112,12 +110,10 @@ const lang = getLang(Astro.currentLocale);
       set:html={JSON.stringify(channelEmotes)}
     />
 
-    <!-- Not-found toast (shown by the client script after a 404 redirect) -->
     <div class="toast" data-toast role="status" aria-live="polite">
       {t("toast.notFound")}
     </div>
 
-    <!-- Video lightbox -->
     <div
       class="lightbox"
       id="lightbox"

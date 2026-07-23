@@ -1,6 +1,15 @@
 ---
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { load as parseYaml } from "js-yaml";
 import { getRelativeLocaleUrl, getAbsoluteLocaleUrl } from "astro:i18n";
-import { SITE_URL, DJ_NAME, SHOW_NAME, SOCIALS } from "../config";
+import {
+  SITE_URL,
+  DJ_NAME,
+  SHOW_NAME,
+  SOCIALS,
+  TWITTER_HANDLE,
+} from "../config";
 import { useTranslations, getLang } from "../i18n";
 import { languages } from "../i18n/ui";
 
@@ -10,11 +19,17 @@ interface VideoLD {
   thumb: string;
   published: string;
 }
+interface GigLD {
+  date: string;
+  venue: string;
+  city: string;
+  url?: string;
+}
 interface Props {
   /** Overrides the default localized title (used by the 404 page). */
   title?: string;
   videos?: VideoLD[];
-  /** Whether to emit hreflang alternates (only true for the home page). */
+  /** Whether to emit hreflang alternates and structured data (false on 404). */
   index?: boolean;
 }
 
@@ -27,14 +42,13 @@ const title = titleOverride ?? `${DJ_NAME} · ${SHOW_NAME} · ${t("meta.role")}`
 const description = t("meta.description");
 const ogImage = new URL("/og.png", SITE_URL).href;
 
-/** hreflang alternates and canonical only make sense for the home page. */
 const isHome = index && Astro.url.pathname === getRelativeLocaleUrl(lang);
 const canonical = isHome
   ? getAbsoluteLocaleUrl(lang)
   : new URL(Astro.url.pathname, SITE_URL).href;
 
 const ogLocale: Record<string, string> = {
-  en: "en_US",
+  en: "en_AU",
   ja: "ja_JP",
   de: "de_DE",
   nl: "nl_NL",
@@ -42,14 +56,58 @@ const ogLocale: Record<string, string> = {
 };
 const otherLocales = Object.keys(languages).filter((code) => code !== lang);
 
-const personLD = {
+// Upcoming gigs for Event structured data
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const upcomingGigs = index
+  ? (
+      (parseYaml(readFileSync(resolve("config/gigs.yaml"), "utf8")) as
+        GigLD[] | null) ?? []
+    ).filter((g) => new Date(g.date) >= today)
+  : [];
+
+const musicGroupLD = {
   "@context": "https://schema.org",
   "@type": "MusicGroup",
   name: DJ_NAME,
-  genre: ["Happy Hardcore", "UK Hardcore"],
+  description: t("meta.description"),
+  genre: ["Happy Hardcore", "UK Hardcore", "Hardcore"],
   url: SITE_URL,
+  image: ogImage,
+  foundingLocation: {
+    "@type": "Place",
+    name: "Melbourne, Australia",
+  },
   sameAs: SOCIALS.map((s) => s.url),
 };
+
+const eventLD = upcomingGigs.map((g) => ({
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: `${DJ_NAME} at ${g.venue}`,
+  startDate: g.date,
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  location: {
+    "@type": "Place",
+    name: g.venue,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: g.city,
+    },
+  },
+  performer: {
+    "@type": "MusicGroup",
+    name: DJ_NAME,
+    url: SITE_URL,
+  },
+  organizer: {
+    "@type": "MusicGroup",
+    name: DJ_NAME,
+    url: SITE_URL,
+  },
+  ...(g.url ? { url: g.url } : {}),
+}));
 
 const videoLD =
   videos.length > 0
@@ -66,6 +124,7 @@ const videoLD =
             uploadDate: v.published,
             contentUrl: `https://www.youtube.com/watch?v=${v.id}`,
             embedUrl: `https://www.youtube.com/embed/${v.id}`,
+            creator: { "@type": "MusicGroup", name: DJ_NAME, url: SITE_URL },
           },
         })),
       }
@@ -74,9 +133,24 @@ const videoLD =
 
 <title>{title}</title>
 <meta name="description" content={description} />
+<meta name="author" content={DJ_NAME} />
+<meta
+  name="keywords"
+  content="DJ Zwackery, House of Fun, hardcore DJ, happy hardcore, UK hardcore, Melbourne DJ, Twitch DJ, rave"
+/>
 <link rel="canonical" href={canonical} />
 <meta name="theme-color" content="#ff1f8f" />
-{!index && <meta name="robots" content="noindex" />}
+<meta name="color-scheme" content="dark" />
+{
+  index ? (
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+  ) : (
+    <meta name="robots" content="noindex" />
+  )
+}
 
 {
   isHome && (
@@ -103,6 +177,13 @@ const videoLD =
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta
+  property="og:image:alt"
+  content={`${DJ_NAME} — ${SHOW_NAME} · ${t("meta.role")}`}
+/>
 <meta property="og:locale" content={ogLocale[lang]} />
 {
   otherLocales.map((code) => (
@@ -111,9 +192,15 @@ const videoLD =
 }
 
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={TWITTER_HANDLE} />
+<meta name="twitter:creator" content={TWITTER_HANDLE} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
+<meta
+  name="twitter:image:alt"
+  content={`${DJ_NAME} — ${SHOW_NAME} · ${t("meta.role")}`}
+/>
 
 <link rel="preconnect" href="https://i.ytimg.com" />
 <link rel="preconnect" href="https://player.twitch.tv" />
@@ -123,8 +210,13 @@ const videoLD =
 <script
   type="application/ld+json"
   is:inline
-  set:html={JSON.stringify(personLD)}
+  set:html={JSON.stringify(musicGroupLD)}
 />
+{
+  eventLD.map((e) => (
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(e)} />
+  ))
+}
 {
   videoLD && (
     <script
