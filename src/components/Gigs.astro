@@ -8,7 +8,8 @@ const t = useTranslations(Astro.currentLocale);
 
 interface Gig {
   date: string;
-  venue: string;
+  event?: string;
+  venue?: string;
   city: string;
   url?: string;
 }
@@ -47,6 +48,8 @@ function fmt(iso: string) {
       <ul class="gig-list">
         {upcoming.map((g) => {
           const { day, mon } = fmt(g.date);
+          const hasEvent = Boolean(g.event);
+          const hasVenue = Boolean(g.venue);
           return (
             <li class="gig">
               <div class="gig__date">
@@ -54,7 +57,14 @@ function fmt(iso: string) {
                 <span class="gig__mon">{mon}</span>
               </div>
               <div class="gig__info">
-                <span class="gig__venue">{g.venue}</span>
+                {(hasEvent || hasVenue) && (
+                  <span class="gig__venue">
+                    {hasEvent ? g.event : g.venue}
+                    {hasEvent && hasVenue && (
+                      <span class="gig__venue-sub"> • {g.venue}</span>
+                    )}
+                  </span>
+                )}
                 <span class="gig__city">{g.city}</span>
               </div>
               {g.url ? (

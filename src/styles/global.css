@@ -1114,6 +1114,12 @@ h3 {
   font-size: var(--fs-item);
 }
 
+/* subordinate to the event name it trails — same line, lighter weight, dimmed to match .gig__city */
+.gig__venue-sub {
+  font-weight: 400;
+  color: var(--ink-dim);
+}
+
 .gig__city {
   font-family: var(--font-label);
   font-size: var(--fs-small);

@@ -21,7 +21,8 @@ interface VideoLD {
 }
 interface GigLD {
   date: string;
-  venue: string;
+  event?: string;
+  venue?: string;
   city: string;
   url?: string;
 }
@@ -80,33 +81,36 @@ const musicGroupLD = {
   sameAs: SOCIALS.map((s) => s.url),
 };
 
-const eventLD = upcomingGigs.map((g) => ({
-  "@context": "https://schema.org",
-  "@type": "Event",
-  name: `${DJ_NAME} at ${g.venue}`,
-  startDate: g.date,
-  eventStatus: "https://schema.org/EventScheduled",
-  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  location: {
-    "@type": "Place",
-    name: g.venue,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: g.city,
+const eventLD = upcomingGigs.map((g) => {
+  const label = [g.event, g.venue].filter(Boolean).join(" • ") || g.city;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: `${DJ_NAME} at ${label}`,
+    startDate: g.date,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: g.venue ?? g.event ?? g.city,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: g.city,
+      },
     },
-  },
-  performer: {
-    "@type": "MusicGroup",
-    name: DJ_NAME,
-    url: SITE_URL,
-  },
-  organizer: {
-    "@type": "MusicGroup",
-    name: DJ_NAME,
-    url: SITE_URL,
-  },
-  ...(g.url ? { url: g.url } : {}),
-}));
+    performer: {
+      "@type": "MusicGroup",
+      name: DJ_NAME,
+      url: SITE_URL,
+    },
+    organizer: {
+      "@type": "MusicGroup",
+      name: DJ_NAME,
+      url: SITE_URL,
+    },
+    ...(g.url ? { url: g.url } : {}),
+  };
+});
 
 const videoLD =
   videos.length > 0

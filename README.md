@@ -65,8 +65,8 @@ In CI these are provided as a GitHub Actions secret (see `.github/workflows/depl
 This repository is set up for automatic deployments to GitHub Pages. Any push to the `dev`
 branch triggers a build + deploy via
 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). A daily cron job also rebuilds
-the site at 06:00 UTC to refresh build-time data (the YouTube feed and Twitch emotes) even when
-nothing has changed in the repo.
+the site at 01:00 UTC (~noon Melbourne) to refresh build-time data (the YouTube feed and Twitch
+emotes) even when nothing has changed in the repo.
 
 One-time setup:
 
@@ -82,15 +82,24 @@ a flat list:
 
 ```yaml
 - date: "2026-09-26"
-  venue: Hardcore Evolution • Rubix Warehouse
+  event: Hardcore Evolution
+  venue: Rubix Warehouse
   city: Melbourne, AU
   url: https://events.humanitix.com/hardcore-evolution/tickets
 ```
 
 - `date` is ISO `YYYY-MM-DD`. Past dates hide themselves automatically — no cleanup needed.
+- `event` and `venue` are both optional. Whichever is set is shown; if both are set they're shown
+  together as "Event • Venue" (the venue dimmed, subordinate to the event name). Set only one if
+  that's all you know — e.g. a warehouse rave with no fixed venue name yet, or a club night where
+  the venue _is_ the event.
+- `city` is required — it's the only field guaranteed to render.
 - `url` is optional; omit it and the gig shows a "details coming soon" state instead of a ticket link.
 - Entries don't need to be pre-sorted — they're rendered soonest-first.
 - If the list is empty, the whole "catch him in the flesh" section is removed from the site.
+- Upcoming gigs also emit [schema.org `Event`](https://schema.org/Event) JSON-LD for search
+  engines, built from the same `event`/`venue` fallback — see
+  [`src/components/Seo.astro`](src/components/Seo.astro).
 
 ## 🎉 Easter Eggs & Live Preview
 
