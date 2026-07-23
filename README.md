@@ -33,7 +33,7 @@ Install dependencies with npm, then use the following commands:
 | `npm run check`        | Runs format:check, lint, and typecheck together.     |
 
 > [!NOTE]
-> Node is pinned via `.node-version` (v26.4.0). If you use [`fnm`](https://github.com/Schniz/fnm)
+> Node is pinned via `.node-version`. If you use [`fnm`](https://github.com/Schniz/fnm)
 > or `nvm`, run `fnm use` / `nvm use` in the project root first.
 
 ## 🔑 Environment Variables
