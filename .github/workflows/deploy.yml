@@ -22,10 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Restore content cache 💾
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .cache
           # rolling cache: unique key each run, restore the most recent one
@@ -34,7 +34,7 @@ jobs:
             content-cache-
 
       - name: Cache Astro image generation 🖼️
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: node_modules/.astro/assets
           key: astro-images-${{ hashFiles('src/assets/**') }}
@@ -42,13 +42,13 @@ jobs:
             astro-images-
 
       - name: Setup Node 🔧
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: npm
 
       - name: Build Astro 🏗️
-        uses: withastro/action@v3
+        uses: withastro/action@v6
         with:
           package-manager: npm
         env:
@@ -63,4 +63,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages 🚀
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
