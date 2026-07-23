@@ -1614,7 +1614,7 @@ h3 {
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 1.5rem;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
   z-index: 220;
   max-width: 94vw;
   padding: 0.85rem 1.15rem;
