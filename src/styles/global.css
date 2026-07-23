@@ -1660,6 +1660,29 @@ h3 {
 }
 
 /**
+ * LANDSCAPE LIGHTBOX — switch to height-driven sizing so the frame fits
+ * within the reduced vertical space of a rotated phone.
+ */
+@media (orientation: landscape) and (max-height: 500px) {
+  .lightbox {
+    padding: 0.5rem;
+  }
+
+  .lightbox__frame {
+    height: calc(100svh - 1rem);
+    width: auto;
+    max-width: 100%;
+    box-shadow: 4px 4px 0 var(--magenta);
+  }
+
+  .lightbox__close {
+    inset-block-start: 0.5rem;
+    inset-inline-end: 0.5rem;
+    padding: 0.35rem 0.65rem;
+  }
+}
+
+/**
  * REDUCED MOTION
  */
 @media (prefers-reduced-motion: reduce) {
