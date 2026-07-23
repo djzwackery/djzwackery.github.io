@@ -71,7 +71,8 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
-  overflow-x: hidden;
+  overflow-x: hidden; /* fallback */
+  overflow-x: clip; /* clip without creating a scroll container; fixes position:fixed jank on iOS */
 }
 
 /**
@@ -1621,6 +1622,10 @@ h3 {
   .hero__fan {
     width: min(100%, 440px);
     margin: 0.5rem auto 0;
+  }
+
+  .emote {
+    filter: none;
   }
 
   .bg-scrim {

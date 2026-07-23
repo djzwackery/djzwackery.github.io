@@ -26,6 +26,7 @@ const html = document.documentElement;
 const reduceMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)",
 ).matches;
+const isMobile = window.matchMedia("(max-width: 640px)").matches;
 const parents = TWITCH_PARENTS.map((p) => `parent=${p}`).join("&");
 
 /**
@@ -353,9 +354,16 @@ const emoteRain = (() => {
     await loadEmotes();
     const tick = () => {
       if (!running) return;
-      const burst = reduceMotion ? 1 : 2 + Math.floor(Math.random() * 3);
+      const burst = reduceMotion
+        ? 1
+        : isMobile
+          ? 1
+          : 2 + Math.floor(Math.random() * 3);
       for (let i = 0; i < burst; i++) spawnOne();
-      spawnTimer = window.setTimeout(tick, reduceMotion ? 1600 : 380);
+      spawnTimer = window.setTimeout(
+        tick,
+        reduceMotion ? 1600 : isMobile ? 900 : 380,
+      );
     };
     tick();
   }
@@ -389,7 +397,7 @@ function setLive(live: boolean) {
   html.dataset.live = String(live);
 
   const bg = document.querySelector<HTMLVideoElement>("[data-bg-video]");
-  if (bg) bg.playbackRate = live ? 1.5 : 1;
+  if (bg && !isMobile) bg.playbackRate = live ? 1.5 : 1;
 
   if (live) {
     mountStage();
