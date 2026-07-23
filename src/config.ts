@@ -101,8 +101,8 @@ export const SOCIALS: Social[] = [
 
 /**
  * Twitch CDN URL for an emote id (works for both his channel's `emotesv2_…`
- * ids and classic numeric ids). His channel emotes live in
- * src/data/twitch-emotes.json, refreshed by scripts/fetch-twitch-emotes.mjs.
+ * ids and classic numeric ids). His channel emotes are fetched at build time
+ * by src/lib/twitch-emotes.ts (see that file for the caching/fallback story).
  */
 export const twitchEmoteUrl = (
   id: string | number,

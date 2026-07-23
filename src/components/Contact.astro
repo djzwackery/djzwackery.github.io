@@ -12,14 +12,23 @@ const reasons = [
 ];
 ---
 
-<section class="section wrap contact" id="contact" aria-labelledby="contact-head">
+<section
+  class="section wrap contact"
+  id="contact"
+  aria-labelledby="contact-head"
+>
   <div class="contact__grid">
     <div class="contact__pitch">
       <p class="hero__kicker">{t("contact.kicker")}</p>
-      <h2 class="screamer" id="contact-head" set:html={highlight(t("contact.heading"))} />
+      <h2
+        class="screamer"
+        id="contact-head"
+        set:html={highlight(t("contact.heading"))}
+      />
       <p class="contact__blurb">{t("contact.blurb")}</p>
       <p class="contact__direct">
-        {t("contact.orEmail")} <a href={`mailto:${BOOKING_EMAIL}`}>{BOOKING_EMAIL}</a>
+        {t("contact.orEmail")}
+        <a href={`mailto:${BOOKING_EMAIL}`}>{BOOKING_EMAIL}</a>
       </p>
     </div>
 
@@ -34,18 +43,40 @@ const reasons = [
       data-msg-failed={t("contact.failed", { email: BOOKING_EMAIL })}
     >
       <input type="hidden" name="access_key" value={CONTACT_ACCESS_KEY} />
-      <input type="hidden" name="subject" value={`New message from djzwackery.com`} />
+      <input
+        type="hidden"
+        name="subject"
+        value={`New message from djzwackery.com`}
+      />
       <input type="hidden" name="from_name" value={DJ_NAME} />
-      <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+      <input
+        type="checkbox"
+        name="botcheck"
+        class="visually-hidden"
+        tabindex="-1"
+        autocomplete="off"
+      />
 
       <div class="contact__row">
         <label class="field">
           <span>{t("contact.name")}</span>
-          <input type="text" name="name" required autocomplete="name" placeholder={t("contact.namePlaceholder")} />
+          <input
+            type="text"
+            name="name"
+            required
+            autocomplete="name"
+            placeholder={t("contact.namePlaceholder")}
+          />
         </label>
         <label class="field">
           <span>{t("contact.email")}</span>
-          <input type="email" name="email" required autocomplete="email" placeholder="you@email.com" />
+          <input
+            type="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="you@email.com"
+          />
         </label>
       </div>
 
@@ -58,11 +89,23 @@ const reasons = [
 
       <label class="field">
         <span>{t("contact.message")}</span>
-        <textarea name="message" required rows="4" placeholder={t("contact.messagePlaceholder")}></textarea>
+        <textarea
+          name="message"
+          required
+          rows="4"
+          placeholder={t("contact.messagePlaceholder")}></textarea>
       </label>
 
-      <button type="submit" class="btn btn--acid contact__submit">{t("contact.send")}</button>
-      <p class="contact__status" data-contact-status role="status" aria-live="polite"></p>
+      <button type="submit" class="btn btn--acid contact__submit"
+        >{t("contact.send")}</button
+      >
+      <p
+        class="contact__status"
+        data-contact-status
+        role="status"
+        aria-live="polite"
+      >
+      </p>
       {!configured && <p class="contact__note">{t("contact.note")}</p>}
     </form>
   </div>

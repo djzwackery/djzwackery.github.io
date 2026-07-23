@@ -25,7 +25,7 @@ const lang = getLang(Astro.currentLocale);
 
 const title = titleOverride ?? `${DJ_NAME} · ${SHOW_NAME} · ${t("meta.role")}`;
 const description = t("meta.description");
-const ogImage = new URL("/og.jpg", SITE_URL).href;
+const ogImage = new URL("/og.png", SITE_URL).href;
 
 /** hreflang alternates and canonical only make sense for the home page. */
 const isHome = index && Astro.url.pathname === getRelativeLocaleUrl(lang);
@@ -82,9 +82,17 @@ const videoLD =
   isHome && (
     <>
       {Object.keys(languages).map((code) => (
-        <link rel="alternate" hreflang={code} href={getAbsoluteLocaleUrl(code)} />
+        <link
+          rel="alternate"
+          hreflang={code}
+          href={getAbsoluteLocaleUrl(code)}
+        />
       ))}
-      <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl("en")} />
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={getAbsoluteLocaleUrl("en")}
+      />
     </>
   )
 }
@@ -96,7 +104,11 @@ const videoLD =
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:locale" content={ogLocale[lang]} />
-{otherLocales.map((code) => <meta property="og:locale:alternate" content={ogLocale[code]} />)}
+{
+  otherLocales.map((code) => (
+    <meta property="og:locale:alternate" content={ogLocale[code]} />
+  ))
+}
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
@@ -108,5 +120,17 @@ const videoLD =
 <link rel="preconnect" href="https://7tv.io" />
 <link rel="dns-prefetch" href="https://cdn.7tv.app" />
 
-<script type="application/ld+json" is:inline set:html={JSON.stringify(personLD)} />
-{videoLD && <script type="application/ld+json" is:inline set:html={JSON.stringify(videoLD)} />}
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(personLD)}
+/>
+{
+  videoLD && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(videoLD)}
+    />
+  )
+}

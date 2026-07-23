@@ -1,78 +1,109 @@
-# DJ Zwackery — djzwackery.com
+# DJ Zwackery — djzwackery.com 🎉
 
-The official site for **DJ Zwackery**, happy hardcore / UK hardcore DJ. Built with
-[Astro](https://astro.build) (no UI framework), statically hosted on GitHub Pages.
+<img align="right" width="220" height="auto" src="./src/assets/logo.svg" alt="DJ Zwackery">
 
-## What it does
+The official site for **DJ Zwackery**, happy hardcore DJ. Built with
+[Astro](https://astro.build/), statically hosted on GitHub Pages at
+[https://djzwackery.com](https://djzwackery.com).
 
 - **Video wall** of his latest YouTube uploads — click any set to play it in an inline
   lightbox (loaded on demand, so nothing embeds until you click).
 - **Real-time Twitch takeover** — a hidden Twitch embed watches for his stream going live.
   When he does, the layout switches to the stream + chat, the wordmark lights up `● LIVE`,
-  and **his real 7TV channel emotes rain down the page**. It all reverses when he goes offline.
-- **Social links** — YouTube, Twitch, Discord, Instagram, TikTok (edit `src/config.ts`).
-- Fast + SEO-friendly: no framework JS, one small inlined script, optimised images,
+  and his real 7TV channel emotes rain down the page. It all reverses when he goes offline.
+- **Social links** — YouTube, Twitch, Discord, Instagram, X (edit `src/config.ts`).
+- Fast + SEO-friendly: no framework JS beyond one small inlined script, optimised images,
   self-hosted fonts, sitemap, canonical URLs, OpenGraph/Twitter cards, and JSON-LD.
 
-## Previewing the live state
+## 🚀 Getting Started
 
-The Twitch takeover only triggers when he's actually streaming. To preview it any time,
-add `?live` to the URL (e.g. `http://localhost:4321/?live`) — this forces the live layout,
-mounts the stream + chat, and starts the emote rain. `?live=0` forces offline; no param
-uses real detection.
+Install dependencies with npm, then use the following commands:
 
-## Editing content
+| Command                | Description                                          |
+| ---------------------- | ---------------------------------------------------- |
+| `npm install`          | Installs dependencies.                               |
+| `npm run dev`          | Runs the application locally at `localhost:4321`.    |
+| `npm run build`        | Prepares the code for production (outputs `dist/`).  |
+| `npm run preview`      | Serves the production build (use this to check CWV). |
+| `npm run format`       | Formats the code with Prettier.                      |
+| `npm run format:check` | Checks formatting without writing changes.           |
+| `npm run lint`         | Lints the code with ESLint.                          |
+| `npm run lint:fix`     | Lints and auto-fixes what it can.                    |
+| `npm run typecheck`    | Type-checks with `astro check`.                      |
+| `npm run check`        | Runs format:check, lint, and typecheck together.     |
 
-Almost everything lives in [`src/config.ts`](src/config.ts): name, tagline, bio, marquee words,
-social URLs, YouTube channel id, the Twitch login/user id, the Ko-fi link, and the gig list.
-The video list is generated from `src/data/youtube.json` (see below).
+> [!NOTE]
+> Node is pinned via `.node-version` (v26.4.0). If you use [`fnm`](https://github.com/Schniz/fnm)
+> or `nvm`, run `fnm use` / `nvm use` in the project root first.
 
-**Gigs:** edit [`config/gigs.yaml`](config/gigs.yaml) (date, venue, city, optional ticket url).
-Past dates hide themselves; if the list is empty the gigs section is removed entirely.
+## 🔑 Environment Variables
 
-## How content refreshes (no backend, never fetched in the browser)
+Optional build-time API keys, provided as environment variables. Copy `.env.example` to `.env`
+and fill in the values to enable them locally — everything is fetched at **build time only**,
+there are no client-side API calls, and the site still builds without any of them (the video
+wall just falls back to a cached feed, or is empty if no cache exists yet).
 
-The video list and emotes are **baked into the build** from JSON committed in `src/data/`, so
-the browser never talks to the YouTube/Twitch APIs and no key is ever shipped to the client.
-That JSON is refreshed by scheduled GitHub Actions jobs:
+In CI these are provided as a GitHub Actions secret (see `.github/workflows/deploy.yml`).
 
-- **`.github/workflows/refresh-feed.yml`** runs daily and:
-  - runs `scripts/fetch-youtube.mjs` (needs the `YOUTUBE_API_KEY` secret) → `src/data/youtube.json`
-  - runs `scripts/fetch-twitch-emotes.mjs` (public Twitch GraphQL, no secret) → `src/data/twitch-emotes.json`
-  - commits any changes to `dev`, which triggers the deploy.
-- **`.github/workflows/deploy.yml`** builds and publishes to GitHub Pages on every push to `dev`.
-  The build only reads the committed JSON (deterministic, no API calls at deploy time).
+| Variable              | Required | Description                                                                |
+| --------------------- | -------- | -------------------------------------------------------------------------- |
+| `YOUTUBE_API_KEY`     | No       | YouTube Data API v3 key. Powers the video wall of his latest uploads.      |
+| `YOUTUBE_CHANNEL_ID`  | No       | Overrides which channel the feed is pulled from (defaults to his channel). |
+| `YOUTUBE_MAX_RESULTS` | No       | Overrides how many videos are fetched (defaults to `12`).                  |
 
-The emote rain also loads his 7TV emotes live in the browser as an enhancement, falling back to
-the committed Twitch emotes / a curated emoji set if unreachable.
+> [!NOTE]
+> His real Twitch channel emotes (for the live emote rain) are fetched at build time too, via
+> Twitch's public GraphQL endpoint — no key or secret needed.
 
-### Refreshing locally
+> [!TIP]
+> The booking form isn't an env var: create a free form at [web3forms.com](https://web3forms.com)
+> and paste the access key into `CONTACT_ACCESS_KEY` in [`src/config.ts`](src/config.ts). Until
+> then it falls back to a `mailto:` link to `BOOKING_EMAIL`.
 
-Copy [`.env.example`](.env.example) to `.env`, add your YouTube Data API v3 key, then:
+## 🚢 Deploying
 
-```sh
-npm run refresh        # fetch YouTube + Twitch emotes into src/data
-npm run fetch:youtube  # just the YouTube feed
+This repository is set up for automatic deployments to GitHub Pages. Any push to the `dev`
+branch triggers a build + deploy via
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). A daily cron job also rebuilds
+the site at 06:00 UTC to refresh build-time data (the YouTube feed and Twitch emotes) even when
+nothing has changed in the repo.
+
+One-time setup:
+
+1. Add a repo secret `YOUTUBE_API_KEY` (enable "YouTube Data API v3" in Google Cloud and create a key).
+2. **Settings → Pages → Source = "GitHub Actions"**.
+3. The custom domain is set via [`public/CNAME`](public/CNAME) (`djzwackery.com`). The Twitch
+   embed's allowed `parent` domains are in `TWITCH_PARENTS` in [`src/config.ts`](src/config.ts).
+
+## 🎤 Adding a Gig
+
+Gigs live in [`config/gigs.yaml`](config/gigs.yaml) — there's no CMS or content collection, just
+a flat list:
+
+```yaml
+- date: "2026-09-26"
+  venue: Hardcore Evolution • Rubix Warehouse
+  city: Melbourne, AU
+  url: https://events.humanitix.com/hardcore-evolution/tickets
 ```
 
-With no key set, the scripts skip and keep the committed cache, so builds still work.
+- `date` is ISO `YYYY-MM-DD`. Past dates hide themselves automatically — no cleanup needed.
+- `url` is optional; omit it and the gig shows a "details coming soon" state instead of a ticket link.
+- Entries don't need to be pre-sorted — they're rendered soonest-first.
+- If the list is empty, the whole "catch him in the flesh" section is removed from the site.
 
-### One-time setup
+## 🎉 Easter Eggs & Live Preview
 
-1. Add a repo secret `YOUTUBE_API_KEY` (YouTube Data API v3 key — enable "YouTube Data API v3"
-   in Google Cloud and create a key).
-2. **Settings → Pages → Source = "GitHub Actions"**.
-3. The custom domain is set via [`public/CNAME`](public/CNAME) (`djzwackery.com`). The
-   Twitch embed's allowed `parent` domains are in `TWITCH_PARENTS` in `src/config.ts`.
-4. **Booking form:** create a free form at [web3forms.com](https://web3forms.com) and paste
-   the access key into `CONTACT_ACCESS_KEY` in `src/config.ts`. Until then the form falls
-   back to a `mailto:` to `BOOKING_EMAIL`.
+| Effect               | Trigger                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------- |
+| Live Twitch takeover | He goes live — the layout switches to stream + chat and his real emotes rain down. |
 
-## 🧞 Commands
+> [!TIP]
+> Force-preview the live takeover with `?live` (e.g. `http://localhost:4321/?live`) — `?live=0`
+> forces offline, no param uses real detection. Both effects respect `prefers-reduced-motion`.
 
-| Command           | Action                                     |
-| :---------------- | :----------------------------------------- |
-| `npm install`     | Install dependencies                       |
-| `npm run dev`     | Start local dev server at `localhost:4321` |
-| `npm run build`   | Build the production site to `./dist/`     |
-| `npm run preview` | Preview the production build locally       |
+## 📚 Additional Resources
+
+| Resource               | Description                                                               |
+| ---------------------- | ------------------------------------------------------------------------- |
+| [AGENTS.md](AGENTS.md) | Agent instructions, conventions and gotchas for working in this codebase. |

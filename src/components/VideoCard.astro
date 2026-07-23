@@ -26,10 +26,23 @@ const date = new Date(published).toLocaleDateString(dateLocale, {
   aria-label={`${t("videos.play")}: ${title}`}
 >
   <span class="card__thumb">
-    <img src={thumb} alt="" width="480" height="360" loading="lazy" decoding="async" />
+    <img
+      src={thumb}
+      alt=""
+      width="480"
+      height="360"
+      loading="lazy"
+      decoding="async"
+    />
     <span class="card__play" aria-hidden="true">
       <svg viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="46" fill="#ff1f8f" stroke="#0a0410" stroke-width="5"></circle>
+        <circle
+          cx="50"
+          cy="50"
+          r="46"
+          fill="#ff1f8f"
+          stroke="#0a0410"
+          stroke-width="5"></circle>
         <path d="M42 33 L72 50 L42 67 Z" fill="#0a0410"></path>
       </svg>
     </span>

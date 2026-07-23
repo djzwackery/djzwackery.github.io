@@ -13,7 +13,11 @@ const facts = ["Melbourne, AU", "Hardcore", "170+ BPM", "House of Fun"];
 
 <section class="section wrap about" id="about" aria-labelledby="about-head">
   <div class="section__head">
-    <h2 class="screamer" id="about-head" set:html={highlight(t("about.heading"))} />
+    <h2
+      class="screamer"
+      id="about-head"
+      set:html={highlight(t("about.heading"))}
+    />
   </div>
 
   <div class="about__grid">
@@ -26,7 +30,13 @@ const facts = ["Melbourne, AU", "Hardcore", "170+ BPM", "House of Fun"];
     </div>
 
     <div class="about__mascot" aria-hidden="true">
-      <Image src={pose} alt="" widths={[320, 480, 640]} sizes="360px" loading="lazy" />
+      <Image
+        src={pose}
+        alt=""
+        widths={[320, 480, 640]}
+        sizes="360px"
+        loading="lazy"
+      />
     </div>
   </div>
 </section>

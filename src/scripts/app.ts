@@ -14,14 +14,18 @@ import {
  */
 const channelEmotes: { id: string; name: string }[] = (() => {
   try {
-    return JSON.parse(document.querySelector("[data-channel-emotes]")?.textContent || "[]");
+    return JSON.parse(
+      document.querySelector("[data-channel-emotes]")?.textContent || "[]",
+    );
   } catch {
     return [];
   }
 })();
 
 const html = document.documentElement;
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduceMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)",
+).matches;
 const parents = TWITCH_PARENTS.map((p) => `parent=${p}`).join("&");
 
 /**
@@ -93,13 +97,15 @@ document.addEventListener("touchstart", () => {}, { passive: true });
    * on, intercept a plain click and open the inline player instead; modifier
    * and middle clicks still open YouTube in a new tab.
    */
-  document.querySelectorAll<HTMLAnchorElement>("[data-video-id]").forEach((card) => {
-    card.addEventListener("click", (e) => {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-      e.preventDefault();
-      open(card.dataset.videoId!);
+  document
+    .querySelectorAll<HTMLAnchorElement>("[data-video-id]")
+    .forEach((card) => {
+      card.addEventListener("click", (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        e.preventDefault();
+        open(card.dataset.videoId!);
+      });
     });
-  });
   closeBtn.addEventListener("click", close);
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) close();
@@ -175,7 +181,8 @@ document.addEventListener("touchstart", () => {}, { passive: true });
       form.reset();
     } catch {
       status.dataset.state = "err";
-      status.textContent = form.dataset.msgFailed ?? `Couldn't send. Email ${email} instead.`;
+      status.textContent =
+        form.dataset.msgFailed ?? `Couldn't send. Email ${email} instead.`;
     } finally {
       btn.disabled = false;
     }
@@ -199,15 +206,19 @@ const emoteRain = (() => {
      * His actual Twitch channel (subscriber) emotes, baked in at build time.
      */
     const twitch = channelEmotes.map((e) => twitchEmoteUrl(e.id));
-    let sevenTv: string[] = [];
+    let sevenTv: string[];
     try {
-      const res = await fetch(`https://7tv.io/v3/users/twitch/${TWITCH_USER_ID}`);
+      const res = await fetch(
+        `https://7tv.io/v3/users/twitch/${TWITCH_USER_ID}`,
+      );
       if (!res.ok) throw new Error(String(res.status));
-      const data = await res.json();
-      const emotes = data?.emote_set?.emotes ?? [];
+      const data = (await res.json()) as {
+        emote_set?: { emotes?: { id: string }[] };
+      };
+      const emotes = data.emote_set?.emotes ?? [];
       sevenTv = emotes
         .slice(0, 40)
-        .map((e: any) => `https://cdn.7tv.app/emote/${e.id}/2x.webp`);
+        .map((e) => `https://cdn.7tv.app/emote/${e.id}/2x.webp`);
     } catch {
       sevenTv = [];
     }
@@ -331,6 +342,27 @@ function setLive(live: boolean) {
 }
 
 /**
+ * Minimal shape of the `Twitch` global the embed player script (see
+ * `loadTwitch` below) attaches to `window` — there's no official types
+ * package for it.
+ */
+interface TwitchEmbedGlobal {
+  Player: {
+    new (
+      elementId: string,
+      options: Record<string, unknown>,
+    ): { addEventListener(event: string, cb: () => void): void };
+    ONLINE: string;
+    OFFLINE: string;
+  };
+}
+declare global {
+  interface Window {
+    Twitch?: TwitchEmbedGlobal;
+  }
+}
+
+/**
  * 6. DETECTION - a hidden Twitch embed's ONLINE/OFFLINE events. Client-side,
  * no secrets, works on static hosting.
  */
@@ -344,7 +376,8 @@ function initTwitch() {
     "position:fixed;width:1px;height:1px;left:-10px;top:-10px;opacity:0;pointer-events:none;";
   document.body.appendChild(probe);
 
-  const Twitch = (window as any).Twitch;
+  const Twitch = window.Twitch;
+  if (!Twitch) return;
   const player = new Twitch.Player("twitch-probe", {
     channel: TWITCH_LOGIN,
     width: 1,
@@ -464,7 +497,10 @@ function initTwitch() {
             offset: 0.4,
             easing: "cubic-bezier(.5,0,.7,.6)",
           },
-          { transform: `translate(${dx}px, ${rise + fall}px) rotate(${spin}deg)`, opacity: 0 },
+          {
+            transform: `translate(${dx}px, ${rise + fall}px) rotate(${spin}deg)`,
+            opacity: 0,
+          },
         ],
         { duration: dur, fill: "forwards" },
       );
@@ -479,8 +515,16 @@ function initTwitch() {
    * Konami code also sets it off, for the truly dedicated.
    */
   const seq = [
-    "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
-    "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a",
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a",
   ];
   let idx = 0;
   window.addEventListener("keydown", (e) => {

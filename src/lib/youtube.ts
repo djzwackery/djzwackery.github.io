@@ -19,14 +19,33 @@ export interface Video {
   published: string;
 }
 
-const CACHE_PATH = fileURLToPath(new URL("../../.cache/youtube.json", import.meta.url));
+/** Shape of the fields we read from a YouTube Data API v3 search result item. */
+interface YouTubeSearchItem {
+  id?: { kind?: string; videoId?: string };
+  snippet?: {
+    title?: string;
+    thumbnails?: { high?: { url?: string } };
+    publishedAt?: string;
+  };
+}
+
+interface YouTubeSearchResponse {
+  items?: YouTubeSearchItem[];
+  error?: { message?: string };
+}
+
+const CACHE_PATH = fileURLToPath(
+  new URL("../../.cache/youtube.json", import.meta.url),
+);
 const API_KEY = import.meta.env.YOUTUBE_API_KEY ?? process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID =
   import.meta.env.YOUTUBE_CHANNEL_ID ??
   process.env.YOUTUBE_CHANNEL_ID ??
   "UCLIVVSFSj9kbYUJzGYIjiUg";
 const MAX_RESULTS =
-  import.meta.env.YOUTUBE_MAX_RESULTS ?? process.env.YOUTUBE_MAX_RESULTS ?? "12";
+  import.meta.env.YOUTUBE_MAX_RESULTS ??
+  process.env.YOUTUBE_MAX_RESULTS ??
+  "12";
 
 /** Fetch once per build, no matter how many pages ask for the feed. */
 let memo: Promise<Video[]> | null = null;
@@ -42,11 +61,13 @@ function decode(s: string): string {
 }
 
 /** Reduce the raw search response to the fields the site actually renders. */
-function normalize(json: any): Video[] {
-  return (json?.items ?? [])
-    .filter((it: any) => it?.id?.kind === "youtube#video" && it?.id?.videoId)
-    .map((it: any) => ({
-      id: it.id.videoId as string,
+function normalize(json: YouTubeSearchResponse): Video[] {
+  return (json.items ?? [])
+    .filter((it): it is YouTubeSearchItem & { id: { videoId: string } } =>
+      Boolean(it.id?.kind === "youtube#video" && it.id?.videoId),
+    )
+    .map((it) => ({
+      id: it.id.videoId,
       title: decode(it.snippet?.title ?? "Untitled set"),
       thumb:
         it.snippet?.thumbnails?.high?.url ??
@@ -75,7 +96,9 @@ async function writeCache(videos: Video[]): Promise<void> {
 async function load(): Promise<Video[]> {
   if (!API_KEY) {
     const cached = await readCache();
-    console.warn(`[youtube] No API key set — ${cached ? "using cached feed" : "feed will be empty"}.`);
+    console.warn(
+      `[youtube] No API key set — ${cached ? "using cached feed" : "feed will be empty"}.`,
+    );
     return cached ?? [];
   }
 
@@ -91,8 +114,8 @@ async function load(): Promise<Video[]> {
         maxResults: String(MAX_RESULTS),
       });
     const res = await fetch(url);
-    const json = await res.json();
-    if (!res.ok) throw new Error(json?.error?.message ?? `HTTP ${res.status}`);
+    const json = (await res.json()) as YouTubeSearchResponse;
+    if (!res.ok) throw new Error(json.error?.message ?? `HTTP ${res.status}`);
     const videos = normalize(json);
     if (videos.length === 0) throw new Error("no videos returned");
     await writeCache(videos);

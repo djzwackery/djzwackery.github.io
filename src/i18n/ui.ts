@@ -224,7 +224,8 @@ export const ui = {
     "contact.send": "Nachricht senden",
     "contact.sending": "Wird gesendet…",
     "contact.sent": "Gesendet! Zwackery meldet sich. 🙌",
-    "contact.failed": "Konnte nicht gesendet werden. Schreib stattdessen an {email}.",
+    "contact.failed":
+      "Konnte nicht gesendet werden. Schreib stattdessen an {email}.",
     "contact.note":
       "Hinweis: Trage deinen Web3Forms-Zugangsschlüssel in src/config.ts ein, um diese zu erhalten.",
 

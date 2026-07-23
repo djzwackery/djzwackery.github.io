@@ -23,7 +23,9 @@ const t = useTranslations(Astro.currentLocale);
             hreflang={code}
             aria-current={code === current ? "true" : undefined}
           >
-            <span class="langs__flag" aria-hidden="true">{flags[code as keyof typeof flags]}</span>
+            <span class="langs__flag" aria-hidden="true">
+              {flags[code as keyof typeof flags]}
+            </span>
             <span>{label}</span>
           </a>
         </li>

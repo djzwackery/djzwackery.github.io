@@ -38,7 +38,11 @@ function fmt(iso: string) {
   upcoming.length > 0 && (
     <section class="section wrap gigs" id="gigs" aria-labelledby="gigs-head">
       <div class="section__head">
-        <h2 class="screamer" id="gigs-head" set:html={highlight(t("gigs.heading"))} />
+        <h2
+          class="screamer"
+          id="gigs-head"
+          set:html={highlight(t("gigs.heading"))}
+        />
       </div>
 
       <ul class="gig-list">
@@ -55,7 +59,12 @@ function fmt(iso: string) {
                 <span class="gig__city">{g.city}</span>
               </div>
               {g.url ? (
-                <a class="btn btn--magenta gig__cta" href={g.url} target="_blank" rel="noopener">
+                <a
+                  class="btn btn--magenta gig__cta"
+                  href={g.url}
+                  target="_blank"
+                  rel="noopener"
+                >
                   {t("gigs.details")}
                 </a>
               ) : (

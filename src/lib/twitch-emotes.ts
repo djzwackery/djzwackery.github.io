@@ -17,6 +17,15 @@ export interface ChannelEmote {
   name: string;
 }
 
+/** Shape of the fields we read from Twitch's public GraphQL response. */
+interface TwitchGqlResponse {
+  data?: {
+    user?: {
+      subscriptionProducts?: { emotes?: { id: string; token: string }[] }[];
+    };
+  };
+}
+
 const CACHE_PATH = fileURLToPath(
   new URL("../../.cache/twitch-emotes.json", import.meta.url),
 );
@@ -53,10 +62,10 @@ async function load(): Promise<ChannelEmote[]> {
       }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    const emotes: ChannelEmote[] = (json?.data?.user?.subscriptionProducts ?? [])
-      .flatMap((p: any) => p.emotes ?? [])
-      .map((e: any) => ({ id: e.id, name: e.token }));
+    const json = (await res.json()) as TwitchGqlResponse;
+    const emotes: ChannelEmote[] = (json.data?.user?.subscriptionProducts ?? [])
+      .flatMap((p) => p.emotes ?? [])
+      .map((e) => ({ id: e.id, name: e.token }));
     if (emotes.length === 0) throw new Error("no emotes returned");
     await writeCache(emotes);
     console.log(`[twitch] Fetched ${emotes.length} channel emotes.`);

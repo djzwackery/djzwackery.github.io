@@ -5,7 +5,12 @@ import { MARQUEE_WORDS, MARQUEE_WORDS_LIVE } from "../config";
  * The word lists are duplicated inline so the -50% keyframe loops seamlessly.
  */
 const words = [...MARQUEE_WORDS, ...MARQUEE_WORDS];
-const liveWords = [...MARQUEE_WORDS_LIVE, ...MARQUEE_WORDS_LIVE, ...MARQUEE_WORDS_LIVE, ...MARQUEE_WORDS_LIVE];
+const liveWords = [
+  ...MARQUEE_WORDS_LIVE,
+  ...MARQUEE_WORDS_LIVE,
+  ...MARQUEE_WORDS_LIVE,
+  ...MARQUEE_WORDS_LIVE,
+];
 ---
 
 <div class="marquee" aria-hidden="true">

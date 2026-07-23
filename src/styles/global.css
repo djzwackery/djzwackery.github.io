@@ -95,10 +95,18 @@ body {
    * dark enough to read text on, warmer toward the hero side; faint dayglo dot grid
    */
   background:
-    linear-gradient(90deg, rgba(9, 3, 15, 0.92) 0%, rgba(9, 3, 15, 0.66) 55%, rgba(9, 3, 15, 0.8) 100%),
+    linear-gradient(
+      90deg,
+      rgba(9, 3, 15, 0.92) 0%,
+      rgba(9, 3, 15, 0.66) 55%,
+      rgba(9, 3, 15, 0.8) 100%
+    ),
     linear-gradient(180deg, rgba(9, 3, 15, 0.5) 0%, rgba(9, 3, 15, 0.62) 100%),
     radial-gradient(rgba(198, 255, 0, 0.05) 1px, transparent 1px);
-  background-size: auto, auto, 26px 26px;
+  background-size:
+    auto,
+    auto,
+    26px 26px;
 }
 [data-live="true"] .bg-scrim {
   /**
@@ -107,7 +115,9 @@ body {
   background:
     linear-gradient(180deg, rgba(9, 3, 15, 0.68) 0%, rgba(9, 3, 15, 0.82) 100%),
     radial-gradient(rgba(198, 255, 0, 0.05) 1px, transparent 1px);
-  background-size: auto, 26px 26px;
+  background-size:
+    auto,
+    26px 26px;
 }
 
 a {
@@ -314,7 +324,9 @@ h3 {
   background-size: 0% 2px;
   background-position: 0 100%;
   background-repeat: no-repeat;
-  transition: background-size 0.2s ease, color 0.15s ease;
+  transition:
+    background-size 0.2s ease,
+    color 0.15s ease;
 }
 .hero__jump span {
   transition: transform 0.15s ease;
@@ -348,7 +360,9 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
 }
 .btn:hover,
 .btn:focus-visible {
@@ -390,7 +404,9 @@ h3 {
   object-position: 50% 20%;
   border: 5px solid var(--white);
   filter: saturate(1.12) contrast(1.03);
-  transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.2, 1), box-shadow 0.6s ease,
+  transition:
+    transform 0.6s cubic-bezier(0.3, 0.7, 0.2, 1),
+    box-shadow 0.6s ease,
     opacity 0.6s ease;
   transform-origin: center center;
 }
@@ -511,7 +527,9 @@ h3 {
   background: var(--accent);
   border: var(--edge) solid var(--void);
   box-shadow: 6px 6px 0 var(--void);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 .social__chip svg {
   width: 38px;
@@ -561,7 +579,9 @@ h3 {
   padding: 0;
   color: inherit;
   font: inherit;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
   overflow: hidden;
 }
 /**
@@ -640,7 +660,9 @@ h3 {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.24s ease, visibility 0s linear 0.24s;
+  transition:
+    opacity 0.24s ease,
+    visibility 0s linear 0.24s;
 }
 .lightbox.is-open {
   opacity: 1;
@@ -678,7 +700,9 @@ h3 {
   padding: 0.5rem 0.85rem;
   cursor: pointer;
   box-shadow: var(--shadow-hard);
-  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
 }
 .lightbox__close:hover,
 .lightbox__close:focus-visible {
@@ -894,7 +918,9 @@ h3 {
   border: var(--edge) solid var(--void-3);
   padding: 1rem 1.25rem;
   box-shadow: var(--shadow-hard);
-  transition: transform 0.1s ease, border-color 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    border-color 0.1s ease;
 }
 .gig:hover {
   transform: translate(-3px, -3px);
@@ -1026,7 +1052,9 @@ h3 {
   border: 2px solid var(--void-3);
   padding: 0.75rem 0.85rem;
   resize: vertical;
-  transition: border-color 0.15s ease, background-color 0.15s ease,
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
     box-shadow 0.15s ease;
 }
 .field select {
@@ -1035,10 +1063,15 @@ h3 {
   /**
    * dayglo chevron
    */
-  background-image: linear-gradient(45deg, transparent 50%, var(--acid) 50%),
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--acid) 50%),
     linear-gradient(135deg, var(--acid) 50%, transparent 50%);
-  background-position: right 1rem center, right 0.75rem center;
-  background-size: 6px 6px, 6px 6px;
+  background-position:
+    right 1rem center,
+    right 0.75rem center;
+  background-size:
+    6px 6px,
+    6px 6px;
   background-repeat: no-repeat;
   padding-right: 2.25rem;
 }
@@ -1167,7 +1200,9 @@ h3 {
   padding: 0.5rem 0.9rem;
   text-decoration: none;
   box-shadow: 4px 4px 0 var(--void);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 .footer__kofi:hover,
 .footer__kofi:focus-visible {
@@ -1252,7 +1287,9 @@ h3 {
   text-decoration: none;
   font-family: var(--font-label);
   font-weight: 700;
-  transition: background-color 0.12s ease, color 0.12s ease;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
 }
 .langs__opt:hover,
 .langs__opt:focus-visible {
