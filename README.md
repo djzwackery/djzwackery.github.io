@@ -1,6 +1,6 @@
 # DJ Zwackery - djzwackery.com 🎉
 
-<img align="right" width="221" height="auto" src="./src/assets/logo.svg" alt="DJ Zwackery">
+<img align="right" width="220" height="auto" src="./src/assets/logo.svg" alt="DJ Zwackery">
 
 The official site for **DJ Zwackery**, happy hardcore DJ. Built with
 [Astro](https://astro.build/), statically hosted on GitHub Pages at
