@@ -2,6 +2,7 @@
 import { Picture } from "astro:assets";
 import { useTranslations, highlight } from "../i18n";
 import pose from "../assets/zwack-pose.png";
+import poseAlt from "../assets/zwack-pose-2.png";
 
 const t = useTranslations(Astro.currentLocale);
 
@@ -47,15 +48,27 @@ const facts = ["Melbourne, AU", "Hardcore", "150+ BPM", "Twitch Partner"];
       </ul>
     </div>
 
-    <div class="about__mascot" aria-hidden="true">
-      <Picture
-        src={pose}
-        alt=""
-        widths={[200, 320, 480, 640]}
-        sizes="(min-width: 900px) 360px, 200px"
-        formats={["avif", "webp"]}
-        loading="lazy"
-      />
+    <div class="about__mascot" aria-hidden="true" data-mascot>
+      <div class="about__mascot-frame">
+        <Picture
+          class="is-default"
+          src={pose}
+          alt=""
+          widths={[200, 320, 480, 640]}
+          sizes="(min-width: 900px) 360px, 200px"
+          formats={["avif", "webp"]}
+          loading="lazy"
+        />
+        <Picture
+          class="is-alt"
+          src={poseAlt}
+          alt=""
+          widths={[200, 320, 480, 640]}
+          sizes="(min-width: 900px) 360px, 200px"
+          formats={["avif", "webp"]}
+          loading="lazy"
+        />
+      </div>
     </div>
   </div>
 </section>

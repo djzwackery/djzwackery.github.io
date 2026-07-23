@@ -69,15 +69,31 @@ document.addEventListener("touchstart", () => {}, { passive: true });
   if (!lightbox || !frame || !closeBtn) return;
 
   let lastFocused: HTMLElement | null = null;
+  let scrollLockY = 0;
+
+  /** iOS Safari ignores `overflow: hidden` on body while scrolling, so pin it in place instead. */
+  const setScrollLocked = (locked: boolean) => {
+    if (locked) {
+      scrollLockY = window.scrollY;
+      document.body.style.top = `-${scrollLockY}px`;
+      document.body.classList.add("scroll-locked");
+    } else {
+      document.body.classList.remove("scroll-locked");
+      document.body.style.top = "";
+      window.scrollTo({ top: scrollLockY, behavior: "instant" });
+    }
+  };
 
   const open = (id: string) => {
     lastFocused = document.activeElement as HTMLElement;
     frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="YouTube video player" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
     lightbox.classList.add("is-open");
+    setScrollLocked(true);
     closeBtn.focus();
   };
   const close = () => {
     lightbox.classList.remove("is-open");
+    setScrollLocked(false);
     // let the exit transition finish before tearing down the iframe
     setTimeout(() => {
       if (!lightbox.classList.contains("is-open")) frame.innerHTML = "";
@@ -121,7 +137,13 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 const emoteUrls = channelEmotes.map((e) => twitchEmoteUrl(e.id));
 const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
 let partyLayer: HTMLElement | null = null;
-let partyFiring = false;
+/**
+ * Cap concurrent particles instead of cooling down clicks — spamming the
+ * trigger stays instant and responsive, it just tops out at a fixed amount
+ * of stuff on screen rather than compounding forever.
+ */
+const MAX_PARTY_BITS = 260;
+let livePartyBits = 0;
 
 function ensurePartyLayer(): HTMLElement {
   if (!partyLayer) {
@@ -133,14 +155,12 @@ function ensurePartyLayer(): HTMLElement {
 }
 
 function fireParty(originX: number, originY: number) {
-  if (partyFiring) return;
-  partyFiring = true;
-  setTimeout(() => (partyFiring = false), 700);
-
   const box = ensurePartyLayer();
 
   // A flat full-page tint reads as a muddy wash; radial gradient anchored to
-  // the click point gives a real burst effect instead.
+  // the click point gives a real burst effect instead. Re-triggering the
+  // class (with a forced reflow) restarts the flash even mid-animation, so
+  // rapid-fire clicks each still get their own flash instead of being eaten.
   if (!reduceMotion) {
     html.style.setProperty("--party-x", `${originX}px`);
     html.style.setProperty("--party-y", `${originY}px`);
@@ -150,8 +170,13 @@ function fireParty(originX: number, originY: number) {
     setTimeout(() => html.classList.remove("is-partying"), 700);
   }
 
-  const count = reduceMotion ? 14 : 48;
+  const requested = reduceMotion ? 14 : 48;
+  const count = Math.max(
+    0,
+    Math.min(requested, MAX_PARTY_BITS - livePartyBits),
+  );
   for (let i = 0; i < count; i++) {
+    livePartyBits++;
     const p = document.createElement("span");
     p.className = "party__bit";
     const useEmote = emoteUrls.length > 0 && Math.random() < 0.4;
@@ -189,7 +214,10 @@ function fireParty(originX: number, originY: number) {
     if (reduceMotion) {
       p.style.transform = `translate(${dx}px, ${rise}px)`;
       p.style.opacity = "0.9";
-      setTimeout(() => p.remove(), 1200);
+      setTimeout(() => {
+        p.remove();
+        livePartyBits--;
+      }, 1200);
       continue;
     }
 
@@ -216,7 +244,10 @@ function fireParty(originX: number, originY: number) {
       ],
       { duration: dur, fill: "forwards" },
     );
-    anim.onfinish = () => p.remove();
+    anim.onfinish = () => {
+      p.remove();
+      livePartyBits--;
+    };
   }
 }
 
@@ -498,6 +529,20 @@ function initTwitch() {
 })();
 
 /**
+ * About mascot: hover swaps to the back-view pose on desktop (pure CSS).
+ * Touch devices have no persistent :hover to leave, so give them a tap
+ * toggle instead — gated to `hover: none` so a desktop click doesn't latch
+ * the swap on and defeat mouse-leave reverting it.
+ */
+(() => {
+  const mascot = document.querySelector<HTMLElement>("[data-mascot]");
+  if (!mascot || !window.matchMedia("(hover: none)").matches) return;
+  mascot.addEventListener("click", () => {
+    mascot.classList.toggle("is-active");
+  });
+})();
+
+/**
  * Easter egg: clicking the hero wordmark (or entering the Konami code) rains
  * channel emotes and confetti from the logo. Respects reduced motion.
  */
@@ -506,9 +551,8 @@ function initTwitch() {
   if (!trigger) return;
 
   trigger.style.cursor = "pointer";
-  trigger.addEventListener("click", () => {
-    const r = trigger.getBoundingClientRect();
-    fireParty(r.left + r.width / 2, r.top + r.height / 2);
+  trigger.addEventListener("click", (e) => {
+    fireParty(e.clientX, e.clientY);
   });
 
   /** Konami code also sets it off, for the truly dedicated. */
