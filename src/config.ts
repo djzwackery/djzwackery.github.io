@@ -62,6 +62,7 @@ export const TWITTER_HANDLE = "@djzwackery";
 export const TWITCH_PARENTS = [
   "djzwackery.com",
   "www.djzwackery.com",
+  "chooksta69.github.io",
   "localhost",
 ];
 
