@@ -120,6 +120,108 @@ document.addEventListener("touchstart", () => {}, { passive: true });
   }, 3500);
 })();
 
+const emoteUrls = channelEmotes.map((e) => twitchEmoteUrl(e.id));
+const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
+let partyLayer: HTMLElement | null = null;
+let partyFiring = false;
+
+function ensurePartyLayer(): HTMLElement {
+  if (!partyLayer) {
+    partyLayer = document.createElement("div");
+    partyLayer.id = "party";
+    document.body.appendChild(partyLayer);
+  }
+  return partyLayer;
+}
+
+function fireParty(originX: number, originY: number) {
+  if (partyFiring) return;
+  partyFiring = true;
+  setTimeout(() => (partyFiring = false), 700);
+
+  const box = ensurePartyLayer();
+
+  // A flat full-page tint reads as a muddy wash; radial gradient anchored to
+  // the click point gives a real burst effect instead.
+  if (!reduceMotion) {
+    html.style.setProperty("--party-x", `${originX}px`);
+    html.style.setProperty("--party-y", `${originY}px`);
+    html.classList.remove("is-partying");
+    void html.offsetWidth;
+    html.classList.add("is-partying");
+    setTimeout(() => html.classList.remove("is-partying"), 700);
+  }
+
+  const count = reduceMotion ? 14 : 48;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement("span");
+    p.className = "party__bit";
+    const useEmote = emoteUrls.length > 0 && Math.random() < 0.4;
+    if (useEmote) {
+      const size = 24 + Math.random() * 14;
+      const img = document.createElement("img");
+      img.src = emoteUrls[Math.floor(Math.random() * emoteUrls.length)];
+      img.alt = "";
+      img.style.width = `${size}px`;
+      img.style.height = `${size}px`;
+      p.appendChild(img);
+    } else {
+      p.style.width = `${4 + Math.random() * 4}px`;
+      p.style.height = `${10 + Math.random() * 14}px`;
+      p.style.background = confettiColors[i % confettiColors.length];
+      p.style.borderRadius =
+        Math.random() < 0.35 ? "50%" : `${5 + Math.random() * 8}px`;
+    }
+
+    const jitterX = (Math.random() - 0.5) * 32;
+    const jitterY = (Math.random() - 0.5) * 32;
+    p.style.left = `${originX + jitterX}px`;
+    p.style.top = `${originY + jitterY}px`;
+    box.appendChild(p);
+
+    const angle = Math.random() * Math.PI * 2;
+    const power = 90 + Math.random() * 220;
+    const dx = Math.cos(angle) * power;
+    const rise = -Math.abs(Math.sin(angle) * power) - 80;
+    const fall = 220 + Math.random() * 240;
+    const startSpin = (Math.random() - 0.5) * 60;
+    const spin = startSpin + (Math.random() - 0.5) * 720;
+    const dur = 1100 + Math.random() * 700;
+
+    if (reduceMotion) {
+      p.style.transform = `translate(${dx}px, ${rise}px)`;
+      p.style.opacity = "0.9";
+      setTimeout(() => p.remove(), 1200);
+      continue;
+    }
+
+    // Two-phase arc: ease-out launch then ease-in fall keeps motion visible
+    // across the full duration instead of front-loading into the first third.
+    const anim = p.animate(
+      [
+        {
+          transform: `translate(0,0) rotate(${startSpin}deg)`,
+          opacity: 1,
+          offset: 0,
+          easing: "cubic-bezier(.15,.8,.3,1)",
+        },
+        {
+          transform: `translate(${dx * 0.75}px, ${rise}px) rotate(${spin * 0.5}deg)`,
+          opacity: 1,
+          offset: 0.4,
+          easing: "cubic-bezier(.5,0,.7,.6)",
+        },
+        {
+          transform: `translate(${dx}px, ${rise + fall}px) rotate(${spin}deg)`,
+          opacity: 0,
+        },
+      ],
+      { duration: dur, fill: "forwards" },
+    );
+    anim.onfinish = () => p.remove();
+  }
+}
+
 /**
  * Booking form: posts to Web3Forms; falls back to a mailto: link when no API
  * key is configured so the CTA still works. Status strings are localized
@@ -161,6 +263,8 @@ document.addEventListener("touchstart", () => {}, { passive: true });
       status.dataset.state = "ok";
       status.textContent = form.dataset.msgSent ?? "Sent!";
       form.reset();
+      const r = btn.getBoundingClientRect();
+      fireParty(r.left + r.width / 2, r.top + r.height / 2);
     } catch {
       status.dataset.state = "err";
       status.textContent =
@@ -356,113 +460,11 @@ function initTwitch() {
   const trigger = document.querySelector<HTMLElement>("[data-party]");
   if (!trigger) return;
 
-  const emoteUrls = channelEmotes.map((e) => twitchEmoteUrl(e.id));
-  const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
-  let layer: HTMLElement | null = null;
-  let firing = false;
-
-  function ensureLayer(): HTMLElement {
-    if (!layer) {
-      layer = document.createElement("div");
-      layer.id = "party";
-      document.body.appendChild(layer);
-    }
-    return layer;
-  }
-
-  function fire() {
-    if (firing) return;
-    firing = true;
-    setTimeout(() => (firing = false), 700);
-
-    const box = ensureLayer();
-    const r = trigger!.getBoundingClientRect();
-    const originX = r.left + r.width / 2;
-    const originY = r.top + r.height / 2;
-
-    // A flat full-page tint reads as a muddy wash; radial gradient anchored to
-    // the click point gives a real burst effect instead.
-    if (!reduceMotion) {
-      html.style.setProperty("--party-x", `${originX}px`);
-      html.style.setProperty("--party-y", `${originY}px`);
-      html.classList.remove("is-partying");
-      void html.offsetWidth;
-      html.classList.add("is-partying");
-      setTimeout(() => html.classList.remove("is-partying"), 700);
-    }
-
-    const count = reduceMotion ? 14 : 48;
-    for (let i = 0; i < count; i++) {
-      const p = document.createElement("span");
-      p.className = "party__bit";
-      const useEmote = emoteUrls.length > 0 && Math.random() < 0.4;
-      if (useEmote) {
-        const size = 24 + Math.random() * 14;
-        const img = document.createElement("img");
-        img.src = emoteUrls[Math.floor(Math.random() * emoteUrls.length)];
-        img.alt = "";
-        img.style.width = `${size}px`;
-        img.style.height = `${size}px`;
-        p.appendChild(img);
-      } else {
-        p.style.width = `${4 + Math.random() * 4}px`;
-        p.style.height = `${10 + Math.random() * 14}px`;
-        p.style.background = confettiColors[i % confettiColors.length];
-        p.style.borderRadius =
-          Math.random() < 0.35 ? "50%" : `${5 + Math.random() * 8}px`;
-      }
-
-      const jitterX = (Math.random() - 0.5) * 32;
-      const jitterY = (Math.random() - 0.5) * 32;
-      p.style.left = `${originX + jitterX}px`;
-      p.style.top = `${originY + jitterY}px`;
-      box.appendChild(p);
-
-      const angle = Math.random() * Math.PI * 2;
-      const power = 90 + Math.random() * 220;
-      const dx = Math.cos(angle) * power;
-      const rise = -Math.abs(Math.sin(angle) * power) - 80;
-      const fall = 220 + Math.random() * 240;
-      const startSpin = (Math.random() - 0.5) * 60;
-      const spin = startSpin + (Math.random() - 0.5) * 720;
-      const dur = 1100 + Math.random() * 700;
-
-      if (reduceMotion) {
-        p.style.transform = `translate(${dx}px, ${rise}px)`;
-        p.style.opacity = "0.9";
-        setTimeout(() => p.remove(), 1200);
-        continue;
-      }
-
-      // Two-phase arc: ease-out launch then ease-in fall keeps motion visible
-      // across the full duration instead of front-loading into the first third.
-      const anim = p.animate(
-        [
-          {
-            transform: `translate(0,0) rotate(${startSpin}deg)`,
-            opacity: 1,
-            offset: 0,
-            easing: "cubic-bezier(.15,.8,.3,1)",
-          },
-          {
-            transform: `translate(${dx * 0.75}px, ${rise}px) rotate(${spin * 0.5}deg)`,
-            opacity: 1,
-            offset: 0.4,
-            easing: "cubic-bezier(.5,0,.7,.6)",
-          },
-          {
-            transform: `translate(${dx}px, ${rise + fall}px) rotate(${spin}deg)`,
-            opacity: 0,
-          },
-        ],
-        { duration: dur, fill: "forwards" },
-      );
-      anim.onfinish = () => p.remove();
-    }
-  }
-
   trigger.style.cursor = "pointer";
-  trigger.addEventListener("click", fire);
+  trigger.addEventListener("click", () => {
+    const r = trigger.getBoundingClientRect();
+    fireParty(r.left + r.width / 2, r.top + r.height / 2);
+  });
 
   /** Konami code also sets it off, for the truly dedicated. */
   const seq = [
@@ -482,7 +484,8 @@ function initTwitch() {
     idx = e.key.toLowerCase() === seq[idx].toLowerCase() ? idx + 1 : 0;
     if (idx === seq.length) {
       idx = 0;
-      fire();
+      const r = trigger.getBoundingClientRect();
+      fireParty(r.left + r.width / 2, r.top + r.height / 2);
     }
   });
 })();

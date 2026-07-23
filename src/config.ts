@@ -18,13 +18,13 @@ export const MARQUEE_WORDS = [
   "HAPPY HARDCORE",
   "UK HARDCORE",
   "FOLLOW ON TWITCH",
-  ":BIGJIMJIMO:",
+  ":BIGJIM:",
   "DJ ZWACKERY",
   "HOUSE OF FUN",
   "HAPPY HARDCORE",
   "UK HARDCORE",
   "FOLLOW ON TWITCH",
-  ":BIGJIMJIMO:",
+  ":ASKINGFORIT:",
 ];
 
 /** Marquee words shown while he's live on Twitch. */
@@ -46,7 +46,8 @@ export const YOUTUBE_URL = "https://www.youtube.com/@DJZwackery1";
  * form at https://web3forms.com, then paste the access key here. Until then the
  * form falls back to a mailto: link so the CTA still works.
  */
-export const CONTACT_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+export const CONTACT_ACCESS_KEY: string =
+  "e40c1461-cffc-49c1-9a03-16ef69dc4c6f";
 export const BOOKING_EMAIL = "djzwackery@hotmail.com";
 
 /**

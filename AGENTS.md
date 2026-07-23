@@ -1,3 +1,19 @@
+## Comments & JSDoc
+
+Write no comments by default. Add one only when the **why** is non-obvious — a hidden constraint, a workaround for a specific browser bug, a subtle invariant, or behaviour that would surprise a reader. If removing the comment wouldn't confuse a future reader, don't write it.
+
+**JSDoc** (`/** … */`) is for exported functions, types, and interfaces where the signature alone doesn't convey intent. One sentence max unless the behaviour is genuinely complex. Never describe what the code does — only why it does it that way.
+
+**Inline comments** (`//`) are for single non-obvious lines. Keep them to one short line.
+
+**Never write:**
+
+- Section dividers or ASCII banners (`// ─── Party burst ───`)
+- Numbered headers (`// 1. LIGHTBOX`)
+- Descriptions of what the next line does (`// loop over cards`)
+- Stale or speculative notes (`// TODO: fix this later`)
+- Multi-line comment blocks for anything that reads naturally from the code
+
 ## Development
 
 When starting the dev server, use background mode:
@@ -21,6 +37,17 @@ npm run check   # format:check + lint + typecheck
 
 Or individually: `npm run format` (Prettier, `--write`), `npm run lint` / `npm run lint:fix`
 (ESLint, flat config in `eslint.config.js`), `npm run typecheck` (`astro check`).
+
+## English copy
+
+The site's English copy follows **Australian English** conventions:
+
+- Use `-ise` endings: `organise`, `realise`, `customise` — not `-ize`
+- Use `-our`: `colour`, `favour`, `behaviour` — not `-or`
+- Use `-re`: `centre`, `theatre` — not `-er`
+- Use double-L inflections: `travelling`, `fulfilling` — not single-L
+
+The `html lang` attribute and the `localeTags` BCP-47 tag for English are both `en` (not `en-AU`) to stay consistent across all locale identifiers. Australian spelling conventions still apply to all copy under the `en` key in `src/i18n/ui.ts` and any new user-facing English text.
 
 ## Localisation
 

@@ -12,7 +12,6 @@ const t = useTranslations(Astro.currentLocale);
 <section class="stage wrap section" aria-label="Live Twitch stream" data-stage>
   <div class="section__head">
     <h2 class="screamer" set:html={highlight(t("live.heading"))} />
-    <span class="section__count" data-viewers></span>
   </div>
   <div class="stage__grid">
     <div class="stage__player" data-twitch-player></div>

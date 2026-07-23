@@ -97,10 +97,19 @@ a flat list:
 | Effect               | Trigger                                                                            |
 | -------------------- | ---------------------------------------------------------------------------------- |
 | Live Twitch takeover | He goes live — the layout switches to stream + chat and his real emotes rain down. |
+| Confetti burst       | Click the DJ Zwackery logo, or enter the Konami code (↑↑↓↓←→←→BA).                 |
+| Dutch overlay        | Switch the language to NL (Dutch) — a special full-page easter egg activates.      |
+| Contact confetti     | Successfully submit the contact form — confetti bursts from the send button.       |
 
 > [!TIP]
 > Force-preview the live takeover with `?live` (e.g. `http://localhost:4321/?live`) — `?live=0`
 > forces offline, no param uses real detection. Both effects respect `prefers-reduced-motion`.
+
+## ✍️ Copy & Language
+
+The site's English copy follows **Australian English** conventions. Use AU spellings throughout — `organise`, `colour`, `centre`, `travelling`, etc. The `html lang` attribute for English pages is `en` (not `en-AU`) for consistency across locales.
+
+All five locales (`en`, `ja`, `de`, `nl`, `fr`) must be updated together whenever a string changes. See [AGENTS.md](AGENTS.md) for the full conventions.
 
 ## 📚 Additional Resources
 

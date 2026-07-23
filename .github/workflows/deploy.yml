@@ -44,7 +44,7 @@ jobs:
       - name: Build Astro 🏗️
         uses: withastro/action@v3
         with:
-          node-version: 26
+          node-version-file: .node-version
           package-manager: npm
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
