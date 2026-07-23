@@ -34,14 +34,11 @@ const parents = TWITCH_PARENTS.map((p) => `parent=${p}`).join("&");
  */
 document.addEventListener("touchstart", () => {}, { passive: true });
 
-/** 404 page redirects home with ?notfound; show a toast then clean the URL. */
+/** 404 page sets a sessionStorage flag before redirecting; consume it once here. */
 (() => {
-  const params = new URLSearchParams(location.search);
-  if (!params.has("notfound")) return;
+  if (!sessionStorage.getItem("notfound")) return;
+  sessionStorage.removeItem("notfound");
   const toast = document.querySelector<HTMLElement>("[data-toast]");
-  params.delete("notfound");
-  const clean = location.pathname + (params.toString() ? `?${params}` : "");
-  history.replaceState(null, "", clean);
   if (!toast) return;
   requestAnimationFrame(() => toast.classList.add("is-visible"));
   setTimeout(() => toast.classList.remove("is-visible"), 5000);

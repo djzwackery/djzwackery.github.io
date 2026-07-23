@@ -15,10 +15,15 @@ const t = useTranslations(Astro.currentLocale);
     <p class="hero__tagline" style="margin-inline: auto;">
       {t("notFound.blurb")}
     </p>
-    <a class="btn btn--magenta" href="/?notfound">{t("notFound.back")}</a>
+    <a class="btn btn--magenta" href="/">{t("notFound.back")}</a>
   </section>
 
   <script is:inline>
-    location.replace("/?notfound");
+    try {
+      sessionStorage.setItem("notfound", "1");
+    } catch {
+      /* sessionStorage unavailable (private browsing restriction) — toast won't show */
+    }
+    location.replace("/");
   </script>
 </Base>
