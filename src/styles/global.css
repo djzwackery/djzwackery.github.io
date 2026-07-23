@@ -86,6 +86,7 @@ body {
   z-index: -10;
   pointer-events: none;
   transition: opacity 0.6s ease;
+  will-change: transform;
 }
 
 .bg-scrim {
@@ -93,6 +94,7 @@ body {
   inset: 0;
   z-index: -9;
   pointer-events: none;
+  will-change: transform;
   /**
    * dark enough to read text on, warmer toward the hero side; faint dayglo dot grid
    */
@@ -806,6 +808,7 @@ h3 {
   border: var(--edge) solid var(--white);
   box-shadow: 8px 8px 0 var(--acid);
   background: var(--void);
+  will-change: transform;
 }
 
 .stage__player {
@@ -1566,11 +1569,24 @@ h3 {
 }
 
 /**
- * Tablet: stack the live stage (player over chat).
+ * Tablet: stack the live stage (player over chat). Explicit height on the
+ * chat so the iframe's height:100% has a definite value to resolve against
+ * (min-height alone doesn't count as definite for percentage children).
  */
 @media (max-width: 900px) {
   .stage__grid {
     grid-template-columns: 1fr;
+  }
+
+  .stage__chat {
+    height: 420px;
+    min-height: unset;
+  }
+}
+
+@media (max-width: 640px) {
+  .stage__chat {
+    height: 320px;
   }
 }
 
@@ -1605,6 +1621,25 @@ h3 {
   .hero__fan {
     width: min(100%, 440px);
     margin: 0.5rem auto 0;
+  }
+
+  .bg-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(9, 3, 15, 0.85) 0%,
+      rgba(9, 3, 15, 0.6) 40%,
+      rgba(9, 3, 15, 0.75) 100%
+    );
+    background-size: auto;
+  }
+
+  [data-live="true"] .bg-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(9, 3, 15, 0.68) 0%,
+      rgba(9, 3, 15, 0.82) 100%
+    );
+    background-size: auto;
   }
 }
 
