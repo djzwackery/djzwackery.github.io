@@ -84,7 +84,7 @@ export const SOCIALS: Social[] = [
   {
     platform: "discord",
     label: "Discord",
-    url: "https://discord.gg/djzwackery",
+    url: "https://discord.gg/V5DdvGe",
     accent: "--acid",
   },
   {
