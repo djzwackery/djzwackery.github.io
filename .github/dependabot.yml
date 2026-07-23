@@ -1,0 +1,48 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: quarterly
+      day: monday
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      fonts:
+        patterns:
+          - "@fontsource/*"
+      eslint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@eslint/*"
+          - "typescript-eslint"
+          - "globals"
+      prettier:
+        patterns:
+          - "prettier"
+          - "prettier-*"
+      typescript:
+        patterns:
+          - "typescript"
+          - "@types/*"
+      build-tools:
+        patterns:
+          - "@rollup/*"
+          - "sharp"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: quarterly
+      day: monday
+    groups:
+      actions:
+        patterns:
+          - "actions/*"
+      astro-action:
+        patterns:
+          - "withastro/*"
