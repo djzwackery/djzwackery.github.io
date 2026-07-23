@@ -48,7 +48,7 @@ jobs:
           cache: npm
 
       - name: Build Astro 🏗️
-        uses: withastro/action@v3
+        uses: withastro/action@v6
         with:
           package-manager: npm
         env:
