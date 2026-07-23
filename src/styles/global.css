@@ -170,8 +170,8 @@ h3 {
  */
 .skip-link {
   position: absolute;
-  left: -999px;
-  top: 0;
+  inset-inline-start: -999px;
+  inset-block-start: 0;
   z-index: 200;
   background: var(--acid);
   color: var(--void);
@@ -181,7 +181,7 @@ h3 {
 }
 
 .skip-link:focus {
-  left: 0;
+  inset-inline-start: 0;
 }
 
 :focus-visible {
@@ -206,7 +206,7 @@ h3 {
 .marquee__track {
   display: inline-flex;
   gap: 2.5rem;
-  padding-left: 2.5rem;
+  padding-inline-start: 2.5rem;
   font-family: var(--font-label);
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -219,7 +219,7 @@ h3 {
 .marquee__track span::after {
   content: "◆";
   color: var(--magenta);
-  margin-left: 2.5rem;
+  margin-inline-start: 2.5rem;
 }
 
 @keyframes marquee {
@@ -632,7 +632,7 @@ h3 {
   background: var(--void-2);
   box-shadow: var(--shadow-hard);
   cursor: pointer;
-  text-align: left;
+  text-align: start;
   text-decoration: none;
   padding: 0;
   color: inherit;
@@ -763,8 +763,8 @@ h3 {
 
 .lightbox__close {
   position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
+  inset-block-start: 1.25rem;
+  inset-inline-end: 1.25rem;
   background: var(--magenta);
   color: var(--white);
   border: var(--edge) solid var(--void);
@@ -875,10 +875,11 @@ h3 {
 
 .party__bit {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   will-change: transform, opacity;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  mix-blend-mode: screen;
 }
 
 .party__bit img {
@@ -890,29 +891,33 @@ h3 {
 .is-partying::after {
   content: "";
   position: fixed;
-  inset: 0;
+  inset-inline-start: var(--party-x, 50%);
+  inset-block-start: var(--party-y, 30%);
+  width: 200vmax;
+  height: 200vmax;
+  border-radius: 50%;
   z-index: 205;
   pointer-events: none;
   mix-blend-mode: screen;
   background: radial-gradient(
-    circle at var(--party-x, 50%) var(--party-y, 30%),
-    rgba(255, 255, 255, 0.55),
-    rgba(255, 31, 143, 0.4) 20%,
-    rgba(0, 229, 255, 0.22) 40%,
-    transparent 65%
+    circle at center,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 31, 143, 0.45) 18%,
+    rgba(0, 229, 255, 0.25) 38%,
+    transparent 60%
   );
-  animation: party-flash 0.7s ease-out;
+  animation: party-flash 0.7s ease-out forwards;
 }
 
 @keyframes party-flash {
   0% {
     opacity: 1;
-    transform: scale(0.4);
+    transform: translate(-50%, -50%) scale(0.03);
   }
 
   100% {
     opacity: 0;
-    transform: scale(1.8);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
@@ -937,7 +942,7 @@ h3 {
 
 @media (min-width: 900px) {
   .about__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+    grid-template-columns: minmax(0, 60ch) minmax(240px, 340px);
   }
 
   .about__mascot {
@@ -1195,7 +1200,7 @@ h3 {
     6px 6px,
     6px 6px;
   background-repeat: no-repeat;
-  padding-right: 2.25rem;
+  padding-inline-end: 2.25rem;
 }
 
 .field option {
@@ -1328,7 +1333,7 @@ h3 {
  * copyright + tip sit together on the left; credit is pushed to the right
  */
 .footer__credit {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .footer__kofi {
@@ -1410,8 +1415,8 @@ h3 {
 .langs__caret {
   width: 0;
   height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
+  border-inline-start: 4px solid transparent;
+  border-inline-end: 4px solid transparent;
   border-bottom: 5px solid var(--acid);
   transition: transform 0.15s ease;
 }
@@ -1423,7 +1428,7 @@ h3 {
 .langs__menu {
   position: absolute;
   bottom: calc(100% + 0.5rem);
-  left: 0;
+  inset-inline-start: 0;
   margin: 0;
   padding: 0.35rem;
   list-style: none;
@@ -1461,7 +1466,7 @@ h3 {
 
 .langs__opt.is-current::after {
   content: "●";
-  margin-left: auto;
+  margin-inline-start: auto;
   font-size: 0.5em;
   color: var(--magenta);
 }
@@ -1496,8 +1501,9 @@ h3 {
 }
 
 /**
- * Easter egg: the credit crossfades to "Site by bigjimjimo" on hover. Both
- * labels share a grid cell so nothing shifts.
+ * Easter egg: the credit crossfades to "Site by bigjimjimo" on hover.
+ * The alt text is anchored to the inline-end (right) edge of the swap
+ * container so it grows leftward — the face image never moves.
  */
 .footer__credit-swap {
   position: relative;
@@ -1510,8 +1516,8 @@ h3 {
 
 .footer__credit-txt.is-alt {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-end: 0;
   opacity: 0;
 }
 
@@ -1568,11 +1574,31 @@ h3 {
 }
 
 /**
- * Phone: stack the hero — intro first, then one big photo below.
+ * Phone: stack the hero — intro first, then one big photo below, centered.
  */
 @media (max-width: 640px) {
   .hero {
     grid-template-columns: 1fr;
+  }
+
+  .hero__intro {
+    text-align: center;
+  }
+
+  .hero__eyebrow {
+    justify-content: center;
+  }
+
+  .logo {
+    margin-inline: auto;
+  }
+
+  .hero__tagline {
+    margin-inline: auto;
+  }
+
+  .hero__actions {
+    justify-content: center;
   }
 
   .hero__fan {

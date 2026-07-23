@@ -451,10 +451,11 @@ function initTwitch() {
         img.style.height = `${size}px`;
         p.appendChild(img);
       } else {
-        p.style.width = `${7 + Math.random() * 6}px`;
-        p.style.height = `${11 + Math.random() * 8}px`;
+        p.style.width = `${4 + Math.random() * 4}px`;
+        p.style.height = `${10 + Math.random() * 14}px`;
         p.style.background = confettiColors[i % confettiColors.length];
-        p.style.borderRadius = Math.random() < 0.5 ? "50%" : "2px";
+        p.style.borderRadius =
+          Math.random() < 0.35 ? "50%" : `${5 + Math.random() * 8}px`;
       }
 
       // Small spawn jitter so pieces don't all stack on the exact same point.

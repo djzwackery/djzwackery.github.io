@@ -22,6 +22,23 @@ npm run check   # format:check + lint + typecheck
 Or individually: `npm run format` (Prettier, `--write`), `npm run lint` / `npm run lint:fix`
 (ESLint, flat config in `eslint.config.js`), `npm run typecheck` (`astro check`).
 
+## Localisation
+
+Every string change must be applied across **all 5 locales**: `en`, `ja`, `de`, `nl`, `fr`. The strings live in `src/i18n/ui.ts`. Never update only one locale — if a translation isn't known, mark it with a `// TODO:` comment but still add the key so the build doesn't break.
+
+## CSS direction
+
+All CSS must use **logical properties** so the codebase is ready for RTL languages (e.g. Arabic) without a rewrite. Use:
+
+- `padding-inline-start` / `padding-inline-end` instead of `padding-left` / `padding-right`
+- `margin-inline-start` / `margin-inline-end` instead of `margin-left` / `margin-right`
+- `inset-inline-start` / `inset-inline-end` instead of `left` / `right` in `position` contexts
+- `inset-block-start` / `inset-block-end` instead of `top` / `bottom` in `position` contexts
+- `border-inline-start` / `border-inline-end` instead of `border-left` / `border-right`
+- `text-align: start` / `text-align: end` instead of `text-align: left` / `text-align: right`
+
+Exception: physical `left: 50%` centering tricks that pair with `translateX(-50%)` may remain as-is (no logical equivalent that works cross-browser for centering).
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
