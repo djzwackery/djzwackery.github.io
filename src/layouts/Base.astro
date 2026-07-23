@@ -48,6 +48,11 @@ const lang = getLang(Astro.currentLocale);
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    {
+      lang === "nl" && (
+        <link rel="preload" as="image" href="/dutch.webp" fetchpriority="low" />
+      )
+    }
     <Seo title={title} videos={videos} index={index} />
   </head>
   <body>

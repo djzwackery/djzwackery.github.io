@@ -458,6 +458,46 @@ function initTwitch() {
 }
 
 /**
+ * The marquee's `-50%` loop only stays seamless if one copy of the words is
+ * at least as wide as the viewport; ultra-wide monitors can outrun the
+ * server-rendered word count and flash a gap at the seam. Duplicate content
+ * (and scale the animation duration to match, so playback speed stays put)
+ * until a copy is wide enough.
+ */
+(() => {
+  const tracks = document.querySelectorAll<HTMLElement>(".marquee__track");
+
+  const ensureSeamless = (track: HTMLElement) => {
+    const duration = parseFloat(getComputedStyle(track).animationDuration);
+    let unitWidth = track.scrollWidth / 2;
+    if (!unitWidth || !duration) return;
+    const speed = unitWidth / duration;
+    const target = window.innerWidth * 1.15;
+    while (unitWidth < target) {
+      const clone = document.createDocumentFragment();
+      Array.from(track.children).forEach((c) =>
+        clone.appendChild(c.cloneNode(true)),
+      );
+      track.appendChild(clone);
+      unitWidth = track.scrollWidth / 2;
+    }
+    track.style.animationDuration = `${unitWidth / speed}s`;
+  };
+
+  tracks.forEach(ensureSeamless);
+
+  let resizeTimer: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => tracks.forEach(ensureSeamless), 200);
+  });
+
+  new MutationObserver(() => tracks.forEach(ensureSeamless)).observe(html, {
+    attributeFilter: ["data-live"],
+  });
+})();
+
+/**
  * Easter egg: clicking the hero wordmark (or entering the Konami code) rains
  * channel emotes and confetti from the logo. Respects reduced motion.
  */
@@ -496,16 +536,18 @@ function initTwitch() {
 })();
 
 /**
- * Dutch easter egg: show the GIF meme whenever someone switches to NL.
- * Fades in full-screen behind content, auto-dismisses after 3 s.
+ * Dutch easter egg: show the GIF (well, WebP) meme whenever someone switches
+ * to NL. Fades in full-screen behind content, auto-dismisses 3 s after it
+ * actually finishes loading — not 3 s after page load — so a slow connection
+ * doesn't fade the overlay in and out over a blank/unloaded image.
  */
 (() => {
   if (document.documentElement.lang !== "nl") return;
   const overlay = document.createElement("div");
   overlay.className = "dutch-meme";
   const img = document.createElement("img");
-  img.src = "/dutch.gif";
   img.alt = "";
+  img.decoding = "async";
   overlay.appendChild(img);
   document.body.appendChild(overlay);
 
@@ -519,14 +561,21 @@ function initTwitch() {
     });
   };
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      overlay.classList.add("is-visible");
-      if (bgVideo) bgVideo.style.opacity = "0";
-    });
-  });
-
-  setTimeout(dismiss, 3000);
+  img.addEventListener(
+    "load",
+    () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          overlay.classList.add("is-visible");
+          if (bgVideo) bgVideo.style.opacity = "0";
+        });
+      });
+      setTimeout(dismiss, 3000);
+    },
+    { once: true },
+  );
+  img.addEventListener("error", () => overlay.remove(), { once: true });
+  img.src = "/dutch.webp";
 })();
 
 (function loadTwitch() {

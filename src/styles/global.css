@@ -935,7 +935,13 @@ h3 {
 }
 
 .about__mascot {
-  display: none;
+  display: flex;
+  justify-content: center;
+}
+
+.about__mascot img {
+  width: auto;
+  height: clamp(200px, 44vw, 320px);
 }
 
 @media (min-width: 900px) {
@@ -944,13 +950,12 @@ h3 {
   }
 
   .about__mascot {
-    display: block;
+    justify-content: normal;
     margin-bottom: -3.5rem;
     align-self: end;
   }
 
   .about__mascot img {
-    width: auto;
     height: 400px;
     /* fade the lower body into the section so it reads chest-up */
     -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
