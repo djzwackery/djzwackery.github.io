@@ -942,6 +942,7 @@ h3 {
 .about__mascot img {
   width: auto;
   height: clamp(200px, 44vw, 320px);
+  filter: drop-shadow(-6px 6px 0 rgba(255, 31, 143, 0.28));
 }
 
 @media (min-width: 900px) {
@@ -960,7 +961,6 @@ h3 {
     /* fade the lower body into the section so it reads chest-up */
     -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
     mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
-    filter: drop-shadow(-6px 6px 0 rgba(255, 31, 143, 0.28));
   }
 }
 
