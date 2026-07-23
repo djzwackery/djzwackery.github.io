@@ -23,8 +23,10 @@ interface GigLD {
   date: string;
   event?: string;
   venue?: string;
-  city: string;
+  location: string;
   url?: string;
+  /** Must be a fully-qualified URL to an externally-hosted flyer/poster — no local asset pipeline for this. */
+  image?: string;
 }
 interface Props {
   /** Overrides the default localized title (used by the 404 page). */
@@ -82,7 +84,7 @@ const musicGroupLD = {
 };
 
 const eventLD = upcomingGigs.map((g) => {
-  const label = [g.event, g.venue].filter(Boolean).join(" • ") || g.city;
+  const label = [g.event, g.venue].filter(Boolean).join(" • ") || g.location;
   return {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -92,10 +94,10 @@ const eventLD = upcomingGigs.map((g) => {
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {
       "@type": "Place",
-      name: g.venue ?? g.event ?? g.city,
+      name: g.venue ?? g.event ?? g.location,
       address: {
         "@type": "PostalAddress",
-        addressLocality: g.city,
+        addressLocality: g.location,
       },
     },
     performer: {
@@ -109,6 +111,7 @@ const eventLD = upcomingGigs.map((g) => {
       url: SITE_URL,
     },
     ...(g.url ? { url: g.url } : {}),
+    ...(g.image?.startsWith("http") ? { image: g.image } : {}),
   };
 });
 

@@ -10,7 +10,7 @@ interface Gig {
   date: string;
   event?: string;
   venue?: string;
-  city: string;
+  location: string;
   url?: string;
 }
 
@@ -65,7 +65,7 @@ function fmt(iso: string) {
                     )}
                   </span>
                 )}
-                <span class="gig__city">{g.city}</span>
+                <span class="gig__location">{g.location}</span>
               </div>
               {g.url ? (
                 <a

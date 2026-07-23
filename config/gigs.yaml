@@ -1,12 +1,17 @@
 # Upcoming gigs.
 #
-# Each entry: date (ISO "YYYY-MM-DD"), city, and an optional url for
+# Each entry: date (ISO "YYYY-MM-DD"), location, and an optional url for
 # tickets/details. `event` and `venue` are both optional — whichever is set
 # is shown, and if both are set they're shown together as "Event • Venue".
-# Past dates are hidden automatically. If the list is empty, the "Catch him
-# in the flesh" section is removed from the site entirely.
+# `image` is also optional — a fully-qualified URL to an externally-hosted
+# flyer/poster (e.g. from the ticketing site), used only in the JSON-LD, not
+# rendered on the page. There's no local asset pipeline for it, so it's
+# skipped entirely unless the value looks like a real URL (starts with
+# "http"). Past dates are hidden automatically. If the list is empty, the
+# "Catch him in the flesh" section is removed from the site entirely.
 - date: "2026-09-26"
   event: Hardcore Evolution
   venue: Rubix Warehouse
-  city: Brunswick VIC, Australia
+  location: Brunswick VIC, Australia
   url: https://events.humanitix.com/hardcore-evolution
+  image: https://images.humanitix.com/i/f5b77aaa-1591-4984-9bed-7668222ac0f9.jpg@responsive-2400.webp

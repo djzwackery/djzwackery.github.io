@@ -84,8 +84,9 @@ a flat list:
 - date: "2026-09-26"
   event: Hardcore Evolution
   venue: Rubix Warehouse
-  city: Melbourne, AU
+  location: Melbourne, AU
   url: https://events.humanitix.com/hardcore-evolution/tickets
+  image: https://events.humanitix.com/hardcore-evolution/flyer.jpg
 ```
 
 - `date` is ISO `YYYY-MM-DD`. Past dates hide themselves automatically — no cleanup needed.
@@ -93,8 +94,12 @@ a flat list:
   together as "Event • Venue" (the venue dimmed, subordinate to the event name). Set only one if
   that's all you know — e.g. a warehouse rave with no fixed venue name yet, or a club night where
   the venue _is_ the event.
-- `city` is required — it's the only field guaranteed to render.
+- `location` is required — it's the only field guaranteed to render (and feeds
+  `address.addressLocality` in the JSON-LD below).
 - `url` is optional; omit it and the gig shows a "details coming soon" state instead of a ticket link.
+- `image` is optional and JSON-LD-only (not shown on the page) — a fully-qualified URL to an
+  externally-hosted flyer/poster. There's no local asset pipeline for it: anything that doesn't
+  start with `http` is silently skipped rather than emitted as a broken image URL.
 - Entries don't need to be pre-sorted — they're rendered soonest-first.
 - If the list is empty, the whole "catch him in the flesh" section is removed from the site.
 - Upcoming gigs also emit [schema.org `Event`](https://schema.org/Event) JSON-LD for search
