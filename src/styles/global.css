@@ -1392,9 +1392,16 @@ h3 {
   outline-offset: 2px;
 }
 
-.langs__flag {
-  font-size: 1.05rem;
-  line-height: 1;
+.flag {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.flag svg {
+  width: 1.25rem;
+  height: auto;
+  display: block;
+  border-radius: 2px;
 }
 
 .langs__code {

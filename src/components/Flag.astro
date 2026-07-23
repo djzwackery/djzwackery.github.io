@@ -1,0 +1,17 @@
+---
+import type { Lang } from "../i18n/ui";
+import AU from "country-flag-icons/string/3x2/AU";
+import JP from "country-flag-icons/string/3x2/JP";
+import DE from "country-flag-icons/string/3x2/DE";
+import NL from "country-flag-icons/string/3x2/NL";
+import FR from "country-flag-icons/string/3x2/FR";
+
+interface Props {
+  lang: Lang;
+}
+
+const svgs: Record<Lang, string> = { en: AU, ja: JP, de: DE, nl: NL, fr: FR };
+const { lang } = Astro.props;
+---
+
+<span class="flag" set:html={svgs[lang]} />

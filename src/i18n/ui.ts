@@ -19,15 +19,6 @@ export const languages = {
 
 export type Lang = keyof typeof languages;
 
-/** Country flag emoji shown in the language switcher. */
-export const flags: Record<Lang, string> = {
-  en: "🇦🇺",
-  ja: "🇯🇵",
-  de: "🇩🇪",
-  nl: "🇳🇱",
-  fr: "🇫🇷",
-};
-
 /** BCP-47 tags for the html lang attribute and og:locale. */
 export const localeTags: Record<Lang, string> = {
   en: "en",
@@ -53,7 +44,7 @@ export const ui = {
     "status.offline": "Offline",
     "status.live": "Live now",
 
-    "live.heading": "We're [[LIVE]] — get in here",
+    "live.heading": "We're [[LIVE]] — get in here!",
 
     "about.heading": "Who's [[Zwackery]]?",
     "about.bio1":
