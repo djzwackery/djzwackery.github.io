@@ -1,4 +1,4 @@
-# DJ Zwackery — djzwackery.com 🎉
+# DJ Zwackery - djzwackery.com 🎉
 
 <img align="right" width="220" height="auto" src="./src/assets/logo.svg" alt="DJ Zwackery">
 
