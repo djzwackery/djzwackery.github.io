@@ -1609,12 +1609,12 @@ h3 {
 }
 
 /**
- * Not-found toast: a dayglo sticker that slides up from the bottom.
+ * Not-found toast: slides down from the top (avoids iOS Safari bottom toolbar).
  */
 .toast {
   position: fixed;
   left: 50%;
-  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  top: calc(1rem + env(safe-area-inset-top, 0px));
   z-index: 220;
   max-width: 94vw;
   padding: 0.85rem 1.15rem;
@@ -1627,7 +1627,7 @@ h3 {
   font-size: var(--fs-small);
   white-space: nowrap;
   text-align: center;
-  transform: translate(-50%, 200%);
+  transform: translate(-50%, calc(-100% - 2rem));
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 

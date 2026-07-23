@@ -18,13 +18,13 @@ export const MARQUEE_WORDS = [
   "HAPPY HARDCORE",
   "UK HARDCORE",
   "FOLLOW ON TWITCH",
-  ":BIGJIM:",
+  "HARD DANCE",
   "DJ ZWACKERY",
   "HOUSE OF FUN",
   "HAPPY HARDCORE",
   "UK HARDCORE",
   "FOLLOW ON TWITCH",
-  ":ASKINGFORIT:",
+  "DRUM & BASS",
 ];
 
 /** Marquee words shown while he's live on Twitch. */
