@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import Logo from "./Logo.astro";
 import { TWITCH_URL, YOUTUBE_URL } from "../config";
 import { useTranslations } from "../i18n";
@@ -74,14 +74,14 @@ const shots = [
   >
     {
       shots.map((s, i) => (
-        <Image
-          class="fan__photo"
+        <Picture
+          pictureAttributes={{ class: "fan__photo" }}
           src={s.src}
           alt={i === shots.length - 1 ? s.alt : ""}
           widths={[520, 780, 1080, 1500]}
           sizes="(max-width: 640px) 92vw, (max-width: 1040px) 42vw, 40vw"
-          quality={88}
-          format="webp"
+          quality={75}
+          formats={["avif", "webp"]}
           loading={i >= shots.length - 2 ? "eager" : "lazy"}
           fetchpriority={i === shots.length - 1 ? "high" : undefined}
         />

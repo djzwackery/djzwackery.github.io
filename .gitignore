@@ -14,7 +14,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
 # environment variables (never commit real keys; keep the example)
 .env
 .env.*
@@ -29,6 +28,3 @@ pnpm-debug.log*
 # misc
 .claude
 .vscode
-
-# TODO: Remove
-README.md

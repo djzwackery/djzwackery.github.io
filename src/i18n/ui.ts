@@ -57,7 +57,7 @@ export const ui = {
 
     "about.heading": "Who's [[Zwackery]]?",
     "about.bio1":
-      "DJ Zwackery is a hardcore DJ out of Melbourne, Australia, bringing the House of Fun to dancefloors and living rooms alike: 170-plus BPM of euphoric, hands-in-the-air rave.",
+      "DJ Zwackery is a hardcore DJ out of Melbourne, Australia, bringing the House of Fun to dancefloors and living rooms alike: 150-plus BPM of euphoric, hands-in-the-air rave.",
     "about.bio2":
       "New sets land on YouTube every week, and the party spills onto Twitch whenever he goes live. Pro DJ, pro lad.",
 
@@ -125,7 +125,7 @@ export const ui = {
 
     "about.heading": "[[Zwackery]] ってどんな人？",
     "about.bio1":
-      "DJ Zwackeryはオーストラリア・メルボルン出身のハードコアDJ。クラブのフロアからお茶の間まで、House of Funをお届け。170BPM超の多幸感あふれる、両手を上げて楽しむレイブサウンド。",
+      "DJ Zwackeryはオーストラリア・メルボルン出身のハードコアDJ。クラブのフロアからお茶の間まで、House of Funをお届け。150BPM超の多幸感あふれる、両手を上げて楽しむレイブサウンド。",
     "about.bio2":
       "新しいセットは毎週YouTubeで公開。ライブのときはTwitchでパーティーがそのまま生中継。Pro DJ, pro lad。",
 
@@ -193,7 +193,7 @@ export const ui = {
 
     "about.heading": "Wer ist [[Zwackery]]?",
     "about.bio1":
-      "DJ Zwackery ist ein Hardcore-DJ aus Melbourne, Australien, und bringt das House of Fun auf Tanzflächen und ins Wohnzimmer gleichermaßen: über 170 BPM euphorischer Rave zum Hände-in-die-Luft-Reißen.",
+      "DJ Zwackery ist ein Hardcore-DJ aus Melbourne, Australien, und bringt das House of Fun auf Tanzflächen und ins Wohnzimmer gleichermaßen: über 150 BPM euphorischer Rave zum Hände-in-die-Luft-Reißen.",
     "about.bio2":
       "Jede Woche gibt es neue Sets auf YouTube, und sobald er live geht, schwappt die Party auf Twitch über. Pro DJ, pro Lad.",
 
@@ -262,7 +262,7 @@ export const ui = {
 
     "about.heading": "Wie is [[Zwackery]]?",
     "about.bio1":
-      "DJ Zwackery is een hardcore-dj uit Melbourne, Australië, die het House of Fun naar zowel de dansvloer als de huiskamer brengt: 170-plus BPM aan euforische, handen-in-de-lucht rave.",
+      "DJ Zwackery is een hardcore-dj uit Melbourne, Australië, die het House of Fun naar zowel de dansvloer als de huiskamer brengt: 150-plus BPM aan euforische, handen-in-de-lucht rave.",
     "about.bio2":
       "Elke week verschijnen er nieuwe sets op YouTube, en zodra hij live gaat stroomt het feest door op Twitch. Pro DJ, pro lad.",
 
@@ -330,7 +330,7 @@ export const ui = {
 
     "about.heading": "C'est qui, [[Zwackery]] ?",
     "about.bio1":
-      "DJ Zwackery est un DJ hardcore originaire de Melbourne, en Australie, qui apporte le House of Fun aussi bien sur les dancefloors que dans les salons : plus de 170 BPM de rave euphorique, les mains en l'air.",
+      "DJ Zwackery est un DJ hardcore originaire de Melbourne, en Australie, qui apporte le House of Fun aussi bien sur les dancefloors que dans les salons : plus de 150 BPM de rave euphorique, les mains en l'air.",
     "about.bio2":
       "De nouveaux sets arrivent chaque semaine sur YouTube, et la fête déborde sur Twitch dès qu'il passe en live. Pro DJ, pro lad.",
 

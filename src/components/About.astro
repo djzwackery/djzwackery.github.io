@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { useTranslations, highlight } from "../i18n";
 import pose from "../assets/zwack-pose.png";
 
@@ -8,7 +8,7 @@ const t = useTranslations(Astro.currentLocale);
 /**
  * Quick-scan facts shown as a byline under the bio.
  */
-const facts = ["Melbourne, AU", "Hardcore", "170+ BPM", "House of Fun"];
+const facts = ["Melbourne, AU", "Hardcore", "150+ BPM", "Twitch Partner"];
 ---
 
 <section class="section wrap about" id="about" aria-labelledby="about-head">
@@ -25,16 +25,38 @@ const facts = ["Melbourne, AU", "Hardcore", "170+ BPM", "House of Fun"];
       <p class="about__lead">{t("about.bio1")}</p>
       <p class="about__text">{t("about.bio2")}</p>
       <ul class="about__facts">
-        {facts.map((f) => <li>{f}</li>)}
+        {
+          facts.map((f) => (
+            <li>
+              {f}
+              {f === "Twitch Partner" && (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 16 16"
+                  aria-label="Verified Partner"
+                >
+                  <path
+                    fill="#a970ff"
+                    fill-rule="evenodd"
+                    d="M12.5 3.5 8 2 3.5 3.5 2 8l1.5 4.5L8 14l4.5-1.5L14 8l-1.5-4.5ZM7 11l4.5-4.5L10 5 7 8 5.5 6.5 4 8l3 3Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              )}
+            </li>
+          ))
+        }
       </ul>
     </div>
 
     <div class="about__mascot" aria-hidden="true">
-      <Image
+      <Picture
         src={pose}
         alt=""
         widths={[320, 480, 640]}
         sizes="360px"
+        formats={["avif", "webp"]}
         loading="lazy"
       />
     </div>

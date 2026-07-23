@@ -23,8 +23,8 @@ const date = new Date(published).toLocaleDateString(dateLocale, {
   class="card"
   href={`https://www.youtube.com/watch?v=${id}`}
   data-video-id={id}
-  aria-label={`${t("videos.play")}: ${title}`}
 >
+  <span class="visually-hidden">{t("videos.play")}: </span>
   <span class="card__thumb">
     <img
       src={thumb}

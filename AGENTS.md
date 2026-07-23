@@ -8,6 +8,20 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+Node is pinned via `.node-version` (v26.4.0) — run `fnm use` / `nvm use` first if node/npm
+aren't on PATH.
+
+## Code quality
+
+Before considering a change done, run:
+
+```
+npm run check   # format:check + lint + typecheck
+```
+
+Or individually: `npm run format` (Prettier, `--write`), `npm run lint` / `npm run lint:fix`
+(ESLint, flat config in `eslint.config.js`), `npm run typecheck` (`astro check`).
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

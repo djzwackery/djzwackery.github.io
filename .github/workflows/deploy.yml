@@ -33,10 +33,18 @@ jobs:
           restore-keys: |
             content-cache-
 
+      - name: Cache Astro image generation 🖼️
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.astro/assets
+          key: astro-images-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-images-
+
       - name: Build Astro 🏗️
         uses: withastro/action@v3
         with:
-          node-version: 22
+          node-version: 26
           package-manager: npm
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}

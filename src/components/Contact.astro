@@ -27,7 +27,7 @@ const reasons = [
       />
       <p class="contact__blurb">{t("contact.blurb")}</p>
       <p class="contact__direct">
-        {t("contact.orEmail")}
+        {t("contact.orEmail")}{" "}
         <a href={`mailto:${BOOKING_EMAIL}`}>{BOOKING_EMAIL}</a>
       </p>
     </div>
@@ -55,6 +55,7 @@ const reasons = [
         class="visually-hidden"
         tabindex="-1"
         autocomplete="off"
+        aria-hidden="true"
       />
 
       <div class="contact__row">
