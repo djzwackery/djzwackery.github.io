@@ -1336,6 +1336,24 @@ h3 {
   display: block;
   width: min(240px, 46vw);
   flex: none;
+  cursor: pointer;
+}
+
+/* same lift-on-hover, press-on-click feel as .btn, scaled off the wordmark's own drop-shadow */
+.footer__logo .logo__svg {
+  transition:
+    transform 0.08s ease,
+    filter 0.08s ease;
+}
+
+.footer__logo:hover .logo__svg {
+  transform: translate(-2px, -2px);
+  filter: drop-shadow(5px 6px 0 rgba(0, 0, 0, 0.55));
+}
+
+.footer__logo:active .logo__svg {
+  transform: translate(3px, 3px);
+  filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, 0.55));
 }
 
 /**

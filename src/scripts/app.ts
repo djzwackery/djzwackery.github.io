@@ -543,6 +543,22 @@ function initTwitch() {
 })();
 
 /**
+ * Easter egg: clicking the footer logo plays a clip. Volume is capped well
+ * below full so it can't blast anyone; restarting from 0 on every click (not
+ * queuing a new instance) keeps repeat clicks snappy instead of layering.
+ */
+(() => {
+  const trigger = document.querySelector<HTMLElement>(".footer__logo");
+  if (!trigger) return;
+  const audio = new Audio("/pavs.mp3");
+  audio.volume = 0.5;
+  trigger.addEventListener("click", () => {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  });
+})();
+
+/**
  * Easter egg: clicking the hero wordmark (or entering the Konami code) rains
  * channel emotes and confetti from the logo. Respects reduced motion.
  */

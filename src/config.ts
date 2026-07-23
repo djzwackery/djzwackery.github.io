@@ -25,7 +25,7 @@ export const MARQUEE_WORDS = [
   "UK HARDCORE",
   "FOLLOW ON TWITCH",
   "DRUM & BASS",
-  "GABBER"
+  "GABBER",
 ];
 
 /** Marquee words shown while he's live on Twitch. */
