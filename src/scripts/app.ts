@@ -138,9 +138,8 @@ const emoteUrls = channelEmotes.map((e) => twitchEmoteUrl(e.id));
 const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
 let partyLayer: HTMLElement | null = null;
 /**
- * Cap concurrent particles instead of cooling down clicks — spamming the
- * trigger stays instant and responsive, it just tops out at a fixed amount
- * of stuff on screen rather than compounding forever.
+ * Caps concurrent particles instead of cooling down clicks, so spamming
+ * stays instant.
  */
 const MAX_PARTY_BITS = 260;
 let livePartyBits = 0;
@@ -489,11 +488,8 @@ function initTwitch() {
 }
 
 /**
- * The marquee's `-50%` loop only stays seamless if one copy of the words is
- * at least as wide as the viewport; ultra-wide monitors can outrun the
- * server-rendered word count and flash a gap at the seam. Duplicate content
- * (and scale the animation duration to match, so playback speed stays put)
- * until a copy is wide enough.
+ * The -50% loop needs one copy of the words as wide as the viewport, or
+ * ultra-wide monitors flash a gap. Duplicate (scaling duration to match).
  */
 (() => {
   const tracks = document.querySelectorAll<HTMLElement>(".marquee__track");
@@ -529,10 +525,8 @@ function initTwitch() {
 })();
 
 /**
- * About mascot: hover swaps to the back-view pose on desktop (pure CSS).
- * Touch devices have no persistent :hover to leave, so give them a tap
- * toggle instead — gated to `hover: none` so a desktop click doesn't latch
- * the swap on and defeat mouse-leave reverting it.
+ * Touch has no persistent :hover to leave, so gate a tap toggle to
+ * `hover: none` only.
  */
 (() => {
   const mascot = document.querySelector<HTMLElement>("[data-mascot]");
@@ -542,11 +536,7 @@ function initTwitch() {
   });
 })();
 
-/**
- * Easter egg: clicking the footer logo plays a clip. Volume is capped well
- * below full so it can't blast anyone; restarting from 0 on every click (not
- * queuing a new instance) keeps repeat clicks snappy instead of layering.
- */
+/** Easter egg: clicking the footer logo plays a clip, restarting rather than layering on repeat clicks. */
 (() => {
   const trigger = document.querySelector<HTMLElement>(".footer__logo");
   if (!trigger) return;
@@ -595,12 +585,7 @@ function initTwitch() {
   });
 })();
 
-/**
- * Dutch easter egg: show the GIF (well, WebP) meme whenever someone switches
- * to NL. Fades in full-screen behind content, auto-dismisses 3 s after it
- * actually finishes loading — not 3 s after page load — so a slow connection
- * doesn't fade the overlay in and out over a blank/unloaded image.
- */
+/** Dutch easter egg: full-screen meme on NL, timed from actual image load not page load. */
 (() => {
   if (document.documentElement.lang !== "nl") return;
   const overlay = document.createElement("div");

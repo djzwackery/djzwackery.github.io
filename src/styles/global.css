@@ -766,9 +766,13 @@ h3 {
 }
 
 .lightbox__close {
+  /* justify/align-self pin the corner explicitly — WebKit can ignore the insets alone here */
   position: absolute;
   inset-block-start: 1.25rem;
   inset-inline-end: 1.25rem;
+  justify-self: end;
+  align-self: start;
+  z-index: 1;
   background: var(--magenta);
   color: var(--white);
   border: var(--edge) solid var(--void);
@@ -1610,9 +1614,10 @@ h3 {
 /**
  * Tablet and down: collapse the four-card fan into one clean tilted frame
  * that crossfades on shuffle. The two-column hero is kept so tablets don't
- * fall back to a lopsided single column.
+ * fall back to a lopsided single column. 1330px clears landscape iPad
+ * widths, which otherwise overflow past --wrap's margin.
  */
-@media (max-width: 1040px) {
+@media (max-width: 1330px) {
   .hero__fan {
     aspect-ratio: 4 / 5;
   }
