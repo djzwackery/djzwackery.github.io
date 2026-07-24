@@ -53,26 +53,42 @@ const lang = getLang(Astro.currentLocale);
   <head>
     <meta charset="utf-8" />
     <script is:inline>
-      /** First-visit-only device-language redirect; supported list mirrors astro.config.mjs's locales. */
+      /**
+       * Root-only redirect, in priority order: an explicit choice from the
+       * language switcher (set in LangSwitcher.astro) always wins and persists
+       * indefinitely; otherwise a first-visit-only device-language guess, gated
+       * so it never fires more than once. Supported list mirrors
+       * astro.config.mjs's locales.
+       */
       (function () {
         try {
-          const KEY = "zw-lang-redirected";
+          const PREF_KEY = "zw-lang-pref";
+          const REDIRECTED_KEY = "zw-lang-redirected";
+          const supported = ["ja", "de", "nl", "fr", "it"];
+
           if (location.pathname !== "/") {
-            localStorage.setItem(KEY, "1");
+            localStorage.setItem(REDIRECTED_KEY, "1");
             return;
           }
-          if (localStorage.getItem(KEY)) return;
-          localStorage.setItem(KEY, "1");
-          const supported = ["ja", "de", "nl", "fr", "it"];
-          const pref = (
+
+          const pref = localStorage.getItem(PREF_KEY);
+          if (pref) {
+            if (pref !== "en" && supported.indexOf(pref) !== -1)
+              location.replace("/" + pref + "/");
+            return;
+          }
+
+          if (localStorage.getItem(REDIRECTED_KEY)) return;
+          localStorage.setItem(REDIRECTED_KEY, "1");
+          const detected = (
             (navigator.languages && navigator.languages[0]) ||
             navigator.language ||
             ""
           )
             .split("-")[0]
             .toLowerCase();
-          if (supported.indexOf(pref) !== -1)
-            location.replace("/" + pref + "/");
+          if (supported.indexOf(detected) !== -1)
+            location.replace("/" + detected + "/");
         } catch {
           /* localStorage unavailable (private browsing restriction); skip redirect */
         }

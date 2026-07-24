@@ -36,7 +36,9 @@ const t = useTranslations(Astro.currentLocale);
 <script>
   /**
    * Progressive enhancement: close the language popover on outside click or
-   * Escape. It still opens/closes and navigates fine without JS.
+   * Escape, and remember an explicit pick so the root-page redirect in
+   * Base.astro honours it on future visits. It still opens/closes and
+   * navigates fine without JS either way.
    */
   const el = document.querySelector<HTMLDetailsElement>("[data-langs]");
   if (el) {
@@ -47,4 +49,14 @@ const t = useTranslations(Astro.currentLocale);
       if (e.key === "Escape" && el.open) el.open = false;
     });
   }
+
+  document.querySelectorAll<HTMLAnchorElement>(".langs__opt").forEach((opt) => {
+    opt.addEventListener("click", () => {
+      try {
+        localStorage.setItem("zw-lang-pref", opt.hreflang);
+      } catch {
+        /* localStorage unavailable (private browsing restriction); pick just won't persist */
+      }
+    });
+  });
 </script>
