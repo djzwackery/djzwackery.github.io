@@ -52,8 +52,9 @@ In CI these are provided as a GitHub Actions secret (see `.github/workflows/depl
 | `YOUTUBE_MAX_RESULTS` | No       | Overrides how many videos are fetched (defaults to `12`).                  |
 
 > [!NOTE]
-> His real Twitch channel emotes (for the live emote rain) are fetched at build time too, via
-> Twitch's public GraphQL endpoint — no key or secret needed.
+> His real Twitch and 7TV emotes (for the live emote rain) are fetched **and downloaded** at
+> build time — see [`src/lib/emotes.ts`](src/lib/emotes.ts) — then self-hosted from `/emotes/`.
+> No key or secret needed, and the site never depends on Twitch or 7TV being reachable at runtime.
 
 > [!TIP]
 > The booking form isn't an env var: create a free form at [web3forms.com](https://web3forms.com)
@@ -123,7 +124,7 @@ a flat list:
 
 The site's English copy follows **Australian English** conventions. Use AU spellings throughout — `organise`, `colour`, `centre`, `travelling`, etc. The `html lang` attribute for English pages is `en` (not `en-AU`) for consistency across locales.
 
-All five locales (`en`, `ja`, `de`, `nl`, `fr`) must be updated together whenever a string changes. See [AGENTS.md](AGENTS.md) for the full conventions.
+All six locales (`en`, `ja`, `de`, `nl`, `fr`, `it`) must be updated together whenever a string changes. See [AGENTS.md](AGENTS.md) for the full conventions.
 
 ## 📚 Additional Resources
 

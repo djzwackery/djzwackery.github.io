@@ -4,7 +4,7 @@ on:
   push:
     branches: [dev]
   schedule:
-    # 01:00 UTC = noon Melbourne (AEDT) / 1pm Melbourne (AEST) — cron is fixed UTC,
+    # 01:00 UTC = noon Melbourne (AEDT) / 1pm Melbourne (AEST); cron is fixed UTC,
     # so this drifts an hour either side of noon across the DST switchover
     - cron: "0 1 * * *"
   workflow_dispatch:

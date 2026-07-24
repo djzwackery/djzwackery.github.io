@@ -51,7 +51,7 @@ The `html lang` attribute and the `localeTags` BCP-47 tag for English are both `
 
 ## Localisation
 
-Every string change must be applied across **all 5 locales**: `en`, `ja`, `de`, `nl`, `fr`. The strings live in `src/i18n/ui.ts`. Never update only one locale — if a translation isn't known, mark it with a `// TODO:` comment but still add the key so the build doesn't break.
+Every string change must be applied across **all 6 locales**: `en`, `ja`, `de`, `nl`, `fr`, `it`. The strings live in `src/i18n/ui.ts`. Never update only one locale — if a translation isn't known, mark it with a `// TODO:` comment but still add the key so the build doesn't break.
 
 ## CSS direction
 

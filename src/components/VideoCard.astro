@@ -28,7 +28,7 @@ const absoluteDate = new Date(published).toLocaleDateString(dateLocale, {
   year: "numeric",
 });
 
-/** "2 days ago", localized — matches how YouTube itself timestamps videos. */
+/** "2 days ago", localized; matches how YouTube itself timestamps videos. */
 function relativeDate(iso: string): string {
   const rtf = new Intl.RelativeTimeFormat(dateLocale, { numeric: "auto" });
   const diffSeconds = (new Date(iso).getTime() - Date.now()) / 1000;

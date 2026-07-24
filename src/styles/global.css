@@ -789,7 +789,7 @@ h3 {
 
 .lightbox__close {
   /*
-   * justify/align-self pin the corner explicitly — WebKit can ignore
+   * justify/align-self pin the corner explicitly; WebKit can ignore
    * the insets alone here.
    */
   position: absolute;
@@ -920,7 +920,7 @@ h3 {
   display: block;
 }
 
-/* driven by Element.animate() in app.ts, not a CSS class/keyframe — see fireParty() */
+/* driven by Element.animate() in app.ts, not a CSS class/keyframe, see fireParty() */
 #party-flash {
   position: fixed;
   width: 200vmax;
@@ -999,7 +999,7 @@ h3 {
   z-index: 290;
   max-width: min(50vw, 380px);
   max-height: min(50vh, 380px);
-  /* no filter: drop-shadow — up to 6 concurrent animated WebPs re-tracing an
+  /* no filter: drop-shadow; up to 6 concurrent animated WebPs re-tracing an
      alpha silhouette every frame is a real Safari/iOS jank risk, and a
      box-shadow would just draw a visible rectangle behind the transparency */
   pointer-events: none;
@@ -1411,7 +1411,7 @@ body.mlg-5 .footer {
   font-size: var(--fs-item);
 }
 
-/* subordinate to the event name it trails — same line, lighter weight, dimmed to match .gig__location */
+/* subordinate to the event name it trails: same line, lighter weight, dimmed to match .gig__location */
 .gig__venue-sub {
   font-weight: 400;
   color: var(--ink-dim);
@@ -1694,6 +1694,13 @@ body.mlg-5 .footer {
   margin: 0;
 }
 
+.footer__disclaimer {
+  margin: 1.25rem 0 0;
+  max-width: 60ch;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
 /**
  * copyright + tip sit together on the left; credit is pushed to the right
  */
@@ -1702,6 +1709,9 @@ body.mlg-5 .footer {
 }
 
 .footer__kofi {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: var(--font-label);
   font-weight: 700;
   text-transform: uppercase;
@@ -1716,6 +1726,12 @@ body.mlg-5 .footer {
   transition:
     transform 0.1s ease,
     box-shadow 0.1s ease;
+}
+
+.coffee-icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
 }
 
 .footer__kofi:hover,
@@ -1875,7 +1891,7 @@ body.mlg-5 .footer {
 /**
  * Easter egg: the credit crossfades to "Site by bigjimjimo" on hover.
  * The alt text is anchored to the inline-end (right) edge of the swap
- * container so it grows leftward — the face image never moves.
+ * container so it grows leftward; the face image never moves.
  */
 .footer__credit-swap {
   position: relative;
@@ -1960,7 +1976,7 @@ body.mlg-5 .footer {
 }
 
 /**
- * Phone: stack the hero — intro first, then one big photo below, centered.
+ * Phone: stack the hero, intro first, then one big photo below, centered.
  */
 @media (max-width: 640px) {
   .hero {
@@ -2068,7 +2084,7 @@ body.mlg-5 .footer {
 }
 
 /**
- * LANDSCAPE LIGHTBOX — switch to height-driven sizing so the frame fits
+ * LANDSCAPE LIGHTBOX: switch to height-driven sizing so the frame fits
  * within the reduced vertical space of a rotated phone.
  */
 @media (orientation: landscape) and (max-height: 500px) {

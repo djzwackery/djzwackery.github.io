@@ -22,7 +22,7 @@ const t = useTranslations(Astro.currentLocale);
     try {
       sessionStorage.setItem("notfound", "1");
     } catch {
-      /* sessionStorage unavailable (private browsing restriction) — toast won't show */
+      /* sessionStorage unavailable (private browsing restriction); toast won't show */
     }
     location.replace("/");
   </script>

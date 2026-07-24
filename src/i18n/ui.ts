@@ -15,6 +15,7 @@ export const languages = {
   de: "Deutsch",
   nl: "Nederlands",
   fr: "Français",
+  it: "Italiano",
 } as const;
 
 export type Lang = keyof typeof languages;
@@ -26,6 +27,7 @@ export const localeTags: Record<Lang, string> = {
   de: "de",
   nl: "nl",
   fr: "fr",
+  it: "it",
 };
 
 export const ui = {
@@ -95,7 +97,10 @@ export const ui = {
     "contact.note":
       "Heads up: add your Web3Forms access key in src/config.ts to receive these.",
 
-    "footer.tip": "☕ Tip the DJ",
+    "footer.tip": "Tip the DJ",
+    "footer.disclaimer":
+      "Our CDN logs your IP for security. Contact form and embedded YouTube/Twitch content share data with their providers — nothing's sold or ad-tracked.",
+    "footer.siteBy": "Site by {name}",
 
     "a11y.newTab": "(opens in new tab)",
     "a11y.language": "Language",
@@ -179,7 +184,10 @@ export const ui = {
     "contact.note":
       "メモ：受信するには src/config.ts に Web3Forms のアクセスキーを設定してください。",
 
-    "footer.tip": "☕ DJに投げ銭",
+    "footer.tip": "DJに投げ銭",
+    "footer.disclaimer":
+      "本サイトのCDNはセキュリティのためIPアドレスを記録します。お問い合わせフォームや埋め込みYouTube・Twitchはそれぞれの提供元とデータを共有しますが、販売や広告トラッキングは行いません。",
+    "footer.siteBy": "{name} 制作",
 
     "a11y.newTab": "（新しいタブで開きます）",
     "a11y.language": "言語",
@@ -265,7 +273,10 @@ export const ui = {
     "contact.note":
       "Hinweis: Trage deinen Web3Forms-Zugangsschlüssel in src/config.ts ein, um diese zu erhalten.",
 
-    "footer.tip": "☕ Trinkgeld für den DJ",
+    "footer.tip": "Trinkgeld für den DJ",
+    "footer.disclaimer":
+      "Unser CDN protokolliert deine IP-Adresse aus Sicherheitsgründen. Kontaktformular und eingebettete YouTube-/Twitch-Inhalte teilen Daten mit ihren Anbietern — nichts wird verkauft oder für Werbung getrackt.",
+    "footer.siteBy": "Website von {name}",
 
     "a11y.newTab": "(öffnet in neuem Tab)",
     "a11y.language": "Sprache",
@@ -350,7 +361,10 @@ export const ui = {
     "contact.note":
       "Let op: voeg je Web3Forms-toegangssleutel toe in src/config.ts om deze te ontvangen.",
 
-    "footer.tip": "☕ Fooi voor de DJ",
+    "footer.tip": "Fooi voor de DJ",
+    "footer.disclaimer":
+      "Onze CDN legt je IP-adres vast voor beveiliging. Contactformulier en ingesloten YouTube-/Twitch-content delen gegevens met hun providers — niets wordt verkocht of voor advertenties getrackt.",
+    "footer.siteBy": "Site door {name}",
 
     "a11y.newTab": "(opent in nieuw tabblad)",
     "a11y.language": "Taal",
@@ -436,7 +450,10 @@ export const ui = {
     "contact.note":
       "Note : ajoute ta clé d'accès Web3Forms dans src/config.ts pour les recevoir.",
 
-    "footer.tip": "☕ Offrir un café au DJ",
+    "footer.tip": "Offrir un café au DJ",
+    "footer.disclaimer":
+      "Notre CDN enregistre ton adresse IP pour la sécurité. Le formulaire de contact et les contenus YouTube/Twitch intégrés partagent des données avec leurs fournisseurs — rien n'est vendu ni pisté à des fins publicitaires.",
+    "footer.siteBy": "Site par {name}",
 
     "a11y.newTab": "(ouvre dans un nouvel onglet)",
     "a11y.language": "Langue",
@@ -453,6 +470,95 @@ export const ui = {
     "notFound.stream": "Voir le live",
     "toast.notFound":
       "Cette page est introuvable. On te ramène au House of Fun.",
+  },
+
+  it: {
+    "meta.role": "DJ Hardcore",
+    "meta.description":
+      "DJ Zwackery è un DJ hardcore di Melbourne, in Australia. Guarda gli ultimi set di House of Fun, segui lo stream su Twitch in diretta e resta aggiornato.",
+
+    "hero.kicker": "House of Fun · Hardcore",
+    "hero.tagline":
+      "DJ hardcore di Melbourne. Nuovi set di House of Fun ogni settimana, live su Twitch.",
+    "hero.followTwitch": "Segui su Twitch",
+    "hero.subscribeYoutube": "Iscriviti su YouTube",
+    "hero.watchSets": "Guarda gli ultimi set",
+    "hero.photo1Alt": "DJ Zwackery con le mani in aria sopra la folla",
+    "hero.photo2Alt":
+      "DJ Zwackery in consolle avvolto da una luce magenta intensa",
+    "hero.photo3Alt":
+      "DJ Zwackery mentre mixa davanti all'enorme parete LED ZWACKERY",
+    "hero.photo4Alt": "DJ Zwackery mentre mixa davanti a un muro di fiamme",
+    "hero.fanAriaLabel": "Foto di DJ Zwackery dal vivo",
+
+    "status.offline": "Offline",
+    "status.live": "In diretta",
+
+    "live.heading": "Siamo [[LIVE]] — entra subito!",
+    "live.streamAriaLabel": "Diretta Twitch",
+
+    "about.heading": "Chi è [[Zwackery]]?",
+    "about.bio1":
+      "DJ Zwackery è un DJ hardcore di Melbourne, in Australia, che porta la House of Fun sia in pista che in salotto: oltre 150 BPM di rave euforico, mani al cielo.",
+    "about.bio2":
+      "Nuovi set escono su YouTube ogni settimana, e la festa si riversa su Twitch ogni volta che va in diretta. Pro DJ, pro fra.",
+    "about.location": "Melbourne, AU",
+    "about.twitchPartner": "Partner di Twitch",
+    "about.verifiedPartner": "Partner verificato",
+
+    "gigs.heading": "Vedilo [[in carne e ossa]]",
+    "gigs.details": "Dettagli",
+    "gigs.onSale": "In vendita a breve",
+
+    "videos.heading": "Le novità della [[House of Fun]]",
+    "videos.empty":
+      "Ancora nessun set caricato. Il feed si aggiorna a breve, nel frattempo seguilo live su Twitch.",
+    "videos.play": "Riproduci",
+    "videos.views": "{count} visualizzazioni",
+    "videos.new": "Nuovo",
+
+    "contact.kicker": "Mettiti in contatto",
+    "contact.heading": "Scrivi [[due righe]] a Zwackery",
+    "contact.blurb":
+      "Booking, collab, guest list, o anche solo per dire che un set ha spaccato. Qualunque cosa sia, arriva dritta nella casella di posta e riceve una risposta.",
+    "contact.orEmail": "Oppure via email",
+    "contact.name": "Il tuo nome",
+    "contact.namePlaceholder": "Chi sei?",
+    "contact.email": "Email",
+    "contact.reasonLabel": "Di cosa si tratta?",
+    "contact.reason1": "Booking / gig",
+    "contact.reason2": "Collab o remix",
+    "contact.reason3": "Guest list",
+    "contact.reason4": "Solo per salutare",
+    "contact.message": "Messaggio",
+    "contact.messagePlaceholder": "Scrivi quello che hai da dire.",
+    "contact.send": "Invia messaggio",
+    "contact.sending": "Invio…",
+    "contact.sent": "Inviato! Zwackery ti risponderà presto. 🙌",
+    "contact.failed": "Invio non riuscito. Scrivi invece a {email}.",
+    "contact.note":
+      "Occhio: aggiungi la tua chiave di accesso Web3Forms in src/config.ts per riceverli.",
+
+    "footer.tip": "Offri un caffè al DJ",
+    "footer.disclaimer":
+      "La nostra CDN registra il tuo indirizzo IP per motivi di sicurezza. Il modulo di contatto e i contenuti YouTube/Twitch incorporati condividono dati con i loro fornitori — nulla viene venduto o tracciato a scopo pubblicitario.",
+    "footer.siteBy": "Sito di {name}",
+
+    "a11y.newTab": "(si apre in una nuova scheda)",
+    "a11y.language": "Lingua",
+    "a11y.skipToSets": "Salta ai set",
+    "a11y.videoPlayer": "Lettore video",
+    "a11y.closeVideo": "Chiudi video",
+    "a11y.close": "CHIUDI",
+
+    "notFound.error": "Errore 404",
+    "notFound.heading": "Perso nel [[rave]]",
+    "notFound.blurb":
+      "Questa pagina ha sbagliato strada sulla via della macchina del fumo. Torniamo alla consolle.",
+    "notFound.back": "Torna alla House of Fun",
+    "notFound.stream": "Guarda lo stream",
+    "toast.notFound":
+      "Questa pagina non esiste. Ti riportiamo alla House of Fun.",
   },
 } as const;
 

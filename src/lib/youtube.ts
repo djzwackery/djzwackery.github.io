@@ -4,13 +4,12 @@
  * private and the videos are baked straight into the HTML.
  *
  * The live API is the source of truth. On any failure (no key, network error,
- * quota, empty result) it falls back to a local cache in `.cache/` — which CI
+ * quota, empty result) it falls back to a local cache in `.cache/`, which CI
  * persists between runs with actions/cache, so a flaky API never blanks the
  * feed. Nothing is committed to the repo.
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
+import { dirname, join } from "node:path";
 
 export interface Video {
   id: string;
@@ -40,9 +39,8 @@ interface YouTubeVideosResponse {
   items?: { id?: string; statistics?: { viewCount?: string } }[];
 }
 
-const CACHE_PATH = fileURLToPath(
-  new URL("../../.cache/youtube.json", import.meta.url),
-);
+/** Resolved from process.cwd(), not import.meta.url, see emotes.ts for why. */
+const CACHE_PATH = join(process.cwd(), ".cache", "youtube.json");
 const API_KEY = import.meta.env.YOUTUBE_API_KEY ?? process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID =
   import.meta.env.YOUTUBE_CHANNEL_ID ??
@@ -174,7 +172,7 @@ async function load(): Promise<Video[]> {
 /**
  * Newest first, matching the channel's own "Date added (newest)" view. The
  * API's `order=date` param and the on-disk cache are both trusted to already
- * be in this order, which isn't guaranteed — so it's re-sorted explicitly
+ * be in this order, which isn't guaranteed, so it's re-sorted explicitly
  * here rather than assumed.
  */
 function sortByPublishedDesc(videos: Video[]): Video[] {

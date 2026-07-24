@@ -7,14 +7,27 @@ import BackgroundVideo from "../components/BackgroundVideo.astro";
 import SocialRail from "../components/SocialRail.astro";
 import Logo from "../components/Logo.astro";
 import LangSwitcher from "../components/LangSwitcher.astro";
+import CoffeeIcon from "../components/CoffeeIcon.astro";
 import jivesFace from "../assets/bigjimjimo.webp";
 import { DJ_NAME, KOFI_URL } from "../config";
 import { useTranslations, getLang } from "../i18n";
 import { localeTags } from "../i18n/ui";
-import { getChannelEmotes } from "../lib/twitch-emotes";
+import { getEmotes } from "../lib/emotes";
 
-/** His channel emotes, fetched at build time and handed to the client script. */
-const channelEmotes = await getChannelEmotes();
+/**
+ * Zwackery's Twitch + 7TV emotes, fetched and self-hosted at build time (see
+ * lib/emotes.ts), grouped by source so the client can weight them and
+ * handed over as plain local URLs, no runtime fetch, no third-party host.
+ */
+const emotes = await getEmotes();
+const emotePayload = {
+  twitch: emotes
+    .filter((e) => e.source === "twitch")
+    .map((e) => `/emotes/${e.file}`),
+  seventv: emotes
+    .filter((e) => e.source === "seventv")
+    .map((e) => `/emotes/${e.file}`),
+};
 
 interface VideoLD {
   id: string;
@@ -50,7 +63,7 @@ const lang = getLang(Astro.currentLocale);
           }
           if (localStorage.getItem(KEY)) return;
           localStorage.setItem(KEY, "1");
-          const supported = ["ja", "de", "nl", "fr"];
+          const supported = ["ja", "de", "nl", "fr", "it"];
           const pref = (
             (navigator.languages && navigator.languages[0]) ||
             navigator.language ||
@@ -61,7 +74,7 @@ const lang = getLang(Astro.currentLocale);
           if (supported.indexOf(pref) !== -1)
             location.replace("/" + pref + "/");
         } catch {
-          /* localStorage unavailable (private browsing restriction) — skip redirect */
+          /* localStorage unavailable (private browsing restriction); skip redirect */
         }
       })();
     </script>
@@ -106,6 +119,7 @@ const lang = getLang(Astro.currentLocale);
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <CoffeeIcon />
                 {t("footer.tip")}
               </a>
             )
@@ -118,9 +132,11 @@ const lang = getLang(Astro.currentLocale);
             rel="noopener noreferrer"
           >
             <span class="footer__credit-swap">
-              <span class="footer__credit-txt is-default">Site by Jives</span>
+              <span class="footer__credit-txt is-default"
+                >{t("footer.siteBy", { name: "Jives" })}</span
+              >
               <span class="footer__credit-txt is-alt" aria-hidden="true"
-                >Site by BIG JIM</span
+                >{t("footer.siteBy", { name: "BIG JIM" })}</span
               >
             </span>
             <Image
@@ -132,6 +148,7 @@ const lang = getLang(Astro.currentLocale);
             />
           </a>
         </div>
+        <p class="footer__disclaimer">{t("footer.disclaimer")}</p>
       </div>
     </footer>
 
@@ -139,9 +156,9 @@ const lang = getLang(Astro.currentLocale);
 
     <script
       type="application/json"
-      data-channel-emotes
+      data-emotes
       is:inline
-      set:html={JSON.stringify(channelEmotes)}
+      set:html={JSON.stringify(emotePayload)}
     />
 
     <div class="toast" data-toast role="status" aria-live="polite">

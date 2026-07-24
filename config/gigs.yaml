@@ -1,9 +1,9 @@
 # Upcoming gigs.
 #
 # Each entry: date (ISO "YYYY-MM-DD"), location, and an optional url for
-# tickets/details. `event` and `venue` are both optional — whichever is set
+# tickets/details. `event` and `venue` are both optional, whichever is set
 # is shown, and if both are set they're shown together as "Event • Venue".
-# `image` is also optional — a fully-qualified URL to an externally-hosted
+# `image` is also optional: a fully-qualified URL to an externally-hosted
 # flyer/poster (e.g. from the ticketing site), used only in the JSON-LD, not
 # rendered on the page. There's no local asset pipeline for it, so it's
 # skipped entirely unless the value looks like a real URL (starts with

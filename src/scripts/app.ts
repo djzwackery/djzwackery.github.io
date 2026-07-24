@@ -1,24 +1,25 @@
 import {
   TWITCH_LOGIN,
-  TWITCH_USER_ID,
   TWITCH_PARENTS,
-  twitchEmoteUrl,
   FALLBACK_EMOJIS,
   CONTACT_ACCESS_KEY,
   BOOKING_EMAIL,
 } from "../config";
+import "./console-credit";
 
 /**
- * Channel emotes fetched at build time and injected as a JSON script tag;
- * empty array if the build-time fetch failed.
+ * Zwackery's Twitch + 7TV emotes, already fetched and self-hosted at build
+ * time (see lib/emotes.ts) and injected as a JSON script tag: plain local
+ * URLs, no runtime fetch; empty arrays if the build-time fetch failed.
  */
-const channelEmotes: { id: string; name: string }[] = (() => {
+const emotes: { twitch: string[]; seventv: string[] } = (() => {
   try {
-    return JSON.parse(
-      document.querySelector("[data-channel-emotes]")?.textContent || "[]",
+    const parsed = JSON.parse(
+      document.querySelector("[data-emotes]")?.textContent || "{}",
     );
+    return { twitch: parsed.twitch ?? [], seventv: parsed.seventv ?? [] };
   } catch {
-    return [];
+    return { twitch: [], seventv: [] };
   }
 })();
 
@@ -54,7 +55,7 @@ document.addEventListener("touchstart", () => {}, { passive: true });
     return;
   }
   vid.play().catch(() => {
-    /* autoplay blocked — poster remains */
+    /* autoplay blocked, poster remains */
   });
 })();
 
@@ -134,13 +135,13 @@ document.addEventListener("touchstart", () => {}, { passive: true });
   }, 3500);
 })();
 
-const emoteUrls = channelEmotes.map((e) => twitchEmoteUrl(e.id));
+const emoteUrls = emotes.twitch;
 const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
 let partyLayer: HTMLElement | null = null;
 let partyFlash: HTMLElement | null = null;
 /**
  * Caps concurrent particles instead of cooling down clicks, so spamming
- * stays instant. Kept modest — each particle is its own composited layer,
+ * stays instant. Kept modest: each particle is its own composited layer,
  * and Safari/iOS chokes well before 260 of those stay smooth.
  */
 const MAX_PARTY_BITS = 160;
@@ -179,7 +180,7 @@ function fireParty(originX: number, originY: number) {
 
   // A flat full-page tint reads as a muddy wash; radial gradient anchored to
   // the click point gives a real burst effect instead. Driven by
-  // Element.animate() (cancel-then-restart) rather than a CSS class toggle —
+  // Element.animate() (cancel-then-restart) rather than a CSS class toggle:
   // rapid-fire clicks on iOS could coalesce the remove/reflow/re-add into a
   // single paint and the flash would never visibly restart.
   if (!reduceMotion) {
@@ -278,7 +279,7 @@ function fireParty(originX: number, originY: number) {
     );
     // onfinish can silently never fire if Safari/iOS throttles or drops the
     // animation under load, which would leak the counter and eventually
-    // block every future burst — a fallback timeout guarantees cleanup.
+    // block every future burst; a fallback timeout guarantees cleanup.
     anim.onfinish = cleanup;
     setTimeout(cleanup, dur + 200);
   }
@@ -340,32 +341,15 @@ function fireParty(originX: number, originY: number) {
 const emoteRain = (() => {
   const layer = document.getElementById("emote-rain");
   let sources: string[] = [];
-  let fetched = false;
+  let loaded = false;
   let running = false;
   let spawnTimer: number | undefined;
 
-  async function loadEmotes() {
-    if (fetched) return;
-    fetched = true;
-    const twitch = channelEmotes.map((e) => twitchEmoteUrl(e.id));
-    let sevenTv: string[];
-    try {
-      const res = await fetch(
-        `https://7tv.io/v3/users/twitch/${TWITCH_USER_ID}`,
-      );
-      if (!res.ok) throw new Error(String(res.status));
-      const data = (await res.json()) as {
-        emote_set?: { emotes?: { id: string }[] };
-      };
-      const emotes = data.emote_set?.emotes ?? [];
-      sevenTv = emotes
-        .slice(0, 40)
-        .map((e) => `https://cdn.7tv.app/emote/${e.id}/2x.webp`);
-    } catch {
-      sevenTv = [];
-    }
+  function loadEmotes() {
+    if (loaded) return;
+    loaded = true;
     // Twitch emotes appear twice so they show up more often than 7TV emotes.
-    sources = [...twitch, ...twitch, ...sevenTv];
+    sources = [...emotes.twitch, ...emotes.twitch, ...emotes.seventv];
   }
 
   function spawnOne() {
@@ -412,10 +396,10 @@ const emoteRain = (() => {
     anim.onfinish = () => el.remove();
   }
 
-  async function start() {
+  function start() {
     if (running) return;
     running = true;
-    await loadEmotes();
+    loadEmotes();
     const tick = () => {
       if (!running) return;
       const burst = reduceMotion
@@ -477,7 +461,7 @@ function setLive(live: boolean) {
 
 /**
  * Minimal shape of the `Twitch` global the embed player script attaches to
- * `window` — there's no official types package for it.
+ * `window`; there's no official types package for it.
  */
 interface TwitchEmbedGlobal {
   Player: {
@@ -496,7 +480,7 @@ declare global {
 }
 
 /**
- * Live detection via a hidden Twitch embed's ONLINE/OFFLINE events — client-side,
+ * Live detection via a hidden Twitch embed's ONLINE/OFFLINE events: client-side,
  * no secrets, works on static hosting without a backend.
  */
 function initTwitch() {
@@ -572,10 +556,12 @@ function initTwitch() {
 
 /**
  * MLG mascot easter egg: click it (repeatedly) for hitmarkers, escalating
- * overlapping sfx/gifs, and a screen shake/strobe that ramps with the combo
- * — kicking in at 3 rapid clicks — and resets after a pause. Tier lands on
- * `body` as a plain class — see the CSS for why the shake itself targets
- * main/.footer instead of body directly.
+ * overlapping sfx/gifs, and a screen shake/strobe that ramps with the combo,
+ * kicking in at 3 rapid clicks, and resets after a pause. Tier lands on
+ * `body` as a plain class; see the CSS for why the shake itself targets
+ * main/.footer instead of body directly. Clicking frantically enough
+ * (5 clicks within 200ms of each other) triggers a one-off "rapid crosshair
+ * meme" burst across the mascot, gated by its own 5s cooldown.
  */
 (() => {
   const mascot = document.querySelector<HTMLElement>("[data-mascot]");
@@ -593,7 +579,7 @@ function initTwitch() {
     "/mlg/mum-get-the-camera.mp3",
     "/mlg/sanic-the-hegehog.mp3",
   ];
-  /** 11-17s tracks — only one plays per peak-tier episode, not per click. */
+  /** 11-17s tracks; only one plays per peak-tier episode, not per click. */
   const chaosTracks = [
     "/mlg/my-hope-will-never-die.mp3",
     "/mlg/wombo-combo.mp3",
@@ -618,6 +604,11 @@ function initTwitch() {
   const COMBO_TIMEOUT = 1200;
   const MAX_COMBO = 20;
   const FADE_OUT_MS = 500;
+  /** Tighter than COMBO_TIMEOUT: this measures genuinely frantic clicking, not just a sustained combo. */
+  const RAPID_CLICK_GAP = 200;
+  const RAPID_CLICKS_NEEDED = 5;
+  const CROSSHAIR_MEME_COOLDOWN = 5000;
+  const CROSSHAIR_COUNT = 16;
   const pick = (pool: string[]) =>
     pool[Math.floor(Math.random() * pool.length)];
 
@@ -627,6 +618,9 @@ function initTwitch() {
   let liveGifs = 0;
   let peakShown = false;
   let resetTimer: ReturnType<typeof setTimeout>;
+  let rapidCombo = 0;
+  let lastRapidClick = 0;
+  let lastCrosshairMeme = 0;
 
   /** Tracked (not just counted) so a reset can fade every one of these out. */
   const activeAudio: { audio: HTMLAudioElement; release: () => void }[] = [];
@@ -642,7 +636,7 @@ function initTwitch() {
     const audio = new Audio(src);
     audio.volume = volume;
     // release() can be reached from "ended", the fallback timeout below, and
-    // a fade-out all racing each other — once() keeps a double-fire from
+    // a fade-out all racing each other; once() keeps a double-fire from
     // double-decrementing liveChaosTracks.
     const entry: { audio: HTMLAudioElement; release: () => void } = {
       audio,
@@ -689,11 +683,25 @@ function initTwitch() {
       mark.style.animation = "none";
       setTimeout(() => mark.remove(), 300);
     } else {
-      // animationend can silently never fire under Safari/iOS throttling —
+      // animationend can silently never fire under Safari/iOS throttling;
       // a fallback timeout guarantees the node still gets cleaned up.
       const cleanup = once(() => mark.remove());
       mark.addEventListener("animationend", cleanup, { once: true });
       setTimeout(cleanup, 550);
+    }
+  };
+
+  /** Rapid-click easter egg: a burst of hitmarkers scattered across the mascot, staggered like a montage. */
+  const spawnCrosshairMeme = () => {
+    const rect = mascot.getBoundingClientRect();
+    for (let i = 0; i < CROSSHAIR_COUNT; i++) {
+      setTimeout(() => {
+        spawnHitmarker(
+          rect.left + Math.random() * rect.width,
+          rect.top + Math.random() * rect.height,
+        );
+        playSfx("/mlg/hitmarker.mp3", 0.6);
+      }, i * 40);
     }
   };
 
@@ -736,6 +744,18 @@ function initTwitch() {
     combo =
       now - lastClick > COMBO_TIMEOUT ? 1 : Math.min(combo + 1, MAX_COMBO);
     lastClick = now;
+
+    rapidCombo = now - lastRapidClick <= RAPID_CLICK_GAP ? rapidCombo + 1 : 1;
+    lastRapidClick = now;
+    if (
+      !reduceMotion &&
+      rapidCombo >= RAPID_CLICKS_NEEDED &&
+      now - lastCrosshairMeme >= CROSSHAIR_MEME_COOLDOWN
+    ) {
+      lastCrosshairMeme = now;
+      rapidCombo = 0;
+      spawnCrosshairMeme();
+    }
 
     playSfx("/mlg/hitmarker.mp3", 0.6);
     spawnHitmarker(e.clientX, e.clientY);

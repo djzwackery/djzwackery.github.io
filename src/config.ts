@@ -28,7 +28,7 @@ export const MARQUEE_WORDS = [
   "GABBER",
 ];
 
-/** Marquee words shown while he's live on Twitch. */
+/** Marquee words shown while Zwackery's live on Twitch. */
 export const MARQUEE_WORDS_LIVE = [
   "● LIVE NOW",
   "WE'RE LIVE ON TWITCH",
@@ -104,9 +104,9 @@ export const SOCIALS: Social[] = [
 ];
 
 /**
- * Twitch CDN URL for an emote id (works for both his channel's `emotesv2_…`
- * ids and classic numeric ids). His channel emotes are fetched at build time
- * by src/lib/twitch-emotes.ts (see that file for the caching/fallback story).
+ * Twitch CDN URL for an emote id (works for both Zwackery's channel's `emotesv2_…`
+ * ids and classic numeric ids). Used only at build time, src/lib/emotes.ts
+ * downloads and self-hosts these, see that file for the caching/fallback story.
  */
 export const twitchEmoteUrl = (
   id: string | number,

@@ -8,7 +8,7 @@ export default defineConfig({
   site: "https://djzwackery.com",
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "ja", "de", "nl", "fr"],
+    locales: ["en", "ja", "de", "nl", "fr", "it"],
     routing: { prefixDefaultLocale: false },
   },
   integrations: [
@@ -21,6 +21,7 @@ export default defineConfig({
           de: "de-DE",
           nl: "nl-NL",
           fr: "fr-FR",
+          it: "it-IT",
         },
       },
     }),

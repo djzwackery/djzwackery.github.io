@@ -5,12 +5,20 @@ import JP from "country-flag-icons/string/3x2/JP";
 import DE from "country-flag-icons/string/3x2/DE";
 import NL from "country-flag-icons/string/3x2/NL";
 import FR from "country-flag-icons/string/3x2/FR";
+import IT from "country-flag-icons/string/3x2/IT";
 
 interface Props {
   lang: Lang;
 }
 
-const svgs: Record<Lang, string> = { en: AU, ja: JP, de: DE, nl: NL, fr: FR };
+const svgs: Record<Lang, string> = {
+  en: AU,
+  ja: JP,
+  de: DE,
+  nl: NL,
+  fr: FR,
+  it: IT,
+};
 const { lang } = Astro.props;
 ---
 
