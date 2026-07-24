@@ -536,7 +536,10 @@ function initTwitch() {
   });
 })();
 
-/** Easter egg: clicking the footer logo plays a clip, restarting rather than layering on repeat clicks. */
+/**
+ * Easter egg: clicking the footer logo plays a clip, restarting rather
+ * than layering on repeat clicks.
+ */
 (() => {
   const trigger = document.querySelector<HTMLElement>(".footer__logo");
   if (!trigger) return;
@@ -585,7 +588,10 @@ function initTwitch() {
   });
 })();
 
-/** Dutch easter egg: full-screen meme on NL, timed from actual image load not page load. */
+/**
+ * Dutch easter egg: full-screen meme on NL, timed from actual image load
+ * rather than page load.
+ */
 (() => {
   if (document.documentElement.lang !== "nl") return;
   const overlay = document.createElement("div");
