@@ -17,6 +17,8 @@ export interface Video {
   title: string;
   thumb: string;
   published: string;
+  /** 0 if the statistics lookup failed or the video hides its view count. */
+  viewCount: number;
 }
 
 /** Shape of the fields we read from a YouTube Data API v3 search result item. */
@@ -32,6 +34,10 @@ interface YouTubeSearchItem {
 interface YouTubeSearchResponse {
   items?: YouTubeSearchItem[];
   error?: { message?: string };
+}
+
+interface YouTubeVideosResponse {
+  items?: { id?: string; statistics?: { viewCount?: string } }[];
 }
 
 const CACHE_PATH = fileURLToPath(
@@ -73,7 +79,40 @@ function normalize(json: YouTubeSearchResponse): Video[] {
         it.snippet?.thumbnails?.high?.url ??
         `https://i.ytimg.com/vi/${it.id.videoId}/hqdefault.jpg`,
       published: it.snippet?.publishedAt ?? new Date().toISOString(),
+      viewCount: 0,
     }));
+}
+
+/**
+ * `search.list` doesn't return statistics, so view counts need a follow-up
+ * `videos.list` call. Best-effort: a failure here just means cards render
+ * without a view count, not a failed build.
+ */
+async function fetchViewCounts(ids: string[]): Promise<Map<string, number>> {
+  const counts = new Map<string, number>();
+  if (ids.length === 0) return counts;
+  try {
+    const url =
+      "https://www.googleapis.com/youtube/v3/videos?" +
+      new URLSearchParams({
+        key: API_KEY!,
+        part: "statistics",
+        id: ids.join(","),
+      });
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = (await res.json()) as YouTubeVideosResponse;
+    for (const item of json.items ?? []) {
+      if (item.id && item.statistics?.viewCount) {
+        counts.set(item.id, Number(item.statistics.viewCount));
+      }
+    }
+  } catch (err) {
+    console.warn(
+      `[youtube] Failed to fetch view counts (${(err as Error).message}) — showing videos without them.`,
+    );
+  }
+  return counts;
 }
 
 async function readCache(): Promise<Video[] | null> {
@@ -118,6 +157,8 @@ async function load(): Promise<Video[]> {
     if (!res.ok) throw new Error(json.error?.message ?? `HTTP ${res.status}`);
     const videos = normalize(json);
     if (videos.length === 0) throw new Error("no videos returned");
+    const viewCounts = await fetchViewCounts(videos.map((v) => v.id));
+    for (const v of videos) v.viewCount = viewCounts.get(v.id) ?? 0;
     await writeCache(videos);
     console.log(`[youtube] Fetched ${videos.length} videos from the API.`);
     return videos;
@@ -130,7 +171,19 @@ async function load(): Promise<Video[]> {
   }
 }
 
+/**
+ * Newest first, matching the channel's own "Date added (newest)" view. The
+ * API's `order=date` param and the on-disk cache are both trusted to already
+ * be in this order, which isn't guaranteed — so it's re-sorted explicitly
+ * here rather than assumed.
+ */
+function sortByPublishedDesc(videos: Video[]): Video[] {
+  return [...videos].sort(
+    (a, b) => Date.parse(b.published) - Date.parse(a.published),
+  );
+}
+
 /** Get the latest videos (memoized for the whole build). */
 export function getVideos(): Promise<Video[]> {
-  return (memo ??= load());
+  return (memo ??= load().then(sortByPublishedDesc));
 }

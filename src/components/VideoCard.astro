@@ -6,17 +6,50 @@ interface Props {
   title: string;
   thumb: string;
   published: string;
+  viewCount: number;
 }
-const { id, title, thumb, published } = Astro.props;
+const { id, title, thumb, published, viewCount } = Astro.props;
 
 const t = useTranslations(Astro.currentLocale);
 const lang = getLang(Astro.currentLocale);
 const dateLocale = lang === "en" ? "en-AU" : lang;
-const date = new Date(published).toLocaleDateString(dateLocale, {
+
+const absoluteDate = new Date(published).toLocaleDateString(dateLocale, {
   day: "numeric",
   month: "short",
   year: "numeric",
 });
+
+/** "2 days ago", localized — matches how YouTube itself timestamps videos. */
+function relativeDate(iso: string): string {
+  const rtf = new Intl.RelativeTimeFormat(dateLocale, { numeric: "auto" });
+  const diffSeconds = (new Date(iso).getTime() - Date.now()) / 1000;
+  const units: [Intl.RelativeTimeFormatUnit, number][] = [
+    ["year", 31536000],
+    ["month", 2592000],
+    ["week", 604800],
+    ["day", 86400],
+    ["hour", 3600],
+    ["minute", 60],
+  ];
+  for (const [unit, secondsInUnit] of units) {
+    if (Math.abs(diffSeconds) >= secondsInUnit) {
+      return rtf.format(Math.round(diffSeconds / secondsInUnit), unit);
+    }
+  }
+  return rtf.format(Math.round(diffSeconds), "second");
+}
+
+const relative = relativeDate(published);
+const views =
+  viewCount > 0
+    ? t("videos.views", {
+        count: new Intl.NumberFormat(dateLocale, {
+          notation: "compact",
+          compactDisplay: "short",
+        }).format(viewCount),
+      })
+    : null;
 ---
 
 <a
@@ -49,6 +82,9 @@ const date = new Date(published).toLocaleDateString(dateLocale, {
   </span>
   <span class="card__body">
     <span class="card__title">{title}</span>
-    <span class="card__date">{date}</span>
+    <span class="card__meta">
+      {views && <span class="card__views">{views} · </span>}
+      <time datetime={published} title={absoluteDate}>{relative}</time>
+    </span>
   </span>
 </a>

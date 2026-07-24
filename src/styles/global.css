@@ -713,7 +713,8 @@ h3 {
   overflow: hidden;
 }
 
-.card__date {
+.card__meta {
+  display: block;
   font-family: var(--font-label);
   font-size: var(--fs-label);
   color: var(--ink-dim);

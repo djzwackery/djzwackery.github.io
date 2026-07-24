@@ -7,6 +7,7 @@ interface Video {
   title: string;
   thumb: string;
   published: string;
+  viewCount: number;
 }
 interface Props {
   videos: Video[];
@@ -33,6 +34,7 @@ const t = useTranslations(Astro.currentLocale);
             title={v.title}
             thumb={v.thumb}
             published={v.published}
+            viewCount={v.viewCount}
           />
         ))}
       </div>

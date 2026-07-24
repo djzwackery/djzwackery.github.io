@@ -2,9 +2,11 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { load as parseYaml } from "js-yaml";
-import { useTranslations, highlight } from "../i18n";
+import { useTranslations, getLang, highlight } from "../i18n";
 
 const t = useTranslations(Astro.currentLocale);
+const lang = getLang(Astro.currentLocale);
+const dateLocale = lang === "en" ? "en-AU" : lang;
 
 interface Gig {
   date: string;
@@ -28,8 +30,8 @@ const upcoming = ((parseYaml(raw) as Gig[] | null) ?? [])
 function fmt(iso: string) {
   const d = new Date(iso);
   return {
-    day: d.toLocaleDateString("en-GB", { day: "2-digit" }),
-    mon: d.toLocaleDateString("en-GB", { month: "short" }).toUpperCase(),
+    day: d.toLocaleDateString(dateLocale, { day: "2-digit" }),
+    mon: d.toLocaleDateString(dateLocale, { month: "short" }).toUpperCase(),
   };
 }
 ---
