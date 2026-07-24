@@ -704,6 +704,7 @@ function initTwitch() {
     img.className = "mlg-overlay";
     img.src = pick(gifPool);
     img.alt = "";
+    img.decoding = "async";
     // jitter around the click point, clamped so it can't spawn off-screen
     const left = Math.min(
       Math.max(x + (Math.random() - 0.5) * 300, 40),
@@ -715,7 +716,7 @@ function initTwitch() {
     );
     img.style.left = `${left}px`;
     img.style.top = `${top}px`;
-    img.style.rotate = `${(Math.random() - 0.5) * 20}deg`;
+    img.style.setProperty("--mlg-rotate", `${(Math.random() - 0.5) * 20}deg`);
     document.body.appendChild(img);
     const cleanup = once(() => {
       img.remove();

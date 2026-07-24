@@ -979,27 +979,30 @@ h3 {
   z-index: 290;
   max-width: min(50vw, 380px);
   max-height: min(50vh, 380px);
-  translate: -50% -50%;
   /* no filter: drop-shadow — up to 6 concurrent animated WebPs re-tracing an
      alpha silhouette every frame is a real Safari/iOS jank risk, and a
      box-shadow would just draw a visible rectangle behind the transparency */
   pointer-events: none;
+  /* one combined `transform` (not separate translate/rotate/scale) compositor-
+     animates far more reliably in Safari, which stutters badly animating
+     several of those individual properties on multiple elements at once */
+  will-change: transform, opacity;
   animation: mlg-overlay-flash 1.4s ease-out forwards;
 }
 
 @keyframes mlg-overlay-flash {
   0% {
     opacity: 0;
-    scale: 0.4;
+    transform: translate(-50%, -50%) rotate(var(--mlg-rotate, 0deg)) scale(0.4);
   }
 
   15% {
     opacity: 1;
-    scale: 1.05;
+    transform: translate(-50%, -50%) rotate(var(--mlg-rotate, 0deg)) scale(1.05);
   }
 
   25% {
-    scale: 1;
+    transform: translate(-50%, -50%) rotate(var(--mlg-rotate, 0deg)) scale(1);
   }
 
   75% {
@@ -1008,7 +1011,7 @@ h3 {
 
   100% {
     opacity: 0;
-    scale: 0.9;
+    transform: translate(-50%, -50%) rotate(var(--mlg-rotate, 0deg)) scale(0.9);
   }
 }
 
