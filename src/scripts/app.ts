@@ -590,6 +590,7 @@ function initTwitch() {
     "/mlg/sniper.mp3",
     "/mlg/intervention-triple-kill.mp3",
     "/mlg/pufferfish-augh.mp3",
+    "/mlg/mum-get-the-camera.mp3",
   ];
   /** 11-17s tracks — only one plays per peak-tier episode, not per click. */
   const chaosTracks = [
