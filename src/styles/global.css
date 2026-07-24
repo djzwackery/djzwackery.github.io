@@ -766,7 +766,10 @@ h3 {
 }
 
 .lightbox__close {
-  /* justify/align-self pin the corner explicitly — WebKit can ignore the insets alone here */
+  /*
+   * justify/align-self pin the corner explicitly — WebKit can ignore
+   * the insets alone here.
+   */
   position: absolute;
   inset-block-start: 1.25rem;
   inset-inline-end: 1.25rem;
