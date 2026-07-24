@@ -1214,6 +1214,8 @@ body.mlg-5 .footer {
   cursor: pointer;
   /* without this, rapid taps read as double-tap-to-zoom on iOS instead of clicks */
   touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .about__mascot-frame {
@@ -1233,6 +1235,9 @@ body.mlg-5 .footer {
   object-fit: contain;
   filter: drop-shadow(-6px 6px 0 rgba(255, 31, 143, 0.28));
   transition: opacity 0.35s ease;
+  /* without this, a rapid click that drifts a pixel or two starts the native image-drag ghost */
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 /* the back-view swap is a hover/tap easter egg, not a preloaded critical asset */
@@ -1612,6 +1617,8 @@ body.mlg-5 .footer {
   width: min(240px, 46vw);
   flex: none;
   cursor: pointer;
+  /* without this, rapid taps read as double-tap-to-zoom on iOS instead of clicks */
+  touch-action: manipulation;
 }
 
 /* same lift-on-hover, press-on-click feel as .btn, scaled off the wordmark's own drop-shadow */

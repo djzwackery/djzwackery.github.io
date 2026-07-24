@@ -591,6 +591,7 @@ function initTwitch() {
     "/mlg/intervention-triple-kill.mp3",
     "/mlg/pufferfish-augh.mp3",
     "/mlg/mum-get-the-camera.mp3",
+    "/mlg/sanic-the-hegehog.mp3",
   ];
   /** 11-17s tracks — only one plays per peak-tier episode, not per click. */
   const chaosTracks = [
@@ -608,6 +609,8 @@ function initTwitch() {
     "/mlg/foodguy.webp",
     "/mlg/takeaway.webp",
     "/mlg/pufferfish.webp",
+    "/mlg/food-gov.webp",
+    "/mlg/takeaway2.webp",
   ];
   const MAX_LIVE_AUDIO = 12;
   const MAX_LIVE_CHAOS_TRACKS = 2;
