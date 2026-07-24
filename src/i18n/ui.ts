@@ -61,6 +61,7 @@ export const ui = {
       "No sets loaded yet. The feed refreshes soon, so catch him live on Twitch in the meantime.",
     "videos.play": "Play",
     "videos.views": "{count} views",
+    "videos.new": "New",
 
     "contact.kicker": "Get in touch",
     "contact.heading": "Drop Zwackery [[a line]]",
@@ -131,6 +132,7 @@ export const ui = {
       "まだセットが読み込まれていません。フィードは間もなく更新されます。それまではTwitchのライブをチェック。",
     "videos.play": "再生",
     "videos.views": "{count} 回視聴",
+    "videos.new": "新着",
 
     "contact.kicker": "お問い合わせ",
     "contact.heading": "Zwackery に [[メッセージ]]",
@@ -201,6 +203,7 @@ export const ui = {
       "Noch keine Sets geladen. Der Feed wird bald aktualisiert – schau ihm solange live auf Twitch zu.",
     "videos.play": "Abspielen",
     "videos.views": "{count} Aufrufe",
+    "videos.new": "Neu",
 
     "contact.kicker": "Kontakt",
     "contact.heading": "Schreib Zwackery [[eine Nachricht]]",
@@ -272,6 +275,7 @@ export const ui = {
       "Nog geen sets geladen. De feed wordt binnenkort ververst; bekijk hem ondertussen live op Twitch.",
     "videos.play": "Afspelen",
     "videos.views": "{count} weergaven",
+    "videos.new": "Nieuw",
 
     "contact.kicker": "Contact",
     "contact.heading": "Stuur Zwackery [[een bericht]]",
@@ -342,6 +346,7 @@ export const ui = {
       "Aucun set chargé pour l'instant. Le flux se met à jour bientôt ; en attendant, retrouve-le en live sur Twitch.",
     "videos.play": "Lire",
     "videos.views": "{count} vues",
+    "videos.new": "Nouveau",
 
     "contact.kicker": "Contact",
     "contact.heading": "Écris [[un mot]] à Zwackery",

@@ -28,13 +28,14 @@ const t = useTranslations(Astro.currentLocale);
   {
     videos.length > 0 ? (
       <div class="wall">
-        {videos.map((v) => (
+        {videos.map((v, i) => (
           <VideoCard
             id={v.id}
             title={v.title}
             thumb={v.thumb}
             published={v.published}
             viewCount={v.viewCount}
+            isLatest={i === 0}
           />
         ))}
       </div>

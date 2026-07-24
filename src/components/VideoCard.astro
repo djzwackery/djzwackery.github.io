@@ -7,8 +7,16 @@ interface Props {
   thumb: string;
   published: string;
   viewCount: number;
+  isLatest?: boolean;
 }
-const { id, title, thumb, published, viewCount } = Astro.props;
+const {
+  id,
+  title,
+  thumb,
+  published,
+  viewCount,
+  isLatest = false,
+} = Astro.props;
 
 const t = useTranslations(Astro.currentLocale);
 const lang = getLang(Astro.currentLocale);
@@ -67,6 +75,13 @@ const views =
       loading="lazy"
       decoding="async"
     />
+    {
+      isLatest && (
+        <span class="card__badge" aria-hidden="true">
+          {t("videos.new")}
+        </span>
+      )
+    }
     <span class="card__play" aria-hidden="true">
       <svg viewBox="0 0 100 100">
         <circle

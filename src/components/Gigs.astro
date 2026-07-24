@@ -34,6 +34,15 @@ function fmt(iso: string) {
     mon: d.toLocaleDateString(dateLocale, { month: "short" }).toUpperCase(),
   };
 }
+
+/** Full date (with year) for the tile's `title` — the tile itself omits the year to stay compact. */
+function fullDate(iso: string) {
+  return new Date(iso).toLocaleDateString(dateLocale, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
 ---
 
 {
@@ -54,10 +63,14 @@ function fmt(iso: string) {
           const hasVenue = Boolean(g.venue);
           return (
             <li class="gig">
-              <div class="gig__date">
+              <time
+                class="gig__date"
+                datetime={g.date}
+                title={fullDate(g.date)}
+              >
                 <span class="gig__day">{day}</span>
                 <span class="gig__mon">{mon}</span>
-              </div>
+              </time>
               <div class="gig__info">
                 {(hasEvent || hasVenue) && (
                   <span class="gig__venue">
