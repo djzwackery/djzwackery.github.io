@@ -39,6 +39,32 @@ const lang = getLang(Astro.currentLocale);
 <html lang={localeTags[lang]} data-live="false">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      /** First-visit-only device-language redirect; supported list mirrors astro.config.mjs's locales. */
+      (function () {
+        try {
+          const KEY = "zw-lang-redirected";
+          if (location.pathname !== "/") {
+            localStorage.setItem(KEY, "1");
+            return;
+          }
+          if (localStorage.getItem(KEY)) return;
+          localStorage.setItem(KEY, "1");
+          const supported = ["ja", "de", "nl", "fr"];
+          const pref = (
+            (navigator.languages && navigator.languages[0]) ||
+            navigator.language ||
+            ""
+          )
+            .split("-")[0]
+            .toLowerCase();
+          if (supported.indexOf(pref) !== -1)
+            location.replace("/" + pref + "/");
+        } catch {
+          /* localStorage unavailable (private browsing restriction) — skip redirect */
+        }
+      })();
+    </script>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -56,7 +82,7 @@ const lang = getLang(Astro.currentLocale);
     <Seo title={title} videos={videos} index={index} />
   </head>
   <body>
-    <a class="skip-link" href="#videos">Skip to sets</a>
+    <a class="skip-link" href="#videos">{t("a11y.skipToSets")}</a>
     <BackgroundVideo />
     <Marquee />
 
@@ -127,12 +153,12 @@ const lang = getLang(Astro.currentLocale);
       id="lightbox"
       role="dialog"
       aria-modal="true"
-      aria-label="Video player"
+      aria-label={t("a11y.videoPlayer")}
     >
       <button
         class="lightbox__close"
         id="lightbox-close"
-        aria-label="Close video">✕ CLOSE</button
+        aria-label={t("a11y.closeVideo")}>✕ {t("a11y.close")}</button
       >
       <div class="lightbox__frame" id="lightbox-frame"></div>
     </div>

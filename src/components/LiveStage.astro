@@ -9,7 +9,11 @@ import { useTranslations, highlight } from "../i18n";
 const t = useTranslations(Astro.currentLocale);
 ---
 
-<section class="stage wrap section" aria-label="Live Twitch stream" data-stage>
+<section
+  class="stage wrap section"
+  aria-label={t("live.streamAriaLabel")}
+  data-stage
+>
   <div class="section__head">
     <h2 class="screamer" set:html={highlight(t("live.heading"))} />
   </div>

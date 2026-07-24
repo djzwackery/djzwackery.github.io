@@ -16,13 +16,10 @@ const t = useTranslations(Astro.currentLocale);
  * client script so every shot takes a turn at the front.
  */
 const shots = [
-  { src: handsup, alt: "DJ Zwackery with hands in the air above the crowd" },
-  { src: magenta, alt: "DJ Zwackery on the decks bathed in hot magenta light" },
-  {
-    src: wall,
-    alt: "DJ Zwackery mixing in front of the giant ZWACKERY LED wall",
-  },
-  { src: fire, alt: "DJ Zwackery mixing in front of a wall of flames" },
+  { src: handsup, alt: t("hero.photo1Alt") },
+  { src: magenta, alt: t("hero.photo2Alt") },
+  { src: wall, alt: t("hero.photo3Alt") },
+  { src: fire, alt: t("hero.photo4Alt") },
 ];
 ---
 
@@ -67,11 +64,7 @@ const shots = [
     </a>
   </div>
 
-  <div
-    class="hero__fan"
-    data-hero-fan
-    aria-label="Photos of DJ Zwackery playing live"
-  >
+  <div class="hero__fan" data-hero-fan aria-label={t("hero.fanAriaLabel")}>
     {
       shots.map((s, i) => (
         <Picture

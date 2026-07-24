@@ -6,7 +6,12 @@ import poseAlt from "../assets/zwack-pose-2.png";
 
 const t = useTranslations(Astro.currentLocale);
 
-const facts = ["Melbourne, AU", "Hardcore", "150+ BPM", "Twitch Partner"];
+const facts = [
+  t("about.location"),
+  "Hardcore",
+  "150+ BPM",
+  t("about.twitchPartner"),
+];
 ---
 
 <section class="section wrap about" id="about" aria-labelledby="about-head">
@@ -27,12 +32,12 @@ const facts = ["Melbourne, AU", "Hardcore", "150+ BPM", "Twitch Partner"];
           facts.map((f) => (
             <li>
               {f}
-              {f === "Twitch Partner" && (
+              {f === t("about.twitchPartner") && (
                 <svg
                   width="20"
                   height="20"
                   viewBox="0 0 16 16"
-                  aria-label="Verified Partner"
+                  aria-label={t("about.verifiedPartner")}
                 >
                   <path
                     fill="#a970ff"

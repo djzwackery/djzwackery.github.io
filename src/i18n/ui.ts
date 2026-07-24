@@ -40,17 +40,27 @@ export const ui = {
     "hero.followTwitch": "Follow on Twitch",
     "hero.subscribeYoutube": "Subscribe on YouTube",
     "hero.watchSets": "Watch the latest sets",
+    "hero.photo1Alt": "DJ Zwackery with hands in the air above the crowd",
+    "hero.photo2Alt": "DJ Zwackery on the decks bathed in hot magenta light",
+    "hero.photo3Alt":
+      "DJ Zwackery mixing in front of the giant ZWACKERY LED wall",
+    "hero.photo4Alt": "DJ Zwackery mixing in front of a wall of flames",
+    "hero.fanAriaLabel": "Photos of DJ Zwackery playing live",
 
     "status.offline": "Offline",
     "status.live": "Live now",
 
     "live.heading": "We're [[LIVE]] — get in here!",
+    "live.streamAriaLabel": "Live Twitch stream",
 
     "about.heading": "Who's [[Zwackery]]?",
     "about.bio1":
       "DJ Zwackery is a hardcore DJ out of Melbourne, Australia, bringing the House of Fun to dancefloors and living rooms alike: 150-plus BPM of euphoric, hands-in-the-air rave.",
     "about.bio2":
       "New sets land on YouTube every week, and the party spills onto Twitch whenever he goes live. Pro DJ, pro lad.",
+    "about.location": "Melbourne, AU",
+    "about.twitchPartner": "Twitch Partner",
+    "about.verifiedPartner": "Verified Partner",
 
     "gigs.heading": "Catch him in the [[flesh]]",
     "gigs.details": "Details",
@@ -89,6 +99,10 @@ export const ui = {
 
     "a11y.newTab": "(opens in new tab)",
     "a11y.language": "Language",
+    "a11y.skipToSets": "Skip to sets",
+    "a11y.videoPlayer": "Video player",
+    "a11y.closeVideo": "Close video",
+    "a11y.close": "CLOSE",
 
     "notFound.error": "Error 404",
     "notFound.heading": "Lost in [[the rave]]",
@@ -109,19 +123,28 @@ export const ui = {
     "hero.tagline":
       "メルボルン発のハードコアDJ。House of Funの新セットを毎週、Twitchでライブ配信。",
     "hero.followTwitch": "Twitchでフォロー",
-    "hero.subscribeYoutube": "YouTubeで登録",
+    "hero.subscribeYoutube": "YouTubeでチャンネル登録",
     "hero.watchSets": "最新のセットを観る",
+    "hero.photo1Alt": "群衆の上で両手を挙げるDJ Zwackery",
+    "hero.photo2Alt": "鮮やかなマゼンタの光に包まれてデッキに立つDJ Zwackery",
+    "hero.photo3Alt": "巨大なZWACKERY LEDウォールの前でプレイするDJ Zwackery",
+    "hero.photo4Alt": "炎の壁の前でプレイするDJ Zwackery",
+    "hero.fanAriaLabel": "ライブ中のDJ Zwackeryの写真",
 
     "status.offline": "オフライン",
     "status.live": "配信中",
 
     "live.heading": "ただいま [[LIVE]] 配信中 — 集まれ！",
+    "live.streamAriaLabel": "Twitchライブ配信",
 
     "about.heading": "[[Zwackery]] ってどんな人？",
     "about.bio1":
       "DJ Zwackeryはオーストラリア・メルボルン出身のハードコアDJ。クラブのフロアからお茶の間まで、House of Funをお届け。150BPM超の多幸感あふれる、両手を上げて楽しむレイブサウンド。",
     "about.bio2":
-      "新しいセットは毎週YouTubeで公開。ライブのときはTwitchでパーティーがそのまま生中継。Pro DJ, pro lad。",
+      "新しいセットは毎週YouTubeで公開。ライブのときはTwitchでパーティーがそのまま生中継。Pro DJ, pro相棒。",
+    "about.location": "メルボルン（AU）",
+    "about.twitchPartner": "Twitchパートナー",
+    "about.verifiedPartner": "認証済みパートナー",
 
     "gigs.heading": "生で [[会おう]]",
     "gigs.details": "詳細",
@@ -135,20 +158,20 @@ export const ui = {
     "videos.new": "新着",
 
     "contact.kicker": "お問い合わせ",
-    "contact.heading": "Zwackery に [[メッセージ]]",
+    "contact.heading": "Zwackery に [[メッセージ]] を送ろう",
     "contact.blurb":
       "ブッキング、コラボ、ゲストリスト、あるいは「あのセット最高だった」の一言でも。どんな内容でも直接受信箱に届き、必ず返信します。",
     "contact.orEmail": "またはメール：",
     "contact.name": "お名前",
-    "contact.namePlaceholder": "どなたですか？",
+    "contact.namePlaceholder": "お名前は？",
     "contact.email": "メールアドレス",
-    "contact.reasonLabel": "ご用件",
+    "contact.reasonLabel": "どんな話？",
     "contact.reason1": "ブッキング／ギグ",
     "contact.reason2": "コラボ／リミックス",
     "contact.reason3": "ゲストリスト",
-    "contact.reason4": "ごあいさつ",
+    "contact.reason4": "あいさつだけ",
     "contact.message": "メッセージ",
-    "contact.messagePlaceholder": "ご自由にどうぞ。",
+    "contact.messagePlaceholder": "言いたいこと、書いてね。",
     "contact.send": "送信",
     "contact.sending": "送信中…",
     "contact.sent": "送信しました！Zwackeryから連絡します。🙌",
@@ -160,15 +183,18 @@ export const ui = {
 
     "a11y.newTab": "（新しいタブで開きます）",
     "a11y.language": "言語",
+    "a11y.skipToSets": "セット一覧へスキップ",
+    "a11y.videoPlayer": "動画プレーヤー",
+    "a11y.closeVideo": "動画を閉じる",
+    "a11y.close": "閉じる",
 
     "notFound.error": "エラー 404",
     "notFound.heading": "レイブで [[迷子]]",
     "notFound.blurb":
-      "このページはスモークマシンへ向かう途中で道に迷いました。デッキまでお戻りください。",
+      "このページはスモークマシンへ向かう途中で道に迷いました。デッキに戻ろう。",
     "notFound.back": "House of Funに戻る",
     "notFound.stream": "配信を観る",
-    "toast.notFound":
-      "そのページは見つかりません。House of Funへお連れします。",
+    "toast.notFound": "そのページは見つかりません。House of Funに戻ろう。",
   },
 
   de: {
@@ -182,19 +208,30 @@ export const ui = {
     "hero.followTwitch": "Auf Twitch folgen",
     "hero.subscribeYoutube": "Auf YouTube abonnieren",
     "hero.watchSets": "Neueste Sets ansehen",
+    "hero.photo1Alt": "DJ Zwackery mit erhobenen Händen über der Menge",
+    "hero.photo2Alt":
+      "DJ Zwackery an den Decks, getaucht in intensives Magentalicht",
+    "hero.photo3Alt":
+      "DJ Zwackery beim Mixen vor der riesigen ZWACKERY-LED-Wand",
+    "hero.photo4Alt": "DJ Zwackery beim Mixen vor einer Feuerwand",
+    "hero.fanAriaLabel": "Fotos von DJ Zwackery bei einem Live-Auftritt",
 
     "status.offline": "Offline",
     "status.live": "Jetzt live",
 
-    "live.heading": "Wir sind [[LIVE]] — komm rein",
+    "live.heading": "Wir sind [[LIVE]] — komm rein!",
+    "live.streamAriaLabel": "Twitch-Livestream",
 
     "about.heading": "Wer ist [[Zwackery]]?",
     "about.bio1":
-      "DJ Zwackery ist ein Hardcore-DJ aus Melbourne, Australien, und bringt das House of Fun auf Tanzflächen und ins Wohnzimmer gleichermaßen: über 150 BPM euphorischer Rave zum Hände-in-die-Luft-Reißen.",
+      "DJ Zwackery ist ein Hardcore-DJ aus Melbourne, Australien, und bringt das House of Fun auf Tanzflächen und ins Wohnzimmer gleichermaßen: über 150 BPM euphorischer Rave mit erhobenen Händen.",
     "about.bio2":
-      "Jede Woche gibt es neue Sets auf YouTube, und sobald er live geht, schwappt die Party auf Twitch über. Pro DJ, pro Lad.",
+      "Jede Woche gibt es neue Sets auf YouTube, und sobald er live geht, schwappt die Party auf Twitch über. Pro DJ, pro Kumpel.",
+    "about.location": "Melbourne, AU",
+    "about.twitchPartner": "Twitch-Partner",
+    "about.verifiedPartner": "Verifizierter Partner",
 
-    "gigs.heading": "Erlebe ihn [[live]]",
+    "gigs.heading": "Erlebe ihn [[hautnah]]",
     "gigs.details": "Details",
     "gigs.onSale": "Bald erhältlich",
 
@@ -208,14 +245,14 @@ export const ui = {
     "contact.kicker": "Kontakt",
     "contact.heading": "Schreib Zwackery [[eine Nachricht]]",
     "contact.blurb":
-      "Buchungen, Kollabos, Gästeliste oder einfach ein „das Set hat gerockt“. Was auch immer – es landet direkt im Postfach und bekommt eine Antwort.",
+      "Buchungen, Collabs, Gästeliste oder einfach nur, um zu sagen, dass ein Set richtig abging. Was auch immer es ist – es landet direkt im Postfach und bekommt eine Antwort.",
     "contact.orEmail": "Oder per E-Mail",
     "contact.name": "Dein Name",
     "contact.namePlaceholder": "Wer bist du?",
     "contact.email": "E-Mail",
     "contact.reasonLabel": "Worum geht's?",
     "contact.reason1": "Booking / Gig",
-    "contact.reason2": "Kollabo oder Remix",
+    "contact.reason2": "Collab oder Remix",
     "contact.reason3": "Gästeliste",
     "contact.reason4": "Einfach Hallo sagen",
     "contact.message": "Nachricht",
@@ -228,10 +265,14 @@ export const ui = {
     "contact.note":
       "Hinweis: Trage deinen Web3Forms-Zugangsschlüssel in src/config.ts ein, um diese zu erhalten.",
 
-    "footer.tip": "☕ DJ ein Trinkgeld geben",
+    "footer.tip": "☕ Trinkgeld für den DJ",
 
     "a11y.newTab": "(öffnet in neuem Tab)",
     "a11y.language": "Sprache",
+    "a11y.skipToSets": "Zu den Sets springen",
+    "a11y.videoPlayer": "Videoplayer",
+    "a11y.closeVideo": "Video schließen",
+    "a11y.close": "SCHLIESSEN",
 
     "notFound.error": "Fehler 404",
     "notFound.heading": "Verloren im [[Rave]]",
@@ -254,17 +295,27 @@ export const ui = {
     "hero.followTwitch": "Volgen op Twitch",
     "hero.subscribeYoutube": "Abonneren op YouTube",
     "hero.watchSets": "Bekijk de nieuwste sets",
+    "hero.photo1Alt": "DJ Zwackery met de handen in de lucht boven de menigte",
+    "hero.photo2Alt":
+      "DJ Zwackery achter de decks, gehuld in fel magenta licht",
+    "hero.photo3Alt": "DJ Zwackery mixt voor de gigantische ZWACKERY LED-muur",
+    "hero.photo4Alt": "DJ Zwackery mixt voor een muur van vlammen",
+    "hero.fanAriaLabel": "Foto's van DJ Zwackery tijdens een liveoptreden",
 
     "status.offline": "Offline",
     "status.live": "Nu live",
 
     "live.heading": "We zijn [[LIVE]] — kom erbij",
+    "live.streamAriaLabel": "Live Twitch-stream",
 
     "about.heading": "Wie is [[Zwackery]]?",
     "about.bio1":
       "DJ Zwackery is een hardcore-dj uit Melbourne, Australië, die het House of Fun naar zowel de dansvloer als de huiskamer brengt: 150-plus BPM aan euforische, handen-in-de-lucht rave.",
     "about.bio2":
-      "Elke week verschijnen er nieuwe sets op YouTube, en zodra hij live gaat stroomt het feest door op Twitch. Pro DJ, pro lad.",
+      "Elke week verschijnen er nieuwe sets op YouTube, en zodra hij live gaat stroomt het feest door op Twitch. Pro DJ, pro maat.",
+    "about.location": "Melbourne, AU",
+    "about.twitchPartner": "Twitch-partner",
+    "about.verifiedPartner": "Geverifieerde partner",
 
     "gigs.heading": "Zie hem in het [[echt]]",
     "gigs.details": "Details",
@@ -292,10 +343,10 @@ export const ui = {
     "contact.reason4": "Even hallo zeggen",
     "contact.message": "Bericht",
     "contact.messagePlaceholder": "Zeg wat je kwijt wilt.",
-    "contact.send": "Bericht versturen",
-    "contact.sending": "Versturen…",
+    "contact.send": "Bericht verzenden",
+    "contact.sending": "Verzenden…",
     "contact.sent": "Verzonden! Zwackery neemt contact op. 🙌",
-    "contact.failed": "Versturen mislukt. Mail in plaats daarvan naar {email}.",
+    "contact.failed": "Verzenden mislukt. Mail in plaats daarvan naar {email}.",
     "contact.note":
       "Let op: voeg je Web3Forms-toegangssleutel toe in src/config.ts om deze te ontvangen.",
 
@@ -303,6 +354,10 @@ export const ui = {
 
     "a11y.newTab": "(opent in nieuw tabblad)",
     "a11y.language": "Taal",
+    "a11y.skipToSets": "Naar sets springen",
+    "a11y.videoPlayer": "Videospeler",
+    "a11y.closeVideo": "Video sluiten",
+    "a11y.close": "SLUITEN",
 
     "notFound.error": "Fout 404",
     "notFound.heading": "Verdwaald in de [[rave]]",
@@ -325,17 +380,28 @@ export const ui = {
     "hero.followTwitch": "Suivre sur Twitch",
     "hero.subscribeYoutube": "S'abonner sur YouTube",
     "hero.watchSets": "Voir les derniers sets",
+    "hero.photo1Alt": "DJ Zwackery les mains en l'air au-dessus de la foule",
+    "hero.photo2Alt":
+      "DJ Zwackery aux platines, baigné d'une lumière magenta intense",
+    "hero.photo3Alt":
+      "DJ Zwackery en train de mixer devant l'immense mur LED ZWACKERY",
+    "hero.photo4Alt": "DJ Zwackery en train de mixer devant un mur de flammes",
+    "hero.fanAriaLabel": "Photos de DJ Zwackery en live",
 
     "status.offline": "Hors ligne",
     "status.live": "En direct",
 
     "live.heading": "On est en [[LIVE]] — rejoins-nous",
+    "live.streamAriaLabel": "Stream Twitch en direct",
 
     "about.heading": "C'est qui, [[Zwackery]] ?",
     "about.bio1":
       "DJ Zwackery est un DJ hardcore originaire de Melbourne, en Australie, qui apporte le House of Fun aussi bien sur les dancefloors que dans les salons : plus de 150 BPM de rave euphorique, les mains en l'air.",
     "about.bio2":
-      "De nouveaux sets arrivent chaque semaine sur YouTube, et la fête déborde sur Twitch dès qu'il passe en live. Pro DJ, pro lad.",
+      "De nouveaux sets arrivent chaque semaine sur YouTube, et la fête déborde sur Twitch dès qu'il passe en live. Pro DJ, pro pote.",
+    "about.location": "Melbourne, AU",
+    "about.twitchPartner": "Partenaire Twitch",
+    "about.verifiedPartner": "Partenaire vérifié",
 
     "gigs.heading": "Retrouve-le en [[vrai]]",
     "gigs.details": "Détails",
@@ -351,13 +417,13 @@ export const ui = {
     "contact.kicker": "Contact",
     "contact.heading": "Écris [[un mot]] à Zwackery",
     "contact.blurb":
-      "Booking, collabs, guestlist, ou juste pour dire qu'un set était énorme. Quoi qu'il en soit, ça arrive directement dans la boîte et reçoit une réponse.",
+      "Booking, collabs, guestlist, ou juste pour dire qu'un set était énorme. Quoi qu'il en soit, ça arrive directement dans la boîte mail, et tu auras une réponse.",
     "contact.orEmail": "Ou par e-mail",
     "contact.name": "Ton nom",
     "contact.namePlaceholder": "C'est qui ?",
     "contact.email": "E-mail",
     "contact.reasonLabel": "C'est à quel sujet ?",
-    "contact.reason1": "Booking / concert",
+    "contact.reason1": "Booking / gig",
     "contact.reason2": "Collab ou remix",
     "contact.reason3": "Guestlist",
     "contact.reason4": "Juste dire bonjour",
@@ -370,10 +436,14 @@ export const ui = {
     "contact.note":
       "Note : ajoute ta clé d'accès Web3Forms dans src/config.ts pour les recevoir.",
 
-    "footer.tip": "☕ Soutenir le DJ",
+    "footer.tip": "☕ Offrir un café au DJ",
 
     "a11y.newTab": "(ouvre dans un nouvel onglet)",
     "a11y.language": "Langue",
+    "a11y.skipToSets": "Passer aux sets",
+    "a11y.videoPlayer": "Lecteur vidéo",
+    "a11y.closeVideo": "Fermer la vidéo",
+    "a11y.close": "FERMER",
 
     "notFound.error": "Erreur 404",
     "notFound.heading": "Perdu dans la [[rave]]",
@@ -382,7 +452,7 @@ export const ui = {
     "notFound.back": "Retour au House of Fun",
     "notFound.stream": "Voir le live",
     "toast.notFound":
-      "Cette page est introuvable. On vous ramène au House of Fun.",
+      "Cette page est introuvable. On te ramène au House of Fun.",
   },
 } as const;
 
