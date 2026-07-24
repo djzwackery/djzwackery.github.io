@@ -614,9 +614,7 @@ function initTwitch() {
   ];
   const MAX_LIVE_AUDIO = 12;
   const MAX_LIVE_CHAOS_TRACKS = 2;
-  // Even a small animated WebP is real decode work; Safari/iOS handles several
-  // concurrent ones much worse than Chromium does, so keep the ceiling modest.
-  const MAX_LIVE_GIFS = 4;
+  const MAX_LIVE_GIFS = 6;
   const COMBO_TIMEOUT = 1200;
   const MAX_COMBO = 20;
   const FADE_OUT_MS = 500;
