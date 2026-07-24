@@ -137,11 +137,13 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 const emoteUrls = channelEmotes.map((e) => twitchEmoteUrl(e.id));
 const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
 let partyLayer: HTMLElement | null = null;
+let partyFlash: HTMLElement | null = null;
 /**
  * Caps concurrent particles instead of cooling down clicks, so spamming
- * stays instant.
+ * stays instant. Kept modest — each particle is its own composited layer,
+ * and Safari/iOS chokes well before 260 of those stay smooth.
  */
-const MAX_PARTY_BITS = 260;
+const MAX_PARTY_BITS = 160;
 let livePartyBits = 0;
 
 function ensurePartyLayer(): HTMLElement {
@@ -153,23 +155,52 @@ function ensurePartyLayer(): HTMLElement {
   return partyLayer;
 }
 
+function ensurePartyFlash(): HTMLElement {
+  if (!partyFlash) {
+    partyFlash = document.createElement("div");
+    partyFlash.id = "party-flash";
+    document.body.appendChild(partyFlash);
+  }
+  return partyFlash;
+}
+
+/** Runs `cleanup` exactly once, whichever of the two triggers fires first. */
+function once(cleanup: () => void): () => void {
+  let done = false;
+  return () => {
+    if (done) return;
+    done = true;
+    cleanup();
+  };
+}
+
 function fireParty(originX: number, originY: number) {
   const box = ensurePartyLayer();
 
   // A flat full-page tint reads as a muddy wash; radial gradient anchored to
-  // the click point gives a real burst effect instead. Re-triggering the
-  // class (with a forced reflow) restarts the flash even mid-animation, so
-  // rapid-fire clicks each still get their own flash instead of being eaten.
+  // the click point gives a real burst effect instead. Driven by
+  // Element.animate() (cancel-then-restart) rather than a CSS class toggle —
+  // rapid-fire clicks on iOS could coalesce the remove/reflow/re-add into a
+  // single paint and the flash would never visibly restart.
   if (!reduceMotion) {
-    html.style.setProperty("--party-x", `${originX}px`);
-    html.style.setProperty("--party-y", `${originY}px`);
-    html.classList.remove("is-partying");
-    void html.offsetWidth;
-    html.classList.add("is-partying");
-    setTimeout(() => html.classList.remove("is-partying"), 700);
+    const flash = ensurePartyFlash();
+    flash.style.insetInlineStart = `${originX}px`;
+    flash.style.insetBlockStart = `${originY}px`;
+    flash.getAnimations().forEach((a) => a.cancel());
+    flash.animate(
+      [
+        { opacity: 1, scale: 0.03 },
+        { opacity: 0, scale: 1 },
+      ],
+      {
+        duration: 700,
+        easing: "ease-out",
+        fill: "forwards",
+      },
+    );
   }
 
-  const requested = reduceMotion ? 14 : 48;
+  const requested = reduceMotion ? 14 : 32;
   const count = Math.max(
     0,
     Math.min(requested, MAX_PARTY_BITS - livePartyBits),
@@ -210,13 +241,15 @@ function fireParty(originX: number, originY: number) {
     const spin = startSpin + (Math.random() - 0.5) * 720;
     const dur = 1100 + Math.random() * 700;
 
+    const cleanup = once(() => {
+      p.remove();
+      livePartyBits--;
+    });
+
     if (reduceMotion) {
       p.style.transform = `translate(${dx}px, ${rise}px)`;
       p.style.opacity = "0.9";
-      setTimeout(() => {
-        p.remove();
-        livePartyBits--;
-      }, 1200);
+      setTimeout(cleanup, 1200);
       continue;
     }
 
@@ -243,10 +276,11 @@ function fireParty(originX: number, originY: number) {
       ],
       { duration: dur, fill: "forwards" },
     );
-    anim.onfinish = () => {
-      p.remove();
-      livePartyBits--;
-    };
+    // onfinish can silently never fire if Safari/iOS throttles or drops the
+    // animation under load, which would leak the counter and eventually
+    // block every future burst — a fallback timeout guarantees cleanup.
+    anim.onfinish = cleanup;
+    setTimeout(cleanup, dur + 200);
   }
 }
 
@@ -533,6 +567,214 @@ function initTwitch() {
   if (!mascot || !window.matchMedia("(hover: none)").matches) return;
   mascot.addEventListener("click", () => {
     mascot.classList.toggle("is-active");
+  });
+})();
+
+/**
+ * MLG mascot easter egg: click it (repeatedly) for hitmarkers, escalating
+ * overlapping sfx/gifs, and a screen shake/strobe that ramps with the combo
+ * — kicking in at 3 rapid clicks — and resets after a pause. Tier lands on
+ * `body` as a plain class — see the CSS for why the shake itself targets
+ * main/.footer instead of body directly.
+ */
+(() => {
+  const mascot = document.querySelector<HTMLElement>("[data-mascot]");
+  if (!mascot) return;
+
+  /** Short enough to layer freely without turning into a wall of noise. */
+  const stingerSfx = [
+    "/mlg/airhorn.mp3",
+    "/mlg/omg.mp3",
+    "/mlg/swaggity-swagger.mp3",
+    "/mlg/wow.mp3",
+    "/mlg/sniper.mp3",
+    "/mlg/intervention-triple-kill.mp3",
+    "/mlg/pufferfish-augh.mp3",
+  ];
+  /** 11-17s tracks — only one plays per peak-tier episode, not per click. */
+  const chaosTracks = [
+    "/mlg/my-hope-will-never-die.mp3",
+    "/mlg/wombo-combo.mp3",
+    "/mlg/wombo-combo-omg.mp3",
+    "/mlg/omg-full.mp3",
+  ];
+  const gifPool = [
+    "/mlg/sniper.webp",
+    "/mlg/rainbow-frog.webp",
+    "/mlg/wow.webp",
+    "/mlg/thumbs-up-kid.webp",
+    "/mlg/airhorn.webp",
+    "/mlg/foodguy.webp",
+    "/mlg/takeaway.webp",
+    "/mlg/pufferfish.webp",
+  ];
+  const MAX_LIVE_AUDIO = 12;
+  const MAX_LIVE_CHAOS_TRACKS = 2;
+  const MAX_LIVE_GIFS = 6;
+  const COMBO_TIMEOUT = 1200;
+  const MAX_COMBO = 20;
+  const FADE_OUT_MS = 500;
+  const pick = (pool: string[]) =>
+    pool[Math.floor(Math.random() * pool.length)];
+
+  let combo = 0;
+  let lastClick = 0;
+  let liveChaosTracks = 0;
+  let liveGifs = 0;
+  let peakShown = false;
+  let resetTimer: ReturnType<typeof setTimeout>;
+
+  /** Tracked (not just counted) so a reset can fade every one of these out. */
+  const activeAudio: { audio: HTMLAudioElement; release: () => void }[] = [];
+
+  const strobe = document.createElement("div");
+  strobe.id = "mlg-strobe";
+  document.body.appendChild(strobe);
+
+  const playSfx = (src: string, volume: number, isChaosTrack = false) => {
+    if (activeAudio.length >= MAX_LIVE_AUDIO) return;
+    if (isChaosTrack && liveChaosTracks >= MAX_LIVE_CHAOS_TRACKS) return;
+    if (isChaosTrack) liveChaosTracks++;
+    const audio = new Audio(src);
+    audio.volume = volume;
+    // release() can be reached from "ended", the fallback timeout below, and
+    // a fade-out all racing each other — once() keeps a double-fire from
+    // double-decrementing liveChaosTracks.
+    const entry: { audio: HTMLAudioElement; release: () => void } = {
+      audio,
+      release: once(() => {
+        const i = activeAudio.indexOf(entry);
+        if (i !== -1) activeAudio.splice(i, 1);
+        if (isChaosTrack) liveChaosTracks--;
+      }),
+    };
+    activeAudio.push(entry);
+    audio.addEventListener("ended", entry.release, { once: true });
+    audio.play().catch(entry.release);
+    // "ended" can go missing under iOS throttling too; 20s covers even the
+    // longest chaos track (~17s) so a stuck entry can't wedge MAX_LIVE_AUDIO.
+    setTimeout(entry.release, 20000);
+  };
+
+  /** Ramps every currently-playing MLG sound to silence instead of letting it linger or cutting abruptly. */
+  const fadeOutAllAudio = () => {
+    for (const { audio, release } of [...activeAudio]) {
+      const startVolume = audio.volume;
+      const start = performance.now();
+      const step = (now: number) => {
+        if (audio.paused) return;
+        const t = Math.min((now - start) / FADE_OUT_MS, 1);
+        audio.volume = startVolume * (1 - t);
+        if (t < 1) requestAnimationFrame(step);
+        else {
+          audio.pause();
+          release();
+        }
+      };
+      requestAnimationFrame(step);
+    }
+  };
+
+  const spawnHitmarker = (x: number, y: number) => {
+    const mark = document.createElement("div");
+    mark.className = "mlg-hitmarker";
+    mark.style.left = `${x}px`;
+    mark.style.top = `${y}px`;
+    document.body.appendChild(mark);
+    if (reduceMotion) {
+      mark.style.animation = "none";
+      setTimeout(() => mark.remove(), 300);
+    } else {
+      // animationend can silently never fire under Safari/iOS throttling —
+      // a fallback timeout guarantees the node still gets cleaned up.
+      const cleanup = once(() => mark.remove());
+      mark.addEventListener("animationend", cleanup, { once: true });
+      setTimeout(cleanup, 550);
+    }
+  };
+
+  const flashOverlay = (x: number, y: number) => {
+    if (liveGifs >= MAX_LIVE_GIFS) return;
+    liveGifs++;
+    const img = document.createElement("img");
+    img.className = "mlg-overlay";
+    img.src = pick(gifPool);
+    img.alt = "";
+    // jitter around the click point, clamped so it can't spawn off-screen
+    const left = Math.min(
+      Math.max(x + (Math.random() - 0.5) * 300, 40),
+      window.innerWidth - 40,
+    );
+    const top = Math.min(
+      Math.max(y + (Math.random() - 0.5) * 300, 40),
+      window.innerHeight - 40,
+    );
+    img.style.left = `${left}px`;
+    img.style.top = `${top}px`;
+    img.style.rotate = `${(Math.random() - 0.5) * 20}deg`;
+    document.body.appendChild(img);
+    const cleanup = once(() => {
+      img.remove();
+      liveGifs--;
+    });
+    img.addEventListener("animationend", cleanup, { once: true });
+    setTimeout(cleanup, 1700);
+  };
+
+  const setTier = (tier: number) => {
+    document.body.classList.remove("mlg-1", "mlg-2", "mlg-3", "mlg-4", "mlg-5");
+    if (tier > 0) document.body.classList.add(`mlg-${tier}`);
+  };
+
+  mascot.addEventListener("click", (e) => {
+    const now = performance.now();
+    combo =
+      now - lastClick > COMBO_TIMEOUT ? 1 : Math.min(combo + 1, MAX_COMBO);
+    lastClick = now;
+
+    playSfx("/mlg/hitmarker.mp3", 0.6);
+    spawnHitmarker(e.clientX, e.clientY);
+
+    const tier =
+      combo >= 16
+        ? 5
+        : combo >= 12
+          ? 4
+          : combo >= 8
+            ? 3
+            : combo >= 5
+              ? 2
+              : combo >= 3
+                ? 1
+                : 0;
+    if (!reduceMotion) {
+      setTier(tier);
+      if (tier >= 3 && !peakShown) {
+        peakShown = true;
+        playSfx(pick(chaosTracks), 0.35, true);
+      }
+      const gifChance = tier >= 3 ? 1 : tier === 2 ? 0.6 : tier === 1 ? 0.3 : 0;
+      if (Math.random() < gifChance) flashOverlay(e.clientX, e.clientY);
+      if (tier >= 4 && Math.random() < (tier === 5 ? 0.9 : 0.5)) {
+        flashOverlay(e.clientX, e.clientY);
+      }
+      if (tier === 5 && Math.random() < 0.4) {
+        flashOverlay(e.clientX, e.clientY);
+      }
+    }
+
+    const sfxChance = tier >= 3 ? 1 : tier === 2 ? 0.7 : tier === 1 ? 0.4 : 0;
+    if (Math.random() < sfxChance) {
+      playSfx(pick(stingerSfx), 0.5);
+    }
+
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      combo = 0;
+      peakShown = false;
+      setTier(0);
+      fadeOutAllAudio();
+    }, COMBO_TIMEOUT);
   });
 })();
 

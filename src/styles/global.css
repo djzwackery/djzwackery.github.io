@@ -890,8 +890,6 @@ h3 {
   inset-block-start: 0;
   inset-inline-start: 0;
   will-change: transform, opacity;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-  mix-blend-mode: screen;
 }
 
 .party__bit img {
@@ -900,17 +898,17 @@ h3 {
   display: block;
 }
 
-.is-partying::after {
-  content: "";
+/* driven by Element.animate() in app.ts, not a CSS class/keyframe — see fireParty() */
+#party-flash {
   position: fixed;
-  inset-inline-start: var(--party-x, 50%);
-  inset-block-start: var(--party-y, 30%);
   width: 200vmax;
   height: 200vmax;
   border-radius: 50%;
   z-index: 205;
   pointer-events: none;
   mix-blend-mode: screen;
+  opacity: 0;
+  translate: -50% -50%;
   background: radial-gradient(
     circle at center,
     rgba(255, 255, 255, 0.6),
@@ -918,18 +916,278 @@ h3 {
     rgba(0, 229, 255, 0.25) 38%,
     transparent 60%
   );
-  animation: party-flash 0.7s ease-out forwards;
 }
 
-@keyframes party-flash {
+/**
+ * MLG mascot easter egg. Combo tier lands on `body` as a plain state class
+ * (never transformed itself, so it can't break position:fixed elsewhere);
+ * the shake targets main/.footer specifically instead.
+ */
+.mlg-hitmarker {
+  position: fixed;
+  z-index: 300;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: mlg-hitmarker-pop 0.35s ease-out forwards;
+}
+
+.mlg-hitmarker::before,
+.mlg-hitmarker::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 5px;
+  margin-top: -2.5px;
+  margin-left: -50%;
+  background: linear-gradient(
+    90deg,
+    #fff 0 32%,
+    transparent 32% 68%,
+    #fff 68% 100%
+  );
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9));
+}
+
+.mlg-hitmarker::before {
+  transform: rotate(45deg);
+}
+
+.mlg-hitmarker::after {
+  transform: rotate(-45deg);
+}
+
+@keyframes mlg-hitmarker-pop {
   0% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(0.03);
+    transform: translate(-50%, -50%) scale(1.4);
   }
 
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+.mlg-overlay {
+  position: fixed;
+  z-index: 290;
+  max-width: min(50vw, 380px);
+  max-height: min(50vh, 380px);
+  translate: -50% -50%;
+  /* no filter: drop-shadow — up to 6 concurrent animated WebPs re-tracing an
+     alpha silhouette every frame is a real Safari/iOS jank risk, and a
+     box-shadow would just draw a visible rectangle behind the transparency */
+  pointer-events: none;
+  animation: mlg-overlay-flash 1.4s ease-out forwards;
+}
+
+@keyframes mlg-overlay-flash {
+  0% {
+    opacity: 0;
+    scale: 0.4;
+  }
+
+  15% {
+    opacity: 1;
+    scale: 1.05;
+  }
+
+  25% {
+    scale: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+#mlg-strobe {
+  position: fixed;
+  inset: 0;
+  z-index: 280;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+body.mlg-2 #mlg-strobe,
+body.mlg-3 #mlg-strobe,
+body.mlg-4 #mlg-strobe,
+body.mlg-5 #mlg-strobe {
+  animation: mlg-strobe steps(1) infinite;
+}
+
+body.mlg-2 #mlg-strobe {
+  animation-duration: 0.5s;
+}
+
+body.mlg-3 #mlg-strobe {
+  animation-duration: 0.28s;
+}
+
+body.mlg-4 #mlg-strobe {
+  animation-duration: 0.15s;
+}
+
+body.mlg-5 #mlg-strobe {
+  animation-duration: 0.11s;
+}
+
+@keyframes mlg-strobe {
+  0% {
+    opacity: 0.4;
+    background: var(--magenta);
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.4;
+    background: var(--cyan);
+  }
+
+  75% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.35;
+    background: var(--acid);
+  }
+}
+
+body.mlg-1 main,
+body.mlg-1 .footer {
+  animation: mlg-shake-1 0.5s ease-in-out infinite;
+}
+
+body.mlg-2 main,
+body.mlg-2 .footer {
+  animation: mlg-shake-2 0.35s ease-in-out infinite;
+}
+
+body.mlg-3 main,
+body.mlg-3 .footer {
+  animation: mlg-shake-3 0.22s ease-in-out infinite;
+}
+
+body.mlg-4 main,
+body.mlg-4 .footer {
+  animation: mlg-shake-4 0.13s ease-in-out infinite;
+}
+
+body.mlg-5 main,
+body.mlg-5 .footer {
+  animation: mlg-shake-5 0.1s ease-in-out infinite;
+}
+
+@keyframes mlg-shake-1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(2px, -2px);
+  }
+}
+
+@keyframes mlg-shake-2 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(-4px, 3px) rotate(-0.3deg);
+  }
+
+  50% {
+    transform: translate(4px, -3px) rotate(0.3deg);
+  }
+
+  75% {
+    transform: translate(-3px, -4px) rotate(-0.2deg);
+  }
+}
+
+@keyframes mlg-shake-3 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  20% {
+    transform: translate(-7px, 5px) rotate(-0.6deg);
+  }
+
+  40% {
+    transform: translate(6px, -6px) rotate(0.6deg);
+  }
+
+  60% {
+    transform: translate(-6px, -5px) rotate(-0.5deg);
+  }
+
+  80% {
+    transform: translate(7px, 6px) rotate(0.5deg);
+  }
+}
+
+@keyframes mlg-shake-4 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+
+  20% {
+    transform: translate(-13px, 9px) rotate(-1.1deg) scale(1.008);
+  }
+
+  40% {
+    transform: translate(12px, -11px) rotate(1.2deg) scale(1);
+  }
+
+  60% {
+    transform: translate(-11px, -10px) rotate(-1deg) scale(1.008);
+  }
+
+  80% {
+    transform: translate(13px, 12px) rotate(1.1deg) scale(1);
+  }
+}
+
+@keyframes mlg-shake-5 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+
+  20% {
+    transform: translate(-20px, 14px) rotate(-1.8deg) scale(1.015);
+  }
+
+  40% {
+    transform: translate(18px, -17px) rotate(2deg) scale(1);
+  }
+
+  60% {
+    transform: translate(-17px, -16px) rotate(-1.7deg) scale(1.015);
+  }
+
+  80% {
+    transform: translate(20px, 18px) rotate(1.8deg) scale(1);
   }
 }
 
