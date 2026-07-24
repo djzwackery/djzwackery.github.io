@@ -279,6 +279,8 @@ h3 {
 
 .hero__wordmark {
   margin: 0.2rem 0 0;
+  /* without this, rapid taps read as double-tap-to-zoom on iOS instead of clicks */
+  touch-action: manipulation;
 }
 
 .logo {
@@ -1210,6 +1212,8 @@ body.mlg-5 .footer {
   display: flex;
   justify-content: center;
   cursor: pointer;
+  /* without this, rapid taps read as double-tap-to-zoom on iOS instead of clicks */
+  touch-action: manipulation;
 }
 
 .about__mascot-frame {
