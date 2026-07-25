@@ -122,43 +122,130 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 
 /**
  * Hero fan: moving the front card (last DOM child) to the back changes every
- * card's nth-child index, which CSS uses to animate each photo to its new fan slot.
+ * card's nth-child index, which CSS uses to animate each photo to its new fan
+ * slot. Paused while a card's easter-egg clip is playing (see below) so the
+ * shuffle doesn't yank the card away mid-loop.
+ *
+ * Easter egg: hovering a card swaps in a muted clip, with a brief VHS-glitch
+ * flicker at the swap instead of a plain crossfade. Touch has no real hover,
+ * so tap toggles it instead (mirrors the About mascot's pattern).
  */
 (() => {
-  const fan = document.querySelector("[data-hero-fan]");
-  if (!fan || reduceMotion) return;
-  const cards = fan.querySelectorAll(".fan__photo");
-  if (cards.length < 2) return;
+  const fan = document.querySelector<HTMLElement>("[data-hero-fan]");
+  if (!fan) return;
+  const cards = fan.querySelectorAll<HTMLElement>(".fan__photo");
+  if (!cards.length) return;
 
-  setInterval(() => {
-    fan.insertBefore(fan.lastElementChild!, fan.firstElementChild);
-  }, 3500);
+  let rotateTimer: ReturnType<typeof setInterval> | undefined;
+  const startRotation = () => {
+    if (reduceMotion || rotateTimer || cards.length < 2) return;
+    rotateTimer = setInterval(() => {
+      fan.insertBefore(fan.lastElementChild!, fan.firstElementChild);
+    }, 3500);
+  };
+  const stopRotation = () => {
+    clearInterval(rotateTimer);
+    rotateTimer = undefined;
+  };
+  startRotation();
+
+  const isTouch = window.matchMedia("(hover: none)").matches;
+  const GLITCH_MS = 250;
+
+  cards.forEach((card) => {
+    const clip = card.querySelector<HTMLVideoElement>(".fan__clip");
+    if (!clip) return;
+    let glitchTimer: ReturnType<typeof setTimeout>;
+
+    const glitch = () => {
+      if (reduceMotion) return;
+      card.classList.remove("is-glitching");
+      // force reflow so a second glitch mid-timer restarts the animation
+      void card.offsetWidth;
+      card.classList.add("is-glitching");
+      clearTimeout(glitchTimer);
+      glitchTimer = setTimeout(
+        () => card.classList.remove("is-glitching"),
+        GLITCH_MS,
+      );
+    };
+    const show = () => {
+      stopRotation();
+      glitch();
+      clip.currentTime = 0;
+      clip.play().catch(() => {});
+    };
+    const hide = () => {
+      glitch();
+      clip.pause();
+      startRotation();
+    };
+
+    if (isTouch) {
+      card.addEventListener("click", () => {
+        const active = card.classList.toggle("is-active");
+        if (active) show();
+        else hide();
+      });
+    } else {
+      card.addEventListener("mouseenter", show);
+      card.addEventListener("mouseleave", hide);
+    }
+  });
 })();
 
 const emoteUrls = emotes.twitch;
 const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
-/** [src, weight]; the melody clips are weighted down so they stay a rare surprise. */
-const partyBeats: [string, number][] = [
-  ["/party/fat-kick.mp3", 3],
-  ["/party/laser-kick.mp3", 3],
-  ["/party/rawstyle-kick.mp3", 3],
-  ["/party/gabber-stabs.mp3", 1],
-  ["/party/hardcore-melody.mp3", 1],
+/** Cycled in order on each click, like playing through a kick roll. */
+const partyKicks = [
+  "/party/kick-1.mp3",
+  "/party/kick-2.mp3",
+  "/party/kick-3.mp3",
+  "/party/kick-4.mp3",
 ];
-const MELODY_BEATS = ["/party/gabber-stabs.mp3", "/party/hardcore-melody.mp3"];
-let melodyBeatPlaying = false;
-const pickPartyBeat = () => {
-  const pool = melodyBeatPlaying
-    ? partyBeats.filter(([src]) => !MELODY_BEATS.includes(src))
-    : partyBeats;
-  const total = pool.reduce((sum, [, weight]) => sum + weight, 0);
-  let r = Math.random() * total;
-  for (const [src, weight] of pool) {
-    if (r < weight) return src;
-    r -= weight;
+/** One picked at random once enough clicks have built up; never two at once. */
+const partyBreaks = [
+  "/party/break-renegade.mp3",
+  "/party/break-omoh.mp3",
+  "/party/break-rig.mp3",
+  "/party/break-djd.mp3",
+];
+/** Clicks needed since the last break before another is allowed to fire. */
+const BREAK_EVERY = 16;
+/** The kick samples are exactly one beat at 170bpm; playbackRate is scaled
+ * off that so the felt tempo tracks how fast you're actually clicking, capped
+ * to a 190bpm ceiling since anything faster stops sounding like a beat. */
+const NATIVE_BPM = 170;
+const MAX_BPM = 200;
+const NATIVE_BEAT_SECONDS = 60 / NATIVE_BPM;
+const MIN_PARTY_RATE = 0.6;
+const MAX_PARTY_RATE = MAX_BPM / NATIVE_BPM;
+
+let nextKickIndex = 0;
+let clicksSinceBreak = 0;
+let breakPlaying = false;
+let lastPartyClick = 0;
+let lastBreak = "";
+
+/** Never the same break twice in a row. */
+function pickPartyBreak(): string {
+  const choices = partyBreaks.filter((b) => b !== lastBreak);
+  return choices[Math.floor(Math.random() * choices.length)];
+}
+
+/** A pause longer than 2s (or the very first click) resets to a neutral tempo. */
+function partyClickRate(now: number): number {
+  if (!lastPartyClick) {
+    lastPartyClick = now;
+    return 1;
   }
-  return pool[0][0];
-};
+  const delta = (now - lastPartyClick) / 1000;
+  lastPartyClick = now;
+  if (delta > 2) return 1;
+  if (delta <= 0) return MAX_PARTY_RATE;
+  const rate = NATIVE_BEAT_SECONDS / delta;
+  return Math.min(MAX_PARTY_RATE, Math.max(MIN_PARTY_RATE, rate));
+}
 let partyLayer: HTMLElement | null = null;
 let partyFlash: HTMLElement | null = null;
 /**
@@ -262,12 +349,24 @@ const clipPlayer = createClipPlayer();
 function fireParty(originX: number, originY: number) {
   const box = ensurePartyLayer();
 
-  const beatSrc = pickPartyBeat();
+  const rate = partyClickRate(performance.now());
+  const playBreak = !breakPlaying && clicksSinceBreak >= BREAK_EVERY;
+  const beatSrc = playBreak ? pickPartyBreak() : partyKicks[nextKickIndex];
+  if (playBreak) {
+    lastBreak = beatSrc;
+    clicksSinceBreak = 0;
+    breakPlaying = true;
+  } else {
+    nextKickIndex = (nextKickIndex + 1) % partyKicks.length;
+    clicksSinceBreak++;
+  }
+
   const beat = new Audio(beatSrc);
   beat.volume = 0.5;
-  if (MELODY_BEATS.includes(beatSrc)) {
-    melodyBeatPlaying = true;
-    beat.addEventListener("ended", () => (melodyBeatPlaying = false), {
+  beat.playbackRate = rate;
+  beat.preservesPitch = false;
+  if (playBreak) {
+    beat.addEventListener("ended", () => (breakPlaying = false), {
       once: true,
     });
   }
@@ -531,6 +630,7 @@ const liveClips = (() => {
     "/videos/food-review-club.mp4",
     "/videos/greg-review.mp4",
     "/videos/aussie-review.mp4",
+    "/videos/bounce-by-the-ounce.mp4",
   ];
   const DELAY = 15 * 1000;
   const PLAYBACK_RATE = 1.5;
@@ -713,6 +813,9 @@ function initTwitch() {
     "/mlg/pufferfish-augh.mp3",
     "/mlg/mum-get-the-camera.mp3",
     "/mlg/sanic-the-hegehog.mp3",
+    "/mlg/damn-son.mp3",
+    "/mlg/headshot-mlg.mp3",
+    "/mlg/loud-mlg-horn.mp3",
   ];
   /** 11-17s tracks; only one plays per peak-tier episode, not per click. */
   const chaosTracks = [

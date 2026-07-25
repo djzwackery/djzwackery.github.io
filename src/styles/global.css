@@ -454,11 +454,104 @@ h3 {
   transform-origin: center center;
 }
 
+.fan__photo-img {
+  position: absolute;
+  inset: 0;
+}
+
 .fan__photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% 20%;
+}
+
+/** Easter egg: hovering (or tapping, via .is-active on touch) swaps in a muted clip. */
+.fan__clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.fan__photo:hover .fan__clip,
+.fan__photo.is-active .fan__clip {
+  opacity: 1;
+}
+
+/**
+ * VHS-style flicker at the photo/clip swap instead of a plain crossfade. The
+ * jitter/filter animation targets the inner img/video layers rather than
+ * .fan__photo itself, since that outer element's own `transform` is already
+ * the fan-spread rotation (nth-child rules below) and an animation on the
+ * same property would clobber it instead of composing with it.
+ */
+.fan__photo.is-glitching .fan__photo-img,
+.fan__photo.is-glitching .fan__clip {
+  animation: fan-glitch 0.25s steps(2, end);
+}
+
+.fan__photo.is-glitching::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.1) 0,
+    rgba(255, 255, 255, 0.1) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: fan-glitch-scanlines 0.25s steps(3, end);
+}
+
+@keyframes fan-glitch {
+  0%,
+  100% {
+    filter: saturate(1.12) contrast(1.03);
+    transform: translate(0, 0);
+  }
+
+  10% {
+    filter: hue-rotate(90deg) saturate(3);
+    transform: translate(-3px, 1px);
+  }
+
+  30% {
+    filter: hue-rotate(-90deg) saturate(2.5);
+    transform: translate(3px, -1px);
+  }
+
+  50% {
+    filter: saturate(0.3) brightness(1.4);
+    transform: translate(-2px, 0);
+  }
+
+  70% {
+    filter: hue-rotate(45deg) saturate(2);
+    transform: translate(2px, 1px);
+  }
+}
+
+@keyframes fan-glitch-scanlines {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  10%,
+  30%,
+  50%,
+  70% {
+    opacity: 1;
+  }
 }
 
 /**

@@ -67,17 +67,28 @@ const shots = [
   <div class="hero__fan" data-hero-fan aria-label={t("hero.fanAriaLabel")}>
     {
       shots.map((s, i) => (
-        <Picture
-          pictureAttributes={{ class: "fan__photo" }}
-          src={s.src}
-          alt={i === shots.length - 1 ? s.alt : ""}
-          widths={[400, 520, 700, 950, 1300, 1700]}
-          sizes="(max-width: 640px) 92vw, (max-width: 1040px) 42vw, 40vw"
-          quality={75}
-          formats={["avif", "webp"]}
-          loading={i >= shots.length - 2 ? "eager" : "lazy"}
-          fetchpriority={i === shots.length - 1 ? "high" : undefined}
-        />
+        <div class="fan__photo" data-fan-card>
+          <Picture
+            pictureAttributes={{ class: "fan__photo-img" }}
+            src={s.src}
+            alt={i === shots.length - 1 ? s.alt : ""}
+            widths={[400, 520, 700, 950, 1300, 1700]}
+            sizes="(max-width: 640px) 92vw, (max-width: 1040px) 42vw, 40vw"
+            quality={75}
+            formats={["avif", "webp"]}
+            loading={i >= shots.length - 2 ? "eager" : "lazy"}
+            fetchpriority={i === shots.length - 1 ? "high" : undefined}
+          />
+          <video
+            class="fan__clip"
+            aria-hidden="true"
+            src="/videos/hero-costume.mp4"
+            muted
+            loop
+            playsinline
+            preload="none"
+          />
+        </div>
       ))
     }
   </div>
