@@ -175,6 +175,68 @@ function once(cleanup: () => void): () => void {
   };
 }
 
+/**
+ * Shared player for the "clip" easter eggs: same ambient-wash treatment as
+ * the Dutch meme (see .clip-meme), muted, dismissing itself when the clip
+ * ends rather than a guessed timeout (`stop()` lets a caller cut it short
+ * early, e.g. to match a shorter sound effect). One overlay reused across
+ * calls, and `playing` guards against a second clip starting while one is
+ * still going.
+ */
+function createClipPlayer() {
+  let overlay: HTMLDivElement | null = null;
+  let video: HTMLVideoElement | null = null;
+  let playing = false;
+  let dismiss: () => void = () => {};
+
+  function play(src: string, rate = 1) {
+    if (playing) return;
+    playing = true;
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.className = "clip-meme";
+      video = document.createElement("video");
+      video.muted = true;
+      video.playsInline = true;
+      overlay.appendChild(video);
+      document.body.appendChild(overlay);
+    }
+    const v = video!;
+    const bgVideo = document.querySelector<HTMLElement>(".bg-video");
+
+    dismiss = once(() => {
+      playing = false;
+      v.pause();
+      overlay!.classList.remove("is-visible");
+      if (bgVideo) bgVideo.style.opacity = "";
+    });
+
+    v.src = src;
+    v.playbackRate = rate;
+    v.addEventListener("ended", dismiss, { once: true });
+    v.addEventListener("error", dismiss, { once: true });
+    v.addEventListener(
+      "canplay",
+      () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            overlay!.classList.add("is-visible");
+            if (bgVideo) bgVideo.style.opacity = "0";
+          });
+        });
+        v.play().catch(dismiss);
+      },
+      { once: true },
+    );
+    // fallback in case `ended` never fires (Safari/iOS throttling)
+    setTimeout(dismiss, 20000);
+  }
+
+  return { play, stop: () => dismiss() };
+}
+
+const clipPlayer = createClipPlayer();
+
 function fireParty(originX: number, originY: number) {
   const box = ensurePartyLayer();
 
@@ -425,6 +487,44 @@ const emoteRain = (() => {
   return { start, stop };
 })();
 
+/**
+ * Easter egg: while live, occasionally shows one of a pool of review clips
+ * as the same ambient wash as the Dutch meme, sped up to match the bg
+ * video's own 1.5x while live. Fixed delay between plays is the cooldown;
+ * add more clips to the pool as needed.
+ */
+const liveClips = (() => {
+  const POOL = [
+    "/videos/food-review-club.mp4",
+    "/videos/greg-review.mp4",
+    "/videos/aussie-review.mp4",
+  ];
+  const DELAY = 15 * 1000;
+  const PLAYBACK_RATE = 1.5;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  let last = "";
+
+  function scheduleNext() {
+    timer = setTimeout(() => {
+      const choices = POOL.filter((c) => c !== last || POOL.length === 1);
+      last = choices[Math.floor(Math.random() * choices.length)];
+      clipPlayer.play(last, PLAYBACK_RATE);
+      scheduleNext();
+    }, DELAY);
+  }
+
+  return {
+    start() {
+      if (timer || reduceMotion) return;
+      scheduleNext();
+    },
+    stop() {
+      clearTimeout(timer);
+      timer = undefined;
+    },
+  };
+})();
+
 function mountStage() {
   const playerEl = document.querySelector<HTMLElement>("[data-twitch-player]");
   const chatEl = document.querySelector<HTMLElement>("[data-twitch-chat]");
@@ -450,12 +550,14 @@ function setLive(live: boolean) {
   if (live) {
     mountStage();
     emoteRain.start();
+    liveClips.start();
     document.querySelector<HTMLElement>("[data-stage]")?.scrollIntoView({
       behavior: reduceMotion ? "auto" : "smooth",
       block: "start",
     });
   } else {
     emoteRain.stop();
+    liveClips.stop();
   }
 }
 
@@ -804,17 +906,21 @@ function initTwitch() {
 })();
 
 /**
- * Easter egg: clicking the footer logo plays a clip, restarting rather
- * than layering on repeat clicks.
+ * Easter egg: clicking the footer logo plays a sound (restarting rather than
+ * layering on repeat clicks) and shows the same ambient clip wash as the
+ * Dutch meme, using the TFT review clip. The clip is cut short the moment
+ * the sound finishes rather than running to its own (longer) natural end.
  */
 (() => {
   const trigger = document.querySelector<HTMLElement>(".footer__logo");
   if (!trigger) return;
   const audio = new Audio("/pavs.mp3");
   audio.volume = 0.5;
+  audio.addEventListener("ended", () => clipPlayer.stop());
   trigger.addEventListener("click", () => {
     audio.currentTime = 0;
     audio.play().catch(() => {});
+    clipPlayer.play("/videos/tft-review.mp4");
   });
 })();
 
