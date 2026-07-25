@@ -101,6 +101,18 @@ export const SOCIALS: Social[] = [
     url: "https://x.com/djzwackery",
     accent: "--cyan",
   },
+  {
+    platform: "facebook",
+    label: "Facebook",
+    url: "https://www.facebook.com/DJZwackery",
+    accent: "--magenta",
+  },
+  {
+    platform: "soundcloud",
+    label: "SoundCloud",
+    url: "https://soundcloud.com/djzwackery",
+    accent: "--acid",
+  },
 ];
 
 /**
