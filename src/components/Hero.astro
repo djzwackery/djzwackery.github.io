@@ -76,8 +76,8 @@ const shots = [
             sizes="(max-width: 640px) 92vw, (max-width: 1040px) 42vw, 40vw"
             quality={75}
             formats={["avif", "webp"]}
-            loading={i >= shots.length - 2 ? "eager" : "lazy"}
-            fetchpriority={i === shots.length - 1 ? "high" : undefined}
+            loading="eager"
+            fetchpriority="high"
           />
           <video
             class="fan__clip"

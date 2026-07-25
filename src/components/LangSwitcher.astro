@@ -9,7 +9,10 @@ const t = useTranslations(Astro.currentLocale);
 ---
 
 <details class="langs" data-langs>
-  <summary class="langs__current" aria-label={t("a11y.language")}>
+  <summary
+    class="langs__current"
+    aria-label={`${t("a11y.language")}: ${current.toUpperCase()}`}
+  >
     <Flag lang={current} />
     <span class="langs__code">{current}</span>
     <span class="langs__caret" aria-hidden="true"></span>

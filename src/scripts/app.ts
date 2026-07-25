@@ -1156,3 +1156,62 @@ function initTwitch() {
   s.onload = initTwitch;
   document.head.appendChild(s);
 })();
+
+/**
+ * Warms the HTTP cache for an easter egg's media the moment the user shows
+ * intent (hover, or touchstart since touch has no hover) instead of
+ * blanket-fetching everything on every page load regardless of whether
+ * these features are ever touched.
+ */
+function prewarmOnIntent(selector: string, assets: string[]) {
+  const trigger = document.querySelector(selector);
+  if (!trigger) return;
+  const warm = () => {
+    for (const href of assets) fetch(href).catch(() => {});
+  };
+  trigger.addEventListener("mouseenter", warm, { once: true });
+  trigger.addEventListener("touchstart", warm, { once: true, passive: true });
+}
+
+prewarmOnIntent(".footer__logo", ["/pavs.mp3", "/videos/tft-review.mp4"]);
+
+prewarmOnIntent("[data-party]", [
+  "/party/kick-1.mp3",
+  "/party/kick-2.mp3",
+  "/party/kick-3.mp3",
+  "/party/kick-4.mp3",
+  "/party/break-renegade.mp3",
+  "/party/break-omoh.mp3",
+  "/party/break-rig.mp3",
+  "/party/break-djd.mp3",
+]);
+
+prewarmOnIntent("[data-mascot]", [
+  "/mlg/airhorn.mp3",
+  "/mlg/omg.mp3",
+  "/mlg/swaggity-swagger.mp3",
+  "/mlg/wow.mp3",
+  "/mlg/sniper.mp3",
+  "/mlg/intervention-triple-kill.mp3",
+  "/mlg/pufferfish-augh.mp3",
+  "/mlg/mum-get-the-camera.mp3",
+  "/mlg/sanic-the-hegehog.mp3",
+  "/mlg/damn-son.mp3",
+  "/mlg/headshot-mlg.mp3",
+  "/mlg/loud-mlg-horn.mp3",
+  "/mlg/hitmarker.mp3",
+  "/mlg/my-hope-will-never-die.mp3",
+  "/mlg/wombo-combo.mp3",
+  "/mlg/wombo-combo-omg.mp3",
+  "/mlg/omg-full.mp3",
+  "/mlg/sniper.webp",
+  "/mlg/rainbow-frog.webp",
+  "/mlg/wow.webp",
+  "/mlg/thumbs-up-kid.webp",
+  "/mlg/airhorn.webp",
+  "/mlg/foodguy.webp",
+  "/mlg/takeaway.webp",
+  "/mlg/pufferfish.webp",
+  "/mlg/food-gov.webp",
+  "/mlg/takeaway2.webp",
+]);

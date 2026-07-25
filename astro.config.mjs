@@ -27,7 +27,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    inlineStylesheets: "auto",
+    inlineStylesheets: "always",
   },
   vite: {
     plugins: [yaml()],
