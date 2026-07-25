@@ -13,8 +13,8 @@ const { class: className, title = "DJ Zwackery" } = Astro.props;
  *   #414042 (shadow) -> a slightly lifted grey so it reads on the dark bg
  */
 const svg = logoRaw
-  .replace(/#f1f2f2/gi, "#ffffff")
-  .replace(/#414042/gi, "#3d3a44")
+  .replace(/#f1f2f2/gi, "var(--white)")
+  .replace(/#414042/gi, "oklch(35.53% 0.0175 299.2)")
   .replace("<svg ", `<svg role="img" aria-label="${title}" class="logo__svg" `);
 ---
 

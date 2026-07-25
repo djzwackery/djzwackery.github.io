@@ -195,7 +195,12 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 })();
 
 const emoteUrls = emotes.twitch;
-const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
+const confettiColors = [
+  "var(--magenta)",
+  "var(--acid)",
+  "var(--cyan)",
+  "var(--sun)",
+];
 /** Cycled in order on each click, like playing through a kick roll. */
 const partyKicks = [
   "/party/kick-1.mp3",
