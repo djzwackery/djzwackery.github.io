@@ -137,6 +137,28 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 
 const emoteUrls = emotes.twitch;
 const confettiColors = ["#ff1f8f", "#c6ff00", "#00e5ff", "#ffe600"];
+/** [src, weight]; the melody clips are weighted down so they stay a rare surprise. */
+const partyBeats: [string, number][] = [
+  ["/party/fat-kick.mp3", 3],
+  ["/party/laser-kick.mp3", 3],
+  ["/party/rawstyle-kick.mp3", 3],
+  ["/party/gabber-stabs.mp3", 1],
+  ["/party/hardcore-melody.mp3", 1],
+];
+const MELODY_BEATS = ["/party/gabber-stabs.mp3", "/party/hardcore-melody.mp3"];
+let melodyBeatPlaying = false;
+const pickPartyBeat = () => {
+  const pool = melodyBeatPlaying
+    ? partyBeats.filter(([src]) => !MELODY_BEATS.includes(src))
+    : partyBeats;
+  const total = pool.reduce((sum, [, weight]) => sum + weight, 0);
+  let r = Math.random() * total;
+  for (const [src, weight] of pool) {
+    if (r < weight) return src;
+    r -= weight;
+  }
+  return pool[0][0];
+};
 let partyLayer: HTMLElement | null = null;
 let partyFlash: HTMLElement | null = null;
 /**
@@ -239,6 +261,17 @@ const clipPlayer = createClipPlayer();
 
 function fireParty(originX: number, originY: number) {
   const box = ensurePartyLayer();
+
+  const beatSrc = pickPartyBeat();
+  const beat = new Audio(beatSrc);
+  beat.volume = 0.5;
+  if (MELODY_BEATS.includes(beatSrc)) {
+    melodyBeatPlaying = true;
+    beat.addEventListener("ended", () => (melodyBeatPlaying = false), {
+      once: true,
+    });
+  }
+  beat.play().catch(() => {});
 
   // A flat full-page tint reads as a muddy wash; radial gradient anchored to
   // the click point gives a real burst effect instead. Driven by
