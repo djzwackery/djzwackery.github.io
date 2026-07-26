@@ -106,21 +106,27 @@ All colours are defined in **OKLCH** in `src/styles/global.css` `:root`, not hex
 palette perceptually consistent and lets wide-gamut (P3) displays render the neon accents more
 vividly than sRGB allows, while degrading gracefully on standard displays. The four accent colours
 (`magenta`, `acid`, `cyan`, `sun`) are deliberately pushed ~8% past the sRGB gamut boundary for that
-reason; the hex values in the token table above are the closest sRGB-safe approximation, for tools
-that need a plain hex.
+reason. The `colors` token block in the front matter is sRGB hex, since that's the only colour
+format the DESIGN.md spec's `colors` token type permits, the OKLCH strings below are the actual
+values in code and the source of truth for anyone editing `global.css` directly.
 
-- **Void** (`#0a0410`): page background, the "club-black" base.
-- **Void-2 / Void-3**: progressively lifted panel backgrounds (marquee, cards).
-- **Magenta** (`#ff1f8f`): primary accent, headline highlights, borders, decorative shadows. Reads
-  _against_ `void`.
-- **Magenta-contrast** (`#e40074`): same hue, darkened until white text/icons sitting _on_ it clear
-  WCAG AA 4.5:1. Used only for button/badge/toast backgrounds. **Do not merge these two tokens.**
-  `magenta` is tuned for contrast against `void`; `magenta-contrast` is tuned for contrast _under_
-  white text. Collapsing them back into one value re-breaks one case to fix the other.
-- **Acid** (`#c6ff00`): secondary accent, the live-state colour, focus rings.
-- **Cyan** (`#00e5ff`): tertiary accent, links, alternating chip colour.
-- **Sun** (`#ffe600`): marquee text, warm accent.
-- **Ink-dim** (`#b9a9cf`): secondary/muted text.
+- **Void**: `#0a0410` / `oklch(12.7% 0.0314 308.4)`. Page background, the "club-black" base.
+- **Void-2**: `#170a24` / `oklch(18% 0.0531 304.71)`. First lifted panel background (marquee,
+  cards).
+- **Void-3**: `#241038` / `oklch(22.63% 0.0756 304)`. Second, further-lifted panel background.
+- **Magenta**: `#ff1f8f` / `oklch(65.71% 0.2758 358.57)`. Primary accent, headline highlights,
+  borders, decorative shadows. Reads _against_ `void`.
+- **Magenta-contrast**: `#e40074` / `oklch(56.82% 0.2758 358.57)`. Same hue, darkened until white
+  text/icons sitting _on_ it clear WCAG AA 4.5:1. Used only for button/badge/toast backgrounds.
+  **Do not merge these two tokens.** `magenta` is tuned for contrast against `void`;
+  `magenta-contrast` is tuned for contrast _under_ white text. Collapsing them back into one value
+  re-breaks one case to fix the other.
+- **Acid**: `#c6ff00` / `oklch(92.68% 0.2498 124.41)`. Secondary accent, the live-state colour,
+  focus rings.
+- **Cyan**: `#00e5ff` / `oklch(84.42% 0.1574 209.29)`. Tertiary accent, links, alternating chip
+  colour.
+- **Sun**: `#ffe600` / `oklch(91.68% 0.2068 101.41)`. Marquee text, warm accent.
+- **Ink-dim**: `#b9a9cf` / `oklch(76.09% 0.0563 304.21)`. Secondary/muted text.
 
 Never hardcode a new `rgba()`/translucent colour. Use `color-mix(in oklch, var(--token) N%,
 transparent)` against one of the tokens above, so every tint traces back to the same source colour
