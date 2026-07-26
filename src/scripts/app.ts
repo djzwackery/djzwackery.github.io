@@ -700,49 +700,42 @@ function setLive(live: boolean) {
 }
 
 /**
- * Minimal shape of the `Twitch` global the embed player script attaches to
- * `window`; there's no official types package for it.
+ * Twitch's own web client ID for anonymous GQL requests; public and widely
+ * used across third-party Twitch tools, not a secret tied to any account.
  */
-interface TwitchEmbedGlobal {
-  Player: {
-    new (
-      elementId: string,
-      options: Record<string, unknown>,
-    ): { addEventListener(event: string, cb: () => void): void };
-    ONLINE: string;
-    OFFLINE: string;
-  };
-}
-declare global {
-  interface Window {
-    Twitch?: TwitchEmbedGlobal;
-  }
-}
+const TWITCH_GQL_CLIENT_ID = "kimne78kx3ncx6brgo4mv6wki5h1ko";
+const LIVE_POLL_INTERVAL = 30 * 1000;
 
 /**
- * Live detection via a hidden Twitch embed's ONLINE/OFFLINE events: client-side,
- * no secrets, works on static hosting without a backend.
+ * Live detection via Twitch's GQL API instead of an embedded player instance:
+ * a plain player.twitch.tv iframe (see mountStage) doesn't need the player
+ * SDK at all, and instantiating Twitch.Player just to listen for its
+ * ONLINE/OFFLINE events was dragging in the SDK's full bundle (ads,
+ * Chromecast, DSA modals, ~80 requests) on every single page load.
+ *
+ * Sent as an ad-hoc query, not a persisted one: Twitch rotates the hashes
+ * for persisted queries used by their own web client without notice, so a
+ * hardcoded hash silently starts failing ("PersistedQueryNotFound") the
+ * moment they rotate it. An ad-hoc query has no hash to go stale.
  */
-function initTwitch() {
-  /** Hidden 1px player: only here to receive online/offline events. */
-  const probe = document.createElement("div");
-  probe.id = "twitch-probe";
-  probe.style.cssText =
-    "position:fixed;width:1px;height:1px;left:-10px;top:-10px;opacity:0;pointer-events:none;";
-  document.body.appendChild(probe);
-
-  const Twitch = window.Twitch;
-  if (!Twitch) return;
-  const player = new Twitch.Player("twitch-probe", {
-    channel: TWITCH_LOGIN,
-    width: 1,
-    height: 1,
-    muted: true,
-    autoplay: true,
-    controls: false,
-  });
-  player.addEventListener(Twitch.Player.ONLINE, () => setLive(true));
-  player.addEventListener(Twitch.Player.OFFLINE, () => setLive(false));
+async function checkTwitchLive(): Promise<boolean> {
+  try {
+    const res = await fetch("https://gql.twitch.tv/gql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=UTF-8",
+        "Client-Id": TWITCH_GQL_CLIENT_ID,
+      },
+      body: JSON.stringify({
+        query: `query { user(login: "${TWITCH_LOGIN}") { stream { id } } }`,
+      }),
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    return Boolean(data?.data?.user?.stream);
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -1143,7 +1136,7 @@ function initTwitch() {
   img.src = "/dutch.webp";
 })();
 
-(function loadTwitch() {
+(function pollTwitchLive() {
   /**
    * `?live` / `?live=1` forces the live takeover so the layout can be previewed
    * without a real stream. `?live=0` / `?live=false` forces offline.
@@ -1152,14 +1145,16 @@ function initTwitch() {
   if (param !== null) {
     const wantLive = param !== "0" && param !== "false" && param !== "off";
     setLive(wantLive);
-    if (wantLive) return; // skip the Twitch probe so it can't flip us back offline
+    if (wantLive) return; // skip polling so it can't flip us back offline
   }
 
-  const s = document.createElement("script");
-  s.src = "https://player.twitch.tv/js/embed/v1.js";
-  s.async = true;
-  s.onload = initTwitch;
-  document.head.appendChild(s);
+  const poll = () => checkTwitchLive().then(setLive);
+  poll();
+  setInterval(poll, LIVE_POLL_INTERVAL);
+  // catches "went live while this tab was backgrounded" without waiting for the next tick
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") poll();
+  });
 })();
 
 /**
