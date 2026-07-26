@@ -14,6 +14,13 @@ interface Props {
 }
 const { videos } = Astro.props;
 const t = useTranslations(Astro.currentLocale);
+
+/** Stop calling it "new" once nothing's been uploaded in a while. */
+const NEW_BADGE_WINDOW_DAYS = 30;
+const latestIsRecent =
+  videos.length > 0 &&
+  (Date.now() - new Date(videos[0].published).getTime()) / 86400000 <=
+    NEW_BADGE_WINDOW_DAYS;
 ---
 
 <section class="section wrap" id="videos" aria-labelledby="videos-head">
@@ -35,7 +42,7 @@ const t = useTranslations(Astro.currentLocale);
             thumb={v.thumb}
             published={v.published}
             viewCount={v.viewCount}
-            isLatest={i === 0}
+            isLatest={i === 0 && latestIsRecent}
           />
         ))}
       </div>
