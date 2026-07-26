@@ -7,7 +7,12 @@
 # flyer/poster (e.g. from the ticketing site), used only in the JSON-LD, not
 # rendered on the page. There's no local asset pipeline for it, so it's
 # skipped entirely unless the value looks like a real URL (starts with
-# "http"). Past dates are hidden automatically. If the list is empty, the
+# "http"). `organizer` is also optional, used only in the JSON-LD: the
+# promoter/event brand running the show, e.g. "Rubix Warehouse" or a
+# promotions crew name. Only set it to "DJ Zwackery" if he's actually
+# self-promoting that one; leave it unset for a normal lineup booking rather
+# than defaulting it to him, since that would misrepresent who's organizing
+# the event. Past dates are hidden automatically. If the list is empty, the
 # "Catch him in the flesh" section is removed from the site entirely.
 - date: "2026-09-26"
   event: Hardcore Evolution
@@ -15,3 +20,4 @@
   location: Brunswick VIC, Australia
   url: https://events.humanitix.com/hardcore-evolution
   image: https://images.humanitix.com/i/f5b77aaa-1591-4984-9bed-7668222ac0f9.jpg@responsive-2400.webp
+  organizer: Unnamed Productions

@@ -34,6 +34,8 @@ interface GigLD {
   url?: string;
   /** Must be a fully-qualified URL to an externally-hosted flyer/poster; no local asset pipeline for this. */
   image?: string;
+  /** The promoter/event brand, when it isn't Zwackery himself; omitted from the JSON-LD if unset. */
+  organizer?: string;
 }
 interface Props {
   /** Overrides the default localized title (used by the 404 page). */
@@ -114,11 +116,9 @@ const eventLD = upcomingGigs.map((g) => {
       url: SITE_URL,
       image: ogImage,
     },
-    organizer: {
-      "@type": "MusicGroup",
-      name: DJ_NAME,
-      url: SITE_URL,
-    },
+    ...(g.organizer
+      ? { organizer: { "@type": "Organization", name: g.organizer } }
+      : {}),
     ...(g.url ? { url: g.url } : {}),
     ...(g.image?.startsWith("http") ? { image: g.image } : {}),
     ...(g.url
