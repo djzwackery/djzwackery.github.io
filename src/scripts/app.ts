@@ -1149,7 +1149,10 @@ async function checkTwitchLive(): Promise<boolean> {
   }
 
   const poll = () => checkTwitchLive().then(setLive);
-  poll();
+  // deferred off the critical path: the poll itself is cheap, but firing it
+  // immediately made it show up as part of the page's critical request chain
+  if ("requestIdleCallback" in window) requestIdleCallback(poll);
+  else setTimeout(poll, 0);
   setInterval(poll, LIVE_POLL_INTERVAL);
   // catches "went live while this tab was backgrounded" without waiting for the next tick
   document.addEventListener("visibilitychange", () => {
