@@ -1802,6 +1802,7 @@ body.mlg-5 .footer {
 
 .footer__logo {
   display: block;
+  position: relative;
   width: min(240px, 46vw);
   flex: none;
   cursor: pointer;
@@ -1828,6 +1829,29 @@ body.mlg-5 .footer {
   filter: drop-shadow(
     1px 2px 0 color-mix(in oklch, var(--void) 55%, transparent)
   );
+}
+
+/** Same glitch as the hero wordmark, hinting this logo hides a secret too. */
+@media (prefers-reduced-motion: no-preference) {
+  .footer__logo:hover .logo__svg {
+    animation: fan-glitch 0.25s steps(2, end);
+  }
+
+  .footer__logo:hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--white) 10%, transparent) 0,
+      color-mix(in oklch, var(--white) 10%, transparent) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    animation: fan-glitch-scanlines 0.25s steps(3, end);
+  }
 }
 
 /**
