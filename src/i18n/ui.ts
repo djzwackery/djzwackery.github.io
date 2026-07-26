@@ -20,6 +20,20 @@ export const languages = {
 
 export type Lang = keyof typeof languages;
 
+/**
+ * Live-mode LED marquee words, kept separate from `ui` because each value is
+ * an array, not a single string. The "LIVE NOW" beat isn't listed here: it's
+ * built from `status.live` in Marquee.astro so the two never drift apart.
+ */
+export const marqueeLive: Record<Lang, readonly string[]> = {
+  en: ["WE'RE LIVE ON TWITCH", "GET IN HERE", "HANDS IN THE AIR"],
+  ja: ["Twitchで配信中", "集まれ", "両手を上げろ"],
+  de: ["WIR SIND LIVE AUF TWITCH", "KOMM REIN", "HÄNDE IN DIE LUFT"],
+  nl: ["WE ZIJN LIVE OP TWITCH", "KOM ERBIJ", "HANDEN IN DE LUCHT"],
+  fr: ["ON EST EN LIVE SUR TWITCH", "REJOINS-NOUS", "MAINS EN L'AIR"],
+  it: ["SIAMO LIVE SU TWITCH", "ENTRA SUBITO", "MANI IN ARIA"],
+};
+
 /** BCP-47 tags for the html lang attribute and og:locale. */
 export const localeTags: Record<Lang, string> = {
   en: "en",

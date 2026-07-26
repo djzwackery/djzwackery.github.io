@@ -1,15 +1,28 @@
 ---
-import { MARQUEE_WORDS, MARQUEE_WORDS_LIVE } from "../config";
+import { MARQUEE_WORDS, MARQUEE_FOLLOW_TWITCH_TOKEN } from "../config";
+import { useTranslations, getLang } from "../i18n";
+import { marqueeLive } from "../i18n/ui";
+
+const t = useTranslations(Astro.currentLocale);
+const lang = getLang(Astro.currentLocale);
+
+const idleWords = MARQUEE_WORDS.map((w) =>
+  w === MARQUEE_FOLLOW_TWITCH_TOKEN ? t("hero.followTwitch").toUpperCase() : w,
+);
+const liveWordsOnce = [
+  `● ${t("status.live").toUpperCase()}`,
+  ...marqueeLive[lang],
+];
 
 /**
  * The word lists are duplicated inline so the -50% keyframe loops seamlessly.
  */
-const words = [...MARQUEE_WORDS, ...MARQUEE_WORDS];
+const words = [...idleWords, ...idleWords];
 const liveWords = [
-  ...MARQUEE_WORDS_LIVE,
-  ...MARQUEE_WORDS_LIVE,
-  ...MARQUEE_WORDS_LIVE,
-  ...MARQUEE_WORDS_LIVE,
+  ...liveWordsOnce,
+  ...liveWordsOnce,
+  ...liveWordsOnce,
+  ...liveWordsOnce,
 ];
 ---
 

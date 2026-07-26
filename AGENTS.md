@@ -51,7 +51,18 @@ The `html lang` attribute and the `localeTags` BCP-47 tag for English are both `
 
 ## Localisation
 
-Every string change must be applied across **all 6 locales**: `en`, `ja`, `de`, `nl`, `fr`, `it`. The strings live in `src/i18n/ui.ts`. Never update only one locale — if a translation isn't known, mark it with a `// TODO:` comment but still add the key so the build doesn't break.
+Every string change must be applied across **all 6 locales**: `en`, `ja`, `de`, `nl`, `fr`, `it`. The strings live in `src/i18n/ui.ts`. Never update only one locale — if a translation isn't known, mark it with a `// TODO:` comment but still add the key so the build doesn't break. See the `localize` skill below before starting any copy change.
+
+## Agent skills
+
+Task-specific playbooks live in `.github/skills/*/SKILL.md`. Check these before starting a matching task instead of re-deriving the approach from scratch:
+
+- **localize** — adding or editing user-facing copy across all 6 locales.
+- **optimize-media-assets** — compressing/tuning images and video so they don't hurt Core Web Vitals or PageSpeed.
+- **add-background-video** — replacing the looping ambient background video.
+- **add-header-logo-party-asset** — the hero wordmark click/Konami code easter egg (kick/break sounds, confetti colours).
+- **add-live-rotation-clip** — the live-only ambient review clip rotation.
+- **add-mlg-easter-egg-asset** — the About section MLG mascot sound/gif combo system.
 
 ## CSS direction
 

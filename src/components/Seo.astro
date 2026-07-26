@@ -19,6 +19,12 @@ interface VideoLD {
   title: string;
   thumb: string;
   published: string;
+  /** ISO-8601 (e.g. "PT4M13S"); omitted from the JSON-LD entirely if empty. */
+  duration?: string;
+  /** Omitted from the JSON-LD entirely if empty. */
+  description?: string;
+  /** Omitted from the JSON-LD entirely if 0/unset. */
+  viewCount?: number;
 }
 interface GigLD {
   date: string;
@@ -74,7 +80,7 @@ const musicGroupLD = {
   "@type": "MusicGroup",
   name: DJ_NAME,
   description: t("meta.description"),
-  genre: ["Happy Hardcore", "UK Hardcore", "Hardcore"],
+  genre: ["Happy Hardcore", "UK Hardcore", "Hardcore", "Harder Styles"],
   url: SITE_URL,
   image: ogImage,
   foundingLocation: {
@@ -89,7 +95,7 @@ const eventLD = upcomingGigs.map((g) => {
   const label = [g.event, g.venue].filter(Boolean).join(" • ") || g.location;
   return {
     "@context": "https://schema.org",
-    "@type": "Event",
+    "@type": "MusicEvent",
     name: `${DJ_NAME} at ${label}`,
     startDate: g.date,
     eventStatus: "https://schema.org/EventScheduled",
@@ -106,6 +112,7 @@ const eventLD = upcomingGigs.map((g) => {
       "@type": "MusicGroup",
       name: DJ_NAME,
       url: SITE_URL,
+      image: ogImage,
     },
     organizer: {
       "@type": "MusicGroup",
@@ -114,6 +121,15 @@ const eventLD = upcomingGigs.map((g) => {
     },
     ...(g.url ? { url: g.url } : {}),
     ...(g.image?.startsWith("http") ? { image: g.image } : {}),
+    ...(g.url
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: g.url,
+            availability: "https://schema.org/InStock",
+          },
+        }
+      : {}),
   };
 });
 
@@ -133,6 +149,17 @@ const videoLD =
             contentUrl: `https://www.youtube.com/watch?v=${v.id}`,
             embedUrl: `https://www.youtube.com/embed/${v.id}`,
             creator: { "@type": "MusicGroup", name: DJ_NAME, url: SITE_URL },
+            ...(v.duration ? { duration: v.duration } : {}),
+            ...(v.description ? { description: v.description } : {}),
+            ...(v.viewCount
+              ? {
+                  interactionStatistic: {
+                    "@type": "InteractionCounter",
+                    interactionType: "https://schema.org/WatchAction",
+                    userInteractionCount: v.viewCount,
+                  },
+                }
+              : {}),
           },
         })),
       }
@@ -144,7 +171,7 @@ const videoLD =
 <meta name="author" content={DJ_NAME} />
 <meta
   name="keywords"
-  content="DJ Zwackery, House of Fun, hardcore DJ, happy hardcore, UK hardcore, Melbourne DJ, Twitch DJ, rave"
+  content="DJ Zwackery, House of Fun, hardcore DJ, happy hardcore, UK hardcore, harder styles, Melbourne DJ, Twitch DJ, rave"
 />
 <link rel="canonical" href={canonical} />
 <meta name="theme-color" content="#ff1f8f" />

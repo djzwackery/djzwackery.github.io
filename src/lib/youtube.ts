@@ -18,6 +18,10 @@ export interface Video {
   published: string;
   /** 0 if the statistics lookup failed or the video hides its view count. */
   viewCount: number;
+  /** ISO-8601 (e.g. "PT4M13S"). Empty if the details lookup failed. */
+  duration: string;
+  /** YouTube's own description text, only used for JSON-LD, not rendered. */
+  description: string;
 }
 
 /** Shape of the fields we read from a YouTube Data API v3 search result item. */
@@ -25,6 +29,7 @@ interface YouTubeSearchItem {
   id?: { kind?: string; videoId?: string };
   snippet?: {
     title?: string;
+    description?: string;
     thumbnails?: { high?: { url?: string } };
     publishedAt?: string;
   };
@@ -36,7 +41,11 @@ interface YouTubeSearchResponse {
 }
 
 interface YouTubeVideosResponse {
-  items?: { id?: string; statistics?: { viewCount?: string } }[];
+  items?: {
+    id?: string;
+    statistics?: { viewCount?: string };
+    contentDetails?: { duration?: string };
+  }[];
 }
 
 /** Resolved from process.cwd(), not import.meta.url, see emotes.ts for why. */
@@ -78,39 +87,51 @@ function normalize(json: YouTubeSearchResponse): Video[] {
         `https://i.ytimg.com/vi/${it.id.videoId}/hqdefault.jpg`,
       published: it.snippet?.publishedAt ?? new Date().toISOString(),
       viewCount: 0,
+      duration: "",
+      description: decode(it.snippet?.description ?? ""),
     }));
 }
 
+interface VideoDetails {
+  viewCount: number;
+  duration: string;
+}
+
 /**
- * `search.list` doesn't return statistics, so view counts need a follow-up
- * `videos.list` call. Best-effort: a failure here just means cards render
- * without a view count, not a failed build.
+ * `search.list` doesn't return statistics or contentDetails, so view counts
+ * and duration need a follow-up `videos.list` call. Best-effort: a failure
+ * here just means cards render without a view count/duration, not a failed
+ * build.
  */
-async function fetchViewCounts(ids: string[]): Promise<Map<string, number>> {
-  const counts = new Map<string, number>();
-  if (ids.length === 0) return counts;
+async function fetchVideoDetails(
+  ids: string[],
+): Promise<Map<string, VideoDetails>> {
+  const details = new Map<string, VideoDetails>();
+  if (ids.length === 0) return details;
   try {
     const url =
       "https://www.googleapis.com/youtube/v3/videos?" +
       new URLSearchParams({
         key: API_KEY!,
-        part: "statistics",
+        part: "statistics,contentDetails",
         id: ids.join(","),
       });
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = (await res.json()) as YouTubeVideosResponse;
     for (const item of json.items ?? []) {
-      if (item.id && item.statistics?.viewCount) {
-        counts.set(item.id, Number(item.statistics.viewCount));
-      }
+      if (!item.id) continue;
+      details.set(item.id, {
+        viewCount: Number(item.statistics?.viewCount ?? 0),
+        duration: item.contentDetails?.duration ?? "",
+      });
     }
   } catch (err) {
     console.warn(
-      `[youtube] Failed to fetch view counts (${(err as Error).message}) — showing videos without them.`,
+      `[youtube] Failed to fetch video details (${(err as Error).message}) — showing videos without view counts/duration.`,
     );
   }
-  return counts;
+  return details;
 }
 
 async function readCache(): Promise<Video[] | null> {
@@ -155,8 +176,12 @@ async function load(): Promise<Video[]> {
     if (!res.ok) throw new Error(json.error?.message ?? `HTTP ${res.status}`);
     const videos = normalize(json);
     if (videos.length === 0) throw new Error("no videos returned");
-    const viewCounts = await fetchViewCounts(videos.map((v) => v.id));
-    for (const v of videos) v.viewCount = viewCounts.get(v.id) ?? 0;
+    const details = await fetchVideoDetails(videos.map((v) => v.id));
+    for (const v of videos) {
+      const d = details.get(v.id);
+      v.viewCount = d?.viewCount ?? 0;
+      v.duration = d?.duration ?? "";
+    }
     await writeCache(videos);
     console.log(`[youtube] Fetched ${videos.length} videos from the API.`);
     return videos;

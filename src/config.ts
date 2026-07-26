@@ -11,29 +11,29 @@ export const SHOW_NAME = "House of Fun";
 /** Ko-fi tip jar. Set to an empty string to hide the support button. */
 export const KOFI_URL = "https://ko-fi.com/djzwackery";
 
-/** Words that scroll across the LED marquee. Factual descriptors, not quotes. */
+/**
+ * Words that scroll across the LED marquee. Factual descriptors, not quotes.
+ * Brand names and genre tags stay in English across all locales (see
+ * src/i18n/ui.ts); MARQUEE_FOLLOW_TWITCH_TOKEN marks where the localized
+ * "follow on Twitch" CTA is spliced in by Marquee.astro.
+ */
+export const MARQUEE_FOLLOW_TWITCH_TOKEN = "__FOLLOW_TWITCH__";
+
 export const MARQUEE_WORDS = [
   "DJ ZWACKERY",
   "HOUSE OF FUN",
   "HAPPY HARDCORE",
   "UK HARDCORE",
-  "FOLLOW ON TWITCH",
+  MARQUEE_FOLLOW_TWITCH_TOKEN,
   "HARD DANCE",
   "DJ ZWACKERY",
   "HOUSE OF FUN",
   "HAPPY HARDCORE",
+  "HARDER STYLES",
   "UK HARDCORE",
-  "FOLLOW ON TWITCH",
+  MARQUEE_FOLLOW_TWITCH_TOKEN,
   "DRUM & BASS",
   "GABBER",
-];
-
-/** Marquee words shown while Zwackery's live on Twitch. */
-export const MARQUEE_WORDS_LIVE = [
-  "● LIVE NOW",
-  "WE'RE LIVE ON TWITCH",
-  "GET IN HERE",
-  "HANDS IN THE AIR",
 ];
 
 /**
