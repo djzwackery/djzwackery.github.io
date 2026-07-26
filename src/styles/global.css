@@ -301,6 +301,7 @@ h3 {
 
 .logo {
   display: block;
+  position: relative;
   width: min(100%, 30rem);
 }
 
@@ -311,6 +312,29 @@ h3 {
   filter: drop-shadow(
     3px 4px 0 color-mix(in oklch, var(--void) 55%, transparent)
   );
+}
+
+/** Same glitch used on the fan photos, hinting the logo hides a secret too. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-party]:hover .logo__svg {
+    animation: fan-glitch 0.25s steps(2, end);
+  }
+
+  [data-party]:hover .logo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--white) 10%, transparent) 0,
+      color-mix(in oklch, var(--white) 10%, transparent) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    animation: fan-glitch-scanlines 0.25s steps(3, end);
+  }
 }
 
 .visually-hidden {
