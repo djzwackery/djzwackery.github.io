@@ -1,0 +1,35 @@
+# DJ Zwackery
+
+> Hardcore DJ from Melbourne, Australia, playing Happy Hardcore, UK Hardcore, and hard dance at 150+ BPM under the banner "House of Fun." Streams live on Twitch (Twitch Partner) and posts a new set to YouTube most weeks.
+
+DJ Zwackery is djzwackery.com's single-page site: bio, live status, upcoming gigs, a set archive, and a booking contact form all live on the one page, linked below by section. The live badge and embedded Twitch player update automatically, with no page reload, whenever he goes live.
+
+## Sections
+
+- [About](https://djzwackery.com/#about): bio, genre, location, Twitch Partner status
+- [Gigs](https://djzwackery.com/#gigs): upcoming live shows with ticket links, auto-hides past dates
+- [Latest sets](https://djzwackery.com/#videos): YouTube set archive embedded on-site
+
+## Key facts
+
+- Genres: Hardcore, Happy Hardcore, UK Hardcore, hard dance, techno
+- Tempo: 150+ BPM
+- Based in: Melbourne, Australia
+- Twitch status: Partner
+
+## Links
+
+- [Twitch](https://www.twitch.tv/djzwackery1): live streams
+- [YouTube](https://www.youtube.com/@DJZwackery1): set archive
+- [Discord](https://discord.gg/V5DdvGe)
+- [Instagram](https://www.instagram.com/djzwackery)
+- [X](https://x.com/djzwackery)
+- [Facebook](https://www.facebook.com/DJZwackery)
+- [SoundCloud](https://soundcloud.com/djzwackery)
+- [Ko-fi](https://ko-fi.com/djzwackery): tip jar
+- Bookings: djzwackery@hotmail.com, or the contact form at the bottom of the homepage
+
+## Notes
+
+- The site is also available in Japanese (/ja/), German (/de/), Dutch (/nl/), French (/fr/), and Italian (/it/); English is the default at the root path.
+- Structured data (schema.org MusicGroup, Event, VideoObject) is present in the page's JSON-LD for machine-readable bio, gig, and video details.
