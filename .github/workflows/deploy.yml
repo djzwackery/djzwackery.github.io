@@ -62,6 +62,14 @@ jobs:
           sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
           sudo chmod a+rx /usr/local/bin/yt-dlp
 
+      - name: Install ffmpeg 🎬
+        # generate-ambient-data.mjs needs this both to merge yt-dlp's
+        # separate video+audio streams and for its own audio/colour
+        # extraction passes; not guaranteed present on ubuntu-latest.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
       - name: Write YouTube cookies 🍪
         # Authenticated requests get treated far more leniently than
         # anonymous ones, which is what was tripping "Sign in to confirm
