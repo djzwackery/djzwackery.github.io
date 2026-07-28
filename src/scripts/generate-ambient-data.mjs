@@ -47,6 +47,18 @@ const PEAKS_PER_SEC = 5;
 const COLORS_PER_SEC = 2;
 const AUDIO_SAMPLE_RATE = 11025;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * A burst of back-to-back requests from the same IP (exactly what a loop
+ * over every video looks like) is itself part of what trips YouTube's bot
+ * check on CI's shared runner IPs. A few seconds of jitter between videos,
+ * on top of yt-dlp's own --sleep-requests below, makes the traffic look less
+ * like scraping.
+ */
+const BETWEEN_VIDEOS_MIN_MS = 4000;
+const BETWEEN_VIDEOS_JITTER_MS = 5000;
+
 /**
  * Standard RGB→HSL conversion. h/s/l are all returned in the 0–1 range (not
  * degrees/percent), since that's what {@link hslToHex} and the clamping in
@@ -130,6 +142,8 @@ function neonize(r, g, b) {
   return hslToHex(h, boostedS, clampedL);
 }
 
+let isFirstDownload = true;
+
 for (const video of videos) {
   const videoId = video.id;
   const cachePath = join(CACHE_DIR, `${videoId}.json`);
@@ -142,6 +156,16 @@ for (const video of videos) {
     await fs.copyFile(cachePath, distPath);
     continue;
   }
+
+  if (!isFirstDownload) {
+    const delay =
+      BETWEEN_VIDEOS_MIN_MS + Math.random() * BETWEEN_VIDEOS_JITTER_MS;
+    console.log(
+      `[process] Waiting ${(delay / 1000).toFixed(1)}s before the next download...`,
+    );
+    await sleep(delay);
+  }
+  isFirstDownload = false;
 
   console.log(`[process] Downloading ${videoId} for ambient-mode analysis...`);
   const videoPath = join(process.cwd(), `temp_${videoId}.mp4`);
@@ -157,7 +181,9 @@ for (const video of videos) {
     // player_client prefers android_vr/tv: both skip YouTube's PO-token/
     // sign-in check entirely, unlike the default web client, which is what
     // was tripping "Sign in to confirm you're not a bot" on CI's datacenter
-    // IP (see https://github.com/yt-dlp/yt-dlp/wiki/PO-Token-Guide).
+    // IP (see https://github.com/yt-dlp/yt-dlp/wiki/PO-Token-Guide). Still
+    // intermittent under a rapid burst of requests, hence --sleep-requests
+    // plus the inter-video delay above.
     execFileSync(
       "yt-dlp",
       [
@@ -165,6 +191,8 @@ for (const video of videos) {
         "bestvideo[height<=144]+worstaudio/worst[height<=240]/worst",
         "--extractor-args",
         "youtube:player_client=android_vr,tv,web",
+        "--sleep-requests",
+        "2",
         "-o",
         videoPath,
         "--merge-output-format",
