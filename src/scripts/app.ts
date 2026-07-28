@@ -186,9 +186,13 @@ document.addEventListener("touchstart", () => {}, { passive: true });
       Math.max(0, Math.floor(t * peaksPerSec)),
     );
     const level = (peaks[peakIndex] ?? 0) * volumeScale;
+    // A flat linear scale reads as too faint outside of the loudest peaks;
+    // sqrt boosts quieter/typical moments while keeping the same ceiling at
+    // full blast, and still reaches exactly 0 at true silence/mute.
+    const boosted = Math.sqrt(level);
 
-    bloom.style.setProperty("--bloom-level", (level * 0.9).toFixed(3));
-    bloom.style.setProperty("--bloom-scale", (1 + level * 0.25).toFixed(3));
+    bloom.style.setProperty("--bloom-level", (boosted * 0.9).toFixed(3));
+    bloom.style.setProperty("--bloom-scale", (1 + boosted * 0.3).toFixed(3));
   };
 
   /**
