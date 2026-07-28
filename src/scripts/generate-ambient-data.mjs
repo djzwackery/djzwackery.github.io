@@ -23,7 +23,25 @@ const DIST_DIR = join(process.cwd(), "dist", "data");
  * which case yt-dlp just runs unauthenticated as before.
  */
 const COOKIES_PATH = join(process.cwd(), "youtube-cookies.txt");
-const cookieArgs = existsSync(COOKIES_PATH) ? ["--cookies", COOKIES_PATH] : [];
+const hasCookies = existsSync(COOKIES_PATH);
+const cookieArgs = hasCookies ? ["--cookies", COOKIES_PATH] : [];
+
+/**
+ * android_vr/tv skip YouTube's PO-token/sign-in check entirely, which is
+ * what "Sign in to confirm you're not a bot" was about — but tv's own auth
+ * model is a device-linked OAuth flow, not regular browser cookies, and
+ * mixing the two causes 403s on the actual media fetch even after format
+ * resolution succeeds. Once cookies authenticate the session properly,
+ * plain "web" (what a real signed-in browser uses) is the correct choice.
+ */
+const clientArgs = hasCookies
+  ? ["--extractor-args", "youtube:player_client=web"]
+  : [
+      "--extractor-args",
+      "youtube:player_client=android_vr,tv,web",
+      "--sleep-requests",
+      "2",
+    ];
 
 for (const dir of [CACHE_DIR, PUBLIC_DIR, DIST_DIR]) {
   if (!existsSync(dir)) {
@@ -185,22 +203,12 @@ for (const video of videos) {
     // anything watchable, so ask for the lowest video+audio tracks directly
     // (144p + the smallest audio track) rather than "worst", which picks the
     // smallest *muxed* format — usually 360p, several times the size.
-    //
-    // player_client prefers android_vr/tv: both skip YouTube's PO-token/
-    // sign-in check entirely, unlike the default web client, which is what
-    // was tripping "Sign in to confirm you're not a bot" on CI's datacenter
-    // IP (see https://github.com/yt-dlp/yt-dlp/wiki/PO-Token-Guide). Still
-    // intermittent under a rapid burst of requests, hence --sleep-requests
-    // plus the inter-video delay above.
     execFileSync(
       "yt-dlp",
       [
         "-f",
         "bestvideo[height<=144]+worstaudio/worst[height<=240]/worst",
-        "--extractor-args",
-        "youtube:player_client=android_vr,tv,web",
-        "--sleep-requests",
-        "2",
+        ...clientArgs,
         ...cookieArgs,
         "-o",
         videoPath,

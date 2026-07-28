@@ -940,7 +940,9 @@ h3 {
   z-index: -1;
   background: var(--bloom-color, var(--magenta));
   filter: blur(clamp(28px, 6vw, 70px));
-  opacity: var(--bloom-level, 0.32);
+  /* Hidden until JS has real data to show — not a placeholder glow while the
+     fetch/player are still loading (see updateAmbience in app.ts). */
+  opacity: var(--bloom-level, 0);
   transform: scale(var(--bloom-scale, 1));
   transition:
     opacity 0.2s ease,
