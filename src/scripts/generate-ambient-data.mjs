@@ -27,21 +27,19 @@ const hasCookies = existsSync(COOKIES_PATH);
 const cookieArgs = hasCookies ? ["--cookies", COOKIES_PATH] : [];
 
 /**
- * android_vr/tv skip YouTube's PO-token/sign-in check entirely, which is
- * what "Sign in to confirm you're not a bot" was about — but tv's own auth
- * model is a device-linked OAuth flow, not regular browser cookies, and
- * mixing the two causes 403s on the actual media fetch even after format
- * resolution succeeds. Once cookies authenticate the session properly,
- * plain "web" (what a real signed-in browser uses) is the correct choice.
+ * Per https://github.com/yt-dlp/yt-dlp/wiki/PO-Token-Guide's client table:
+ * "web" requires a PO token for the actual streaming request, which we don't
+ * have (that's the "only images are available" failure) — "tv" is the one
+ * client that both skips the PO-token requirement and gets real (non-DRM)
+ * formats once cookies are present. It's used alone, not mixed with "web",
+ * since mixing clients can resolve video/audio through different ones and
+ * 403 on whichever half came from a PO-token-requiring client. Without
+ * cookies, "android_vr" is the equivalent PO-token-free option, but it
+ * doesn't support cookies at all, hence the two separate branches.
  */
 const clientArgs = hasCookies
-  ? ["--extractor-args", "youtube:player_client=web"]
-  : [
-      "--extractor-args",
-      "youtube:player_client=android_vr,tv,web",
-      "--sleep-requests",
-      "2",
-    ];
+  ? ["--extractor-args", "youtube:player_client=tv"]
+  : ["--extractor-args", "youtube:player_client=android_vr"];
 
 for (const dir of [CACHE_DIR, PUBLIC_DIR, DIST_DIR]) {
   if (!existsSync(dir)) {
