@@ -27,18 +27,18 @@ const hasCookies = existsSync(COOKIES_PATH);
 const cookieArgs = hasCookies ? ["--cookies", COOKIES_PATH] : [];
 
 /**
- * Per https://github.com/yt-dlp/yt-dlp/wiki/PO-Token-Guide's client table:
- * "web" requires a PO token for the actual streaming request, which we don't
- * have (that's the "only images are available" failure) — "tv" is the one
- * client that both skips the PO-token requirement and gets real (non-DRM)
- * formats once cookies are present. It's used alone, not mixed with "web",
- * since mixing clients can resolve video/audio through different ones and
- * 403 on whichever half came from a PO-token-requiring client. Without
- * cookies, "android_vr" is the equivalent PO-token-free option, but it
- * doesn't support cookies at all, hence the two separate branches.
+ * Forcing a specific player_client (tried android_vr/tv/web in various
+ * combinations) consistently 403'd on the actual media fetch, even though
+ * format *resolution* succeeded — reproduced locally, so it wasn't CI's IP.
+ * Letting yt-dlp fall back to its own default client-selection logic (no
+ * --extractor-args at all) is what actually works once cookies are present;
+ * it evidently negotiates something our manual override was overriding
+ * incorrectly. Only override the client when there's no cookies file, where
+ * we do still need to dodge the "Sign in to confirm you're not a bot" wall
+ * that yt-dlp's default (web-first) selection hits when unauthenticated.
  */
 const clientArgs = hasCookies
-  ? ["--extractor-args", "youtube:player_client=tv"]
+  ? []
   : ["--extractor-args", "youtube:player_client=android_vr"];
 
 for (const dir of [CACHE_DIR, PUBLIC_DIR, DIST_DIR]) {
