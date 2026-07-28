@@ -62,6 +62,19 @@ jobs:
           sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
           sudo chmod a+rx /usr/local/bin/yt-dlp
 
+      - name: Write YouTube cookies 🍪
+        # Authenticated requests get treated far more leniently than
+        # anonymous ones, which is what was tripping "Sign in to confirm
+        # you're not a bot" on this runner's shared IP. Only written when the
+        # secret is set, so a fork/PR build without it just runs cookie-less
+        # (same as local dev) instead of failing.
+        env:
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+        run: |
+          if [ -n "$YOUTUBE_COOKIES" ]; then
+            echo "$YOUTUBE_COOKIES" > youtube-cookies.txt
+          fi
+
       - name: Build Astro 🏗️
         uses: withastro/action@v6
         with:

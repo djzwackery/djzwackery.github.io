@@ -17,6 +17,14 @@ const CACHE_DIR = join(process.cwd(), ".cache", "data");
 const PUBLIC_DIR = join(process.cwd(), "public", "data");
 const DIST_DIR = join(process.cwd(), "dist", "data");
 
+/**
+ * Written by the "Write YouTube cookies" CI step from a YOUTUBE_COOKIES
+ * secret, when set; absent locally and on builds without the secret, in
+ * which case yt-dlp just runs unauthenticated as before.
+ */
+const COOKIES_PATH = join(process.cwd(), "youtube-cookies.txt");
+const cookieArgs = existsSync(COOKIES_PATH) ? ["--cookies", COOKIES_PATH] : [];
+
 for (const dir of [CACHE_DIR, PUBLIC_DIR, DIST_DIR]) {
   if (!existsSync(dir)) {
     await fs.mkdir(dir, { recursive: true });
@@ -193,6 +201,7 @@ for (const video of videos) {
         "youtube:player_client=android_vr,tv,web",
         "--sleep-requests",
         "2",
+        ...cookieArgs,
         "-o",
         videoPath,
         "--merge-output-format",

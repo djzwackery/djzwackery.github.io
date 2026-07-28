@@ -233,7 +233,13 @@ document.addEventListener("touchstart", () => {}, { passive: true });
           ambientData = await res.json();
         }
       } catch {
-        // no ambient data for this video yet — the bloom just stays off
+        // no ambient data for this video yet
+      }
+      if (!ambientData && bloom) {
+        // Without this, the bloom's CSS fallback (a fixed default colour/
+        // level, meant only to cover the instant before the first poll tick)
+        // would show for the video's entire runtime instead of nothing.
+        bloom.style.setProperty("--bloom-level", "0");
       }
     }
 

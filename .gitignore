@@ -19,6 +19,8 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
+# written from the YOUTUBE_COOKIES secret in CI; never commit a real one
+youtube-cookies.txt
 
 # macOS-specific files
 .DS_Store
