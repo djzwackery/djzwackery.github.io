@@ -49,6 +49,11 @@ jobs:
           node-version-file: .node-version
           cache: npm
 
+      - name: Install yt-dlp 🔧
+        run: |
+          sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+          sudo chmod a+rx /usr/local/bin/yt-dlp
+
       - name: Build Astro 🏗️
         uses: withastro/action@v6
         with:

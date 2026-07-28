@@ -16,15 +16,23 @@ export interface Video {
   title: string;
   thumb: string;
   published: string;
-  /** 0 if the statistics lookup failed or the video hides its view count. */
+  /**
+   * 0 if the statistics lookup failed or the video hides its view count.
+   */
   viewCount: number;
-  /** ISO-8601 (e.g. "PT4M13S"). Empty if the details lookup failed. */
+  /**
+   * ISO-8601 (e.g. "PT4M13S"). Empty if the details lookup failed.
+   */
   duration: string;
-  /** YouTube's own description text, only used for JSON-LD, not rendered. */
+  /**
+   * YouTube's own description text, only used for JSON-LD, not rendered.
+   */
   description: string;
 }
 
-/** Shape of the fields we read from a YouTube Data API v3 search result item. */
+/**
+ * Shape of the fields we read from a YouTube Data API v3 search result item.
+ */
 interface YouTubeSearchItem {
   id?: { kind?: string; videoId?: string };
   snippet?: {
@@ -48,7 +56,9 @@ interface YouTubeVideosResponse {
   }[];
 }
 
-/** Resolved from process.cwd(), not import.meta.url, see emotes.ts for why. */
+/**
+ * Resolved from process.cwd(), not import.meta.url, see emotes.ts for why.
+ */
 const CACHE_PATH = join(process.cwd(), ".cache", "youtube.json");
 const API_KEY = import.meta.env.YOUTUBE_API_KEY ?? process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID =
@@ -60,10 +70,14 @@ const MAX_RESULTS =
   process.env.YOUTUBE_MAX_RESULTS ??
   "12";
 
-/** Fetch once per build, no matter how many pages ask for the feed. */
+/**
+ * Fetch once per build, no matter how many pages ask for the feed.
+ */
 let memo: Promise<Video[]> | null = null;
 
-/** Decode the HTML entities the YouTube API returns in titles (e.g. &#39;). */
+/**
+ * Decode the HTML entities the YouTube API returns in titles (e.g. &#39;).
+ */
 function decode(s: string): string {
   return s
     .replace(/&#39;/g, "'")
@@ -73,7 +87,9 @@ function decode(s: string): string {
     .replace(/&gt;/g, ">");
 }
 
-/** Reduce the raw search response to the fields the site actually renders. */
+/**
+ * Reduce the raw search response to the fields the site actually renders.
+ */
 function normalize(json: YouTubeSearchResponse): Video[] {
   return (json.items ?? [])
     .filter((it): it is YouTubeSearchItem & { id: { videoId: string } } =>
@@ -107,7 +123,9 @@ async function fetchVideoDetails(
   ids: string[],
 ): Promise<Map<string, VideoDetails>> {
   const details = new Map<string, VideoDetails>();
-  if (ids.length === 0) return details;
+  if (ids.length === 0) {
+    return details;
+  }
   try {
     const url =
       "https://www.googleapis.com/youtube/v3/videos?" +
@@ -117,10 +135,14 @@ async function fetchVideoDetails(
         id: ids.join(","),
       });
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
     const json = (await res.json()) as YouTubeVideosResponse;
     for (const item of json.items ?? []) {
-      if (!item.id) continue;
+      if (!item.id) {
+        continue;
+      }
       details.set(item.id, {
         viewCount: Number(item.statistics?.viewCount ?? 0),
         duration: item.contentDetails?.duration ?? "",
@@ -173,9 +195,13 @@ async function load(): Promise<Video[]> {
       });
     const res = await fetch(url);
     const json = (await res.json()) as YouTubeSearchResponse;
-    if (!res.ok) throw new Error(json.error?.message ?? `HTTP ${res.status}`);
+    if (!res.ok) {
+      throw new Error(json.error?.message ?? `HTTP ${res.status}`);
+    }
     const videos = normalize(json);
-    if (videos.length === 0) throw new Error("no videos returned");
+    if (videos.length === 0) {
+      throw new Error("no videos returned");
+    }
     const details = await fetchVideoDetails(videos.map((v) => v.id));
     for (const v of videos) {
       const d = details.get(v.id);
@@ -206,7 +232,9 @@ function sortByPublishedDesc(videos: Video[]): Video[] {
   );
 }
 
-/** Get the latest videos (memoized for the whole build). */
+/**
+ * Get the latest videos (memoized for the whole build).
+ */
 export function getVideos(): Promise<Video[]> {
   return (memo ??= load().then(sortByPublishedDesc));
 }

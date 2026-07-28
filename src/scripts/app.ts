@@ -36,19 +36,27 @@ const parents = TWITCH_PARENTS.map((p) => `parent=${p}`).join("&");
  */
 document.addEventListener("touchstart", () => {}, { passive: true });
 
-/** 404 page sets a sessionStorage flag before redirecting; consume it once here. */
+/**
+ * 404 page sets a sessionStorage flag before redirecting; consume it once here.
+ */
 (() => {
-  if (!sessionStorage.getItem("notfound")) return;
+  if (!sessionStorage.getItem("notfound")) {
+    return;
+  }
   sessionStorage.removeItem("notfound");
   const toast = document.querySelector<HTMLElement>("[data-toast]");
-  if (!toast) return;
+  if (!toast) {
+    return;
+  }
   requestAnimationFrame(() => toast.classList.add("is-visible"));
   setTimeout(() => toast.classList.remove("is-visible"), 5000);
 })();
 
 (() => {
   const vid = document.querySelector<HTMLVideoElement>("[data-bg-video]");
-  if (!vid) return;
+  if (!vid) {
+    return;
+  }
   if (reduceMotion) {
     vid.removeAttribute("autoplay");
     vid.pause();
@@ -67,12 +75,125 @@ document.addEventListener("touchstart", () => {}, { passive: true });
   const lightbox = document.getElementById("lightbox");
   const frame = document.getElementById("lightbox-frame");
   const closeBtn = document.getElementById("lightbox-close");
-  if (!lightbox || !frame || !closeBtn) return;
+  const bloom = document.querySelector<HTMLElement>(".lightbox__bloom");
+  if (!lightbox || !frame || !closeBtn) {
+    return;
+  }
 
   let lastFocused: HTMLElement | null = null;
   let scrollLockY = 0;
 
-  /** iOS Safari ignores `overflow: hidden` on body while scrolling, so pin it in place instead. */
+  interface YTPlayer {
+    getCurrentTime(): number;
+    getDuration(): number;
+    getPlayerState(): number;
+    getVolume?(): number;
+    isMuted?(): boolean;
+    destroy(): void;
+  }
+
+  interface YTWindow extends Window {
+    YT?: {
+      Player: new (
+        id: string,
+        options: { events: { onReady: () => void } },
+      ) => YTPlayer;
+    };
+    onYouTubeIframeAPIReady?: () => void;
+  }
+
+  /**
+   * Build-time analysis of the video itself (see generate-ambient-data.mjs).
+   */
+  interface AmbientData {
+    peaks: number[];
+    colors: string[];
+    peaksPerSec: number;
+    colorsPerSec: number;
+  }
+
+  const win = window as unknown as YTWindow;
+  let ytPlayer: YTPlayer | null = null;
+  let ambienceInterval: number | undefined;
+  let ambientData: AmbientData | null = null;
+
+  const loadYtApi = () => {
+    if (win.YT) {
+      return Promise.resolve();
+    }
+    return new Promise<void>((resolve) => {
+      win.onYouTubeIframeAPIReady = () => resolve();
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    });
+  };
+
+  const clearAmbience = () => {
+    if (!bloom) {
+      return;
+    }
+    bloom.style.removeProperty("--bloom-color");
+    bloom.style.removeProperty("--bloom-level");
+    bloom.style.removeProperty("--bloom-scale");
+  };
+
+  const currentVolumeScale = () => {
+    if (ytPlayer?.isMuted && ytPlayer.isMuted()) {
+      return 0;
+    }
+    if (ytPlayer?.getVolume) {
+      return ytPlayer.getVolume() / 100;
+    }
+    return 1;
+  };
+
+  /**
+   * Bloom colour tracks the video; brightness/size tracks both the beat and
+   * the player's own volume, so turning the video down visibly dims the
+   * glow. Hidden entirely whenever the video isn't actively playing (paused,
+   * buffering, ended) rather than freezing at its last value.
+   */
+  const updateAmbience = () => {
+    if (!bloom || !ytPlayer || !ambientData) {
+      return;
+    }
+
+    const isPlaying = ytPlayer.getPlayerState() === 1; // YT.PlayerState.PLAYING
+    if (!isPlaying) {
+      bloom.style.setProperty("--bloom-level", "0");
+      bloom.style.setProperty("--bloom-scale", "1");
+      return;
+    }
+
+    const { peaks, colors, peaksPerSec, colorsPerSec } = ambientData;
+    if (peaks.length === 0 || colors.length === 0) {
+      return;
+    }
+
+    const t = ytPlayer.getCurrentTime();
+    const volumeScale = currentVolumeScale();
+
+    const colorIndex = Math.min(
+      colors.length - 1,
+      Math.max(0, Math.floor(t * colorsPerSec)),
+    );
+    bloom.style.setProperty("--bloom-color", colors[colorIndex]);
+
+    const peakIndex = Math.min(
+      peaks.length - 1,
+      Math.max(0, Math.floor(t * peaksPerSec)),
+    );
+    const level = (peaks[peakIndex] ?? 0) * volumeScale;
+
+    bloom.style.setProperty("--bloom-level", (level * 0.9).toFixed(3));
+    bloom.style.setProperty("--bloom-scale", (1 + level * 0.25).toFixed(3));
+  };
+
+  /**
+   * iOS Safari ignores `overflow: hidden` on body while scrolling, so pin it in place instead.
+   */
   const setScrollLocked = (locked: boolean) => {
     if (locked) {
       scrollLockY = window.scrollY;
@@ -85,19 +206,66 @@ document.addEventListener("touchstart", () => {}, { passive: true });
     }
   };
 
-  const open = (id: string) => {
+  const open = async (id: string) => {
+    // Opening a second video without closing the first (e.g. tabbing to a
+    // card behind the modal) would otherwise leave the old poll interval
+    // running against a player whose iframe just got torn out from under it.
+    window.clearInterval(ambienceInterval);
+    if (ytPlayer && ytPlayer.destroy) {
+      ytPlayer.destroy();
+    }
+    ytPlayer = null;
+    clearAmbience();
+
     lastFocused = document.activeElement as HTMLElement;
-    frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="YouTube video player" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+    frame.innerHTML = `<iframe id="yt-player-iframe" src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&enablejsapi=1" title="YouTube video player" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
     lightbox.classList.add("is-open");
     setScrollLocked(true);
     closeBtn.focus();
+
+    ambientData = null;
+    if (!reduceMotion) {
+      // The bloom is CSS-hidden under reduced motion, so there's no point
+      // fetching the data that would only ever drive it.
+      try {
+        const res = await fetch(`/data/${id}.json`);
+        if (res.ok) {
+          ambientData = await res.json();
+        }
+      } catch {
+        // no ambient data for this video yet — the bloom just stays off
+      }
+    }
+
+    await loadYtApi();
+    if (win.YT) {
+      ytPlayer = new win.YT.Player("yt-player-iframe", {
+        events: {
+          onReady: () => {
+            if (!reduceMotion) {
+              // 10fps: smooth enough for a colour/brightness chase, cheap enough to poll
+              ambienceInterval = window.setInterval(updateAmbience, 100);
+            }
+          },
+        },
+      });
+    }
   };
   const close = () => {
     lightbox.classList.remove("is-open");
     setScrollLocked(false);
+    window.clearInterval(ambienceInterval);
+    if (ytPlayer && ytPlayer.destroy) {
+      ytPlayer.destroy();
+    }
+    ytPlayer = null;
+    ambientData = null;
+    clearAmbience();
     // let the exit transition finish before tearing down the iframe
     setTimeout(() => {
-      if (!lightbox.classList.contains("is-open")) frame.innerHTML = "";
+      if (!lightbox.classList.contains("is-open")) {
+        frame.innerHTML = "";
+      }
     }, 260);
     lastFocused?.focus();
   };
@@ -106,17 +274,23 @@ document.addEventListener("touchstart", () => {}, { passive: true });
     .querySelectorAll<HTMLAnchorElement>("[data-video-id]")
     .forEach((card) => {
       card.addEventListener("click", (e) => {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {
+          return;
+        }
         e.preventDefault();
         open(card.dataset.videoId!);
       });
     });
   closeBtn.addEventListener("click", close);
   lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) close();
+    if (e.target === lightbox) {
+      close();
+    }
   });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && lightbox.classList.contains("is-open")) close();
+    if (e.key === "Escape" && lightbox.classList.contains("is-open")) {
+      close();
+    }
   });
 })();
 
@@ -132,13 +306,19 @@ document.addEventListener("touchstart", () => {}, { passive: true });
  */
 (() => {
   const fan = document.querySelector<HTMLElement>("[data-hero-fan]");
-  if (!fan) return;
+  if (!fan) {
+    return;
+  }
   const cards = fan.querySelectorAll<HTMLElement>(".fan__photo");
-  if (!cards.length) return;
+  if (!cards.length) {
+    return;
+  }
 
   let rotateTimer: ReturnType<typeof setInterval> | undefined;
   const startRotation = () => {
-    if (reduceMotion || rotateTimer || cards.length < 2) return;
+    if (reduceMotion || rotateTimer || cards.length < 2) {
+      return;
+    }
     rotateTimer = setInterval(() => {
       fan.insertBefore(fan.lastElementChild!, fan.firstElementChild);
     }, 3500);
@@ -154,11 +334,15 @@ document.addEventListener("touchstart", () => {}, { passive: true });
 
   cards.forEach((card) => {
     const clip = card.querySelector<HTMLVideoElement>(".fan__clip");
-    if (!clip) return;
+    if (!clip) {
+      return;
+    }
     let glitchTimer: ReturnType<typeof setTimeout>;
 
     const glitch = () => {
-      if (reduceMotion) return;
+      if (reduceMotion) {
+        return;
+      }
       card.classList.remove("is-glitching");
       // force reflow so a second glitch mid-timer restarts the animation
       void card.offsetWidth;
@@ -172,6 +356,9 @@ document.addEventListener("touchstart", () => {}, { passive: true });
     const show = () => {
       stopRotation();
       glitch();
+      if (reduceMotion) {
+        return;
+      }
       clip.currentTime = 0;
       clip.play().catch(() => {});
     };
@@ -184,8 +371,11 @@ document.addEventListener("touchstart", () => {}, { passive: true });
     if (isTouch) {
       card.addEventListener("click", () => {
         const active = card.classList.toggle("is-active");
-        if (active) show();
-        else hide();
+        if (active) {
+          show();
+        } else {
+          hide();
+        }
       });
     } else {
       card.addEventListener("mouseenter", show);
@@ -201,25 +391,33 @@ const confettiColors = [
   "var(--cyan)",
   "var(--sun)",
 ];
-/** Cycled in order on each click, like playing through a kick roll. */
+/**
+ * Cycled in order on each click, like playing through a kick roll.
+ */
 const partyKicks = [
   "/party/kick-1.mp3",
   "/party/kick-2.mp3",
   "/party/kick-3.mp3",
   "/party/kick-4.mp3",
 ];
-/** One picked at random once enough clicks have built up; never two at once. */
+/**
+ * One picked at random once enough clicks have built up; never two at once.
+ */
 const partyBreaks = [
   "/party/break-renegade.mp3",
   "/party/break-omoh.mp3",
   "/party/break-rig.mp3",
   "/party/break-djd.mp3",
 ];
-/** Clicks needed since the last break before another is allowed to fire. */
+/**
+ * Clicks needed since the last break before another is allowed to fire.
+ */
 const BREAK_EVERY = 16;
-/** The kick samples are exactly one beat at 170bpm; playbackRate is scaled
+/**
+ * The kick samples are exactly one beat at 170bpm; playbackRate is scaled
  * off that so the felt tempo tracks how fast you're actually clicking, capped
- * to a 190bpm ceiling since anything faster stops sounding like a beat. */
+ * to a 190bpm ceiling since anything faster stops sounding like a beat.
+ */
 const NATIVE_BPM = 170;
 const MAX_BPM = 200;
 const NATIVE_BEAT_SECONDS = 60 / NATIVE_BPM;
@@ -232,13 +430,17 @@ let breakPlaying = false;
 let lastPartyClick = 0;
 let lastBreak = "";
 
-/** Never the same break twice in a row. */
+/**
+ * Never the same break twice in a row.
+ */
 function pickPartyBreak(): string {
   const choices = partyBreaks.filter((b) => b !== lastBreak);
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
-/** A pause longer than 2s (or the very first click) resets to a neutral tempo. */
+/**
+ * A pause longer than 2s (or the very first click) resets to a neutral tempo.
+ */
 function partyClickRate(now: number): number {
   if (!lastPartyClick) {
     lastPartyClick = now;
@@ -246,8 +448,12 @@ function partyClickRate(now: number): number {
   }
   const delta = (now - lastPartyClick) / 1000;
   lastPartyClick = now;
-  if (delta > 2) return 1;
-  if (delta <= 0) return MAX_PARTY_RATE;
+  if (delta > 2) {
+    return 1;
+  }
+  if (delta <= 0) {
+    return MAX_PARTY_RATE;
+  }
   const rate = NATIVE_BEAT_SECONDS / delta;
   return Math.min(MAX_PARTY_RATE, Math.max(MIN_PARTY_RATE, rate));
 }
@@ -279,11 +485,15 @@ function ensurePartyFlash(): HTMLElement {
   return partyFlash;
 }
 
-/** Runs `cleanup` exactly once, whichever of the two triggers fires first. */
+/**
+ * Runs `cleanup` exactly once, whichever of the two triggers fires first.
+ */
 function once(cleanup: () => void): () => void {
   let done = false;
   return () => {
-    if (done) return;
+    if (done) {
+      return;
+    }
     done = true;
     cleanup();
   };
@@ -304,7 +514,9 @@ function createClipPlayer() {
   let dismiss: () => void = () => {};
 
   function play(src: string, rate = 1) {
-    if (playing) return;
+    if (playing) {
+      return;
+    }
     playing = true;
     if (!overlay) {
       overlay = document.createElement("div");
@@ -322,7 +534,9 @@ function createClipPlayer() {
       playing = false;
       v.pause();
       overlay!.classList.remove("is-visible");
-      if (bgVideo) bgVideo.style.opacity = "";
+      if (bgVideo) {
+        bgVideo.style.opacity = "";
+      }
     });
 
     v.src = src;
@@ -335,7 +549,9 @@ function createClipPlayer() {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             overlay!.classList.add("is-visible");
-            if (bgVideo) bgVideo.style.opacity = "0";
+            if (bgVideo) {
+              bgVideo.style.opacity = "0";
+            }
           });
         });
         v.play().catch(dismiss);
@@ -400,7 +616,7 @@ function fireParty(originX: number, originY: number) {
     );
   }
 
-  const requested = reduceMotion ? 14 : 32;
+  const requested = reduceMotion ? 0 : 32;
   const count = Math.max(
     0,
     Math.min(requested, MAX_PARTY_BITS - livePartyBits),
@@ -446,13 +662,6 @@ function fireParty(originX: number, originY: number) {
       livePartyBits--;
     });
 
-    if (reduceMotion) {
-      p.style.transform = `translate(${dx}px, ${rise}px)`;
-      p.style.opacity = "0.9";
-      setTimeout(cleanup, 1200);
-      continue;
-    }
-
     // Two-phase arc: ease-out launch then ease-in fall keeps motion visible
     // across the full duration instead of front-loading into the first third.
     const anim = p.animate(
@@ -492,7 +701,9 @@ function fireParty(originX: number, originY: number) {
 (() => {
   const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
   const status = document.querySelector<HTMLElement>("[data-contact-status]");
-  if (!form || !status) return;
+  if (!form || !status) {
+    return;
+  }
   const configured = CONTACT_ACCESS_KEY !== "YOUR_WEB3FORMS_ACCESS_KEY";
   const email = form.dataset.email ?? BOOKING_EMAIL;
 
@@ -521,7 +732,9 @@ function fireParty(originX: number, originY: number) {
         headers: { Accept: "application/json" },
         body: data,
       });
-      if (!res.ok) throw new Error(String(res.status));
+      if (!res.ok) {
+        throw new Error(String(res.status));
+      }
       status.dataset.state = "ok";
       status.textContent = form.dataset.msgSent ?? "Sent!";
       form.reset();
@@ -545,14 +758,18 @@ const emoteRain = (() => {
   let spawnTimer: number | undefined;
 
   function loadEmotes() {
-    if (loaded) return;
+    if (loaded) {
+      return;
+    }
     loaded = true;
     // Twitch emotes appear twice so they show up more often than 7TV emotes.
     sources = [...emotes.twitch, ...emotes.twitch, ...emotes.seventv];
   }
 
   function spawnOne() {
-    if (!layer) return;
+    if (!layer) {
+      return;
+    }
     const el = document.createElement("span");
     el.className = "emote";
     const src = sources[Math.floor(Math.random() * sources.length)];
@@ -575,13 +792,6 @@ const emoteRain = (() => {
 
     layer.appendChild(el);
 
-    if (reduceMotion) {
-      el.style.top = `${5 + Math.random() * 15}vh`;
-      el.style.opacity = "0.9";
-      setTimeout(() => el.remove(), 2500);
-      return;
-    }
-
     const anim = el.animate(
       [
         { transform: "translate(0, 0) rotate(0deg)", opacity: 1 },
@@ -596,29 +806,32 @@ const emoteRain = (() => {
   }
 
   function start() {
-    if (running) return;
+    if (running || reduceMotion) {
+      return;
+    }
     running = true;
     loadEmotes();
     const tick = () => {
-      if (!running) return;
-      const burst = reduceMotion
-        ? 1
-        : isMobile
-          ? 1
-          : 2 + Math.floor(Math.random() * 3);
-      for (let i = 0; i < burst; i++) spawnOne();
-      spawnTimer = window.setTimeout(
-        tick,
-        reduceMotion ? 1600 : isMobile ? 900 : 380,
-      );
+      if (!running) {
+        return;
+      }
+      const burst = isMobile ? 1 : 2 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < burst; i++) {
+        spawnOne();
+      }
+      spawnTimer = window.setTimeout(tick, isMobile ? 900 : 380);
     };
     tick();
   }
 
   function stop() {
     running = false;
-    if (spawnTimer) clearTimeout(spawnTimer);
-    if (layer) layer.innerHTML = "";
+    if (spawnTimer) {
+      clearTimeout(spawnTimer);
+    }
+    if (layer) {
+      layer.innerHTML = "";
+    }
   }
 
   return { start, stop };
@@ -653,7 +866,9 @@ const liveClips = (() => {
 
   return {
     start() {
-      if (timer || reduceMotion) return;
+      if (timer || reduceMotion) {
+        return;
+      }
       scheduleNext();
     },
     stop() {
@@ -678,12 +893,16 @@ function mountStage() {
 
 let isLive = false;
 function setLive(live: boolean) {
-  if (live === isLive) return;
+  if (live === isLive) {
+    return;
+  }
   isLive = live;
   html.dataset.live = String(live);
 
   const bg = document.querySelector<HTMLVideoElement>("[data-bg-video]");
-  if (bg && !isMobile) bg.playbackRate = live ? 1.5 : 1;
+  if (bg && !isMobile) {
+    bg.playbackRate = live ? 1.5 : 1;
+  }
 
   if (live) {
     mountStage();
@@ -730,7 +949,9 @@ async function checkTwitchLive(): Promise<boolean> {
         query: `query { user(login: "${TWITCH_LOGIN}") { stream { id } } }`,
       }),
     });
-    if (!res.ok) return false;
+    if (!res.ok) {
+      return false;
+    }
     const data = await res.json();
     return Boolean(data?.data?.user?.stream);
   } catch {
@@ -748,7 +969,9 @@ async function checkTwitchLive(): Promise<boolean> {
   const ensureSeamless = (track: HTMLElement) => {
     const duration = parseFloat(getComputedStyle(track).animationDuration);
     let unitWidth = track.scrollWidth / 2;
-    if (!unitWidth || !duration) return;
+    if (!unitWidth || !duration) {
+      return;
+    }
     const speed = unitWidth / duration;
     const target = window.innerWidth * 1.15;
     while (unitWidth < target) {
@@ -781,7 +1004,9 @@ async function checkTwitchLive(): Promise<boolean> {
  */
 (() => {
   const mascot = document.querySelector<HTMLElement>("[data-mascot]");
-  if (!mascot || !window.matchMedia("(hover: none)").matches) return;
+  if (!mascot || !window.matchMedia("(hover: none)").matches) {
+    return;
+  }
   mascot.addEventListener("click", () => {
     mascot.classList.toggle("is-active");
   });
@@ -798,9 +1023,13 @@ async function checkTwitchLive(): Promise<boolean> {
  */
 (() => {
   const mascot = document.querySelector<HTMLElement>("[data-mascot]");
-  if (!mascot) return;
+  if (!mascot) {
+    return;
+  }
 
-  /** Short enough to layer freely without turning into a wall of noise. */
+  /**
+   * Short enough to layer freely without turning into a wall of noise.
+   */
   const stingerSfx = [
     "/mlg/airhorn.mp3",
     "/mlg/omg.mp3",
@@ -815,7 +1044,9 @@ async function checkTwitchLive(): Promise<boolean> {
     "/mlg/headshot-mlg.mp3",
     "/mlg/loud-mlg-horn.mp3",
   ];
-  /** 11-17s tracks; only one plays per peak-tier episode, not per click. */
+  /**
+   * 11-17s tracks; only one plays per peak-tier episode, not per click.
+   */
   const chaosTracks = [
     "/mlg/my-hope-will-never-die.mp3",
     "/mlg/wombo-combo.mp3",
@@ -840,7 +1071,9 @@ async function checkTwitchLive(): Promise<boolean> {
   const COMBO_TIMEOUT = 1200;
   const MAX_COMBO = 20;
   const FADE_OUT_MS = 500;
-  /** Tighter than COMBO_TIMEOUT: this measures genuinely frantic clicking, not just a sustained combo. */
+  /**
+   * Tighter than COMBO_TIMEOUT: this measures genuinely frantic clicking, not just a sustained combo.
+   */
   const RAPID_CLICK_GAP = 200;
   const RAPID_CLICKS_NEEDED = 5;
   const CROSSHAIR_MEME_COOLDOWN = 5000;
@@ -858,7 +1091,9 @@ async function checkTwitchLive(): Promise<boolean> {
   let lastRapidClick = 0;
   let lastCrosshairMeme = 0;
 
-  /** Tracked (not just counted) so a reset can fade every one of these out. */
+  /**
+   * Tracked (not just counted) so a reset can fade every one of these out.
+   */
   const activeAudio: { audio: HTMLAudioElement; release: () => void }[] = [];
 
   const strobe = document.createElement("div");
@@ -866,9 +1101,15 @@ async function checkTwitchLive(): Promise<boolean> {
   document.body.appendChild(strobe);
 
   const playSfx = (src: string, volume: number, isChaosTrack = false) => {
-    if (activeAudio.length >= MAX_LIVE_AUDIO) return;
-    if (isChaosTrack && liveChaosTracks >= MAX_LIVE_CHAOS_TRACKS) return;
-    if (isChaosTrack) liveChaosTracks++;
+    if (activeAudio.length >= MAX_LIVE_AUDIO) {
+      return;
+    }
+    if (isChaosTrack && liveChaosTracks >= MAX_LIVE_CHAOS_TRACKS) {
+      return;
+    }
+    if (isChaosTrack) {
+      liveChaosTracks++;
+    }
     const audio = new Audio(src);
     audio.volume = volume;
     // release() can be reached from "ended", the fallback timeout below, and
@@ -878,8 +1119,12 @@ async function checkTwitchLive(): Promise<boolean> {
       audio,
       release: once(() => {
         const i = activeAudio.indexOf(entry);
-        if (i !== -1) activeAudio.splice(i, 1);
-        if (isChaosTrack) liveChaosTracks--;
+        if (i !== -1) {
+          activeAudio.splice(i, 1);
+        }
+        if (isChaosTrack) {
+          liveChaosTracks--;
+        }
       }),
     };
     activeAudio.push(entry);
@@ -890,17 +1135,22 @@ async function checkTwitchLive(): Promise<boolean> {
     setTimeout(entry.release, 20000);
   };
 
-  /** Ramps every currently-playing MLG sound to silence instead of letting it linger or cutting abruptly. */
+  /**
+   * Ramps every currently-playing MLG sound to silence instead of letting it linger or cutting abruptly.
+   */
   const fadeOutAllAudio = () => {
     for (const { audio, release } of [...activeAudio]) {
       const startVolume = audio.volume;
       const start = performance.now();
       const step = (now: number) => {
-        if (audio.paused) return;
+        if (audio.paused) {
+          return;
+        }
         const t = Math.min((now - start) / FADE_OUT_MS, 1);
         audio.volume = startVolume * (1 - t);
-        if (t < 1) requestAnimationFrame(step);
-        else {
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
           audio.pause();
           release();
         }
@@ -927,7 +1177,9 @@ async function checkTwitchLive(): Promise<boolean> {
     }
   };
 
-  /** Rapid-click easter egg: a burst of hitmarkers scattered across the mascot, staggered like a montage. */
+  /**
+   * Rapid-click easter egg: a burst of hitmarkers scattered across the mascot, staggered like a montage.
+   */
   const spawnCrosshairMeme = () => {
     const rect = mascot.getBoundingClientRect();
     for (let i = 0; i < CROSSHAIR_COUNT; i++) {
@@ -942,7 +1194,9 @@ async function checkTwitchLive(): Promise<boolean> {
   };
 
   const flashOverlay = (x: number, y: number) => {
-    if (liveGifs >= MAX_LIVE_GIFS) return;
+    if (liveGifs >= MAX_LIVE_GIFS) {
+      return;
+    }
     liveGifs++;
     const img = document.createElement("img");
     img.className = "mlg-overlay";
@@ -972,7 +1226,9 @@ async function checkTwitchLive(): Promise<boolean> {
 
   const setTier = (tier: number) => {
     document.body.classList.remove("mlg-1", "mlg-2", "mlg-3", "mlg-4", "mlg-5");
-    if (tier > 0) document.body.classList.add(`mlg-${tier}`);
+    if (tier > 0) {
+      document.body.classList.add(`mlg-${tier}`);
+    }
   };
 
   mascot.addEventListener("click", (e) => {
@@ -1015,7 +1271,9 @@ async function checkTwitchLive(): Promise<boolean> {
         playSfx(pick(chaosTracks), 0.35, true);
       }
       const gifChance = tier >= 3 ? 1 : tier === 2 ? 0.6 : tier === 1 ? 0.3 : 0;
-      if (Math.random() < gifChance) flashOverlay(e.clientX, e.clientY);
+      if (Math.random() < gifChance) {
+        flashOverlay(e.clientX, e.clientY);
+      }
       if (tier >= 4 && Math.random() < (tier === 5 ? 0.9 : 0.5)) {
         flashOverlay(e.clientX, e.clientY);
       }
@@ -1047,14 +1305,18 @@ async function checkTwitchLive(): Promise<boolean> {
  */
 (() => {
   const trigger = document.querySelector<HTMLElement>(".footer__logo");
-  if (!trigger) return;
+  if (!trigger) {
+    return;
+  }
   const audio = new Audio("/pavs.mp3");
   audio.volume = 0.5;
   audio.addEventListener("ended", () => clipPlayer.stop());
   trigger.addEventListener("click", () => {
     audio.currentTime = 0;
     audio.play().catch(() => {});
-    clipPlayer.play("/videos/tft-review.mp4");
+    if (!reduceMotion) {
+      clipPlayer.play("/videos/tft-review.mp4");
+    }
   });
 })();
 
@@ -1064,14 +1326,18 @@ async function checkTwitchLive(): Promise<boolean> {
  */
 (() => {
   const trigger = document.querySelector<HTMLElement>("[data-party]");
-  if (!trigger) return;
+  if (!trigger) {
+    return;
+  }
 
   trigger.style.cursor = "pointer";
   trigger.addEventListener("click", (e) => {
     fireParty(e.clientX, e.clientY);
   });
 
-  /** Konami code also sets it off, for the truly dedicated. */
+  /**
+   * Konami code also sets it off, for the truly dedicated.
+   */
   const seq = [
     "ArrowUp",
     "ArrowUp",
@@ -1100,7 +1366,9 @@ async function checkTwitchLive(): Promise<boolean> {
  * rather than page load.
  */
 (() => {
-  if (document.documentElement.lang !== "nl") return;
+  if (document.documentElement.lang !== "nl") {
+    return;
+  }
   const overlay = document.createElement("div");
   overlay.className = "dutch-meme";
   const img = document.createElement("img");
@@ -1113,7 +1381,9 @@ async function checkTwitchLive(): Promise<boolean> {
 
   const dismiss = () => {
     overlay.classList.remove("is-visible");
-    if (bgVideo) bgVideo.style.opacity = "";
+    if (bgVideo) {
+      bgVideo.style.opacity = "";
+    }
     overlay.addEventListener("transitionend", () => overlay.remove(), {
       once: true,
     });
@@ -1125,7 +1395,9 @@ async function checkTwitchLive(): Promise<boolean> {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           overlay.classList.add("is-visible");
-          if (bgVideo) bgVideo.style.opacity = "0";
+          if (bgVideo) {
+            bgVideo.style.opacity = "0";
+          }
         });
       });
       setTimeout(dismiss, 3000);
@@ -1145,18 +1417,25 @@ async function checkTwitchLive(): Promise<boolean> {
   if (param !== null) {
     const wantLive = param !== "0" && param !== "false" && param !== "off";
     setLive(wantLive);
-    if (wantLive) return; // skip polling so it can't flip us back offline
+    if (wantLive) {
+      return;
+    } // skip polling so it can't flip us back offline
   }
 
   const poll = () => checkTwitchLive().then(setLive);
   // deferred off the critical path: the poll itself is cheap, but firing it
   // immediately made it show up as part of the page's critical request chain
-  if ("requestIdleCallback" in window) requestIdleCallback(poll);
-  else setTimeout(poll, 0);
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(poll);
+  } else {
+    setTimeout(poll, 0);
+  }
   setInterval(poll, LIVE_POLL_INTERVAL);
   // catches "went live while this tab was backgrounded" without waiting for the next tick
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") poll();
+    if (document.visibilityState === "visible") {
+      poll();
+    }
   });
 })();
 
@@ -1168,9 +1447,13 @@ async function checkTwitchLive(): Promise<boolean> {
  */
 function prewarmOnIntent(selector: string, assets: string[]) {
   const trigger = document.querySelector(selector);
-  if (!trigger) return;
+  if (!trigger) {
+    return;
+  }
   const warm = () => {
-    for (const href of assets) fetch(href).catch(() => {});
+    for (const href of assets) {
+      fetch(href).catch(() => {});
+    }
   };
   trigger.addEventListener("mouseenter", warm, { once: true });
   trigger.addEventListener("touchstart", warm, { once: true, passive: true });

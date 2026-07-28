@@ -8,7 +8,9 @@ import VideoWall from "./VideoWall.astro";
 import Contact from "./Contact.astro";
 import { getVideos } from "../lib/youtube";
 
-/** Fetched at build time (server-side); never requested from the browser. */
+/**
+ * Fetched at build time (server-side); never requested from the browser.
+ */
 const videos = await getVideos();
 ---
 

@@ -35,7 +35,9 @@ function fmt(iso: string) {
   };
 }
 
-/** Full date (with year) for the tile's `title`; the tile itself omits the year to stay compact. */
+/**
+ * Full date (with year) for the tile's `title`; the tile itself omits the year to stay compact.
+ */
 function fullDate(iso: string) {
   return new Date(iso).toLocaleDateString(dateLocale, {
     day: "numeric",

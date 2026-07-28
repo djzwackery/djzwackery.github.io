@@ -19,11 +19,17 @@ interface VideoLD {
   title: string;
   thumb: string;
   published: string;
-  /** ISO-8601 (e.g. "PT4M13S"); omitted from the JSON-LD entirely if empty. */
+  /**
+   * ISO-8601 (e.g. "PT4M13S"); omitted from the JSON-LD entirely if empty.
+   */
   duration?: string;
-  /** Omitted from the JSON-LD entirely if empty. */
+  /**
+   * Omitted from the JSON-LD entirely if empty.
+   */
   description?: string;
-  /** Omitted from the JSON-LD entirely if 0/unset. */
+  /**
+   * Omitted from the JSON-LD entirely if 0/unset.
+   */
   viewCount?: number;
 }
 interface GigLD {
@@ -32,16 +38,24 @@ interface GigLD {
   venue?: string;
   location: string;
   url?: string;
-  /** Must be a fully-qualified URL to an externally-hosted flyer/poster; no local asset pipeline for this. */
+  /**
+   * Must be a fully-qualified URL to an externally-hosted flyer/poster; no local asset pipeline for this.
+   */
   image?: string;
-  /** The promoter/event brand, when it isn't Zwackery himself; omitted from the JSON-LD if unset. */
+  /**
+   * The promoter/event brand, when it isn't Zwackery himself; omitted from the JSON-LD if unset.
+   */
   organizer?: string;
 }
 interface Props {
-  /** Overrides the default localized title (used by the 404 page). */
+  /**
+   * Overrides the default localized title (used by the 404 page).
+   */
   title?: string;
   videos?: VideoLD[];
-  /** Whether to emit hreflang alternates and structured data (false on 404). */
+  /**
+   * Whether to emit hreflang alternates and structured data (false on 404).
+   */
   index?: boolean;
 }
 

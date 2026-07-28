@@ -1,4 +1,6 @@
-/** Console art credit: prints Jives' logo in DevTools, in the same spirit as the footer credit. */
+/**
+ * Console art credit: prints Jives' logo in DevTools, in the same spirit as the footer credit.
+ */
 
 interface LogoCell {
   color: string | null;
@@ -406,7 +408,9 @@ function printBrowserLogo(): void {
         `color: ${part.color ?? "transparent"}; font-family: monospace; font-size: 10px; line-height: 6px;`,
       );
     }
-    if (i < logo.length - 1) fmt += "\n";
+    if (i < logo.length - 1) {
+      fmt += "\n";
+    }
   }
 
   // A separate console.log per row would let DevTools group/chunk them; one call keeps it a single block.

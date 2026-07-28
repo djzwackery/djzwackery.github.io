@@ -19,7 +19,9 @@ import { TWITCH_LOGIN, TWITCH_USER_ID, twitchEmoteUrl } from "../config";
 
 export interface Emote {
   source: "twitch" | "seventv";
-  /** Filename under /emotes/, e.g. "twitch-emotesv2_123.png". */
+  /**
+   * Filename under /emotes/, e.g. "twitch-emotesv2_123.png".
+   */
   file: string;
 }
 
@@ -78,11 +80,19 @@ async function ensureImage(
   const prior = manifest[key];
   try {
     const headers: HeadersInit = {};
-    if (prior?.etag) headers["If-None-Match"] = prior.etag;
-    if (prior?.lastModified) headers["If-Modified-Since"] = prior.lastModified;
+    if (prior?.etag) {
+      headers["If-None-Match"] = prior.etag;
+    }
+    if (prior?.lastModified) {
+      headers["If-Modified-Since"] = prior.lastModified;
+    }
     const res = await fetch(sourceUrl, { headers });
-    if (res.status === 304 && prior) return prior.file;
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (res.status === 304 && prior) {
+      return prior.file;
+    }
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
     const type = res.headers.get("content-type") ?? "";
     const ext = EXT_BY_CONTENT_TYPE[type] ?? "png";
     const file = `${key}.${ext}`;
@@ -98,7 +108,9 @@ async function ensureImage(
     };
     return file;
   } catch (err) {
-    if (prior) return prior.file;
+    if (prior) {
+      return prior.file;
+    }
     console.warn(
       `[emotes] image fetch failed for ${key} (${(err as Error).message}).`,
     );
@@ -117,7 +129,9 @@ async function fetchTwitchIds(): Promise<string[]> {
       query: `{ user(login: "${TWITCH_LOGIN}") { subscriptionProducts { emotes { id } } } }`,
     }),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
   const json = (await res.json()) as {
     data?: {
       user?: { subscriptionProducts?: { emotes?: { id: string }[] }[] };
@@ -126,18 +140,24 @@ async function fetchTwitchIds(): Promise<string[]> {
   const ids = (json.data?.user?.subscriptionProducts ?? [])
     .flatMap((p) => p.emotes ?? [])
     .map((e) => e.id);
-  if (ids.length === 0) throw new Error("no emotes returned");
+  if (ids.length === 0) {
+    throw new Error("no emotes returned");
+  }
   return ids;
 }
 
 async function fetchSevenTvIds(): Promise<string[]> {
   const res = await fetch(`https://7tv.io/v3/users/twitch/${TWITCH_USER_ID}`);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
   const json = (await res.json()) as {
     emote_set?: { emotes?: { id: string }[] };
   };
   const ids = (json.emote_set?.emotes ?? []).slice(0, 40).map((e) => e.id);
-  if (ids.length === 0) throw new Error("no emotes returned");
+  if (ids.length === 0) {
+    throw new Error("no emotes returned");
+  }
   return ids;
 }
 
@@ -156,15 +176,20 @@ async function loadSource(
       `[emotes] ${source} list fetch failed (${(err as Error).message}) — falling back to cache.`,
     );
     for (const [key, entry] of Object.entries(manifest)) {
-      if (key.startsWith(`${source}-`))
+      if (key.startsWith(`${source}-`)) {
         result.push({ source, file: entry.file });
+      }
     }
     return;
   }
   const files = await Promise.all(
     ids.map((id) => ensureImage(manifest, source, id, sourceUrl(id))),
   );
-  for (const file of files) if (file) result.push({ source, file });
+  for (const file of files) {
+    if (file) {
+      result.push({ source, file });
+    }
+  }
 }
 
 let memo: Promise<Emote[]> | null = null;
@@ -191,7 +216,9 @@ async function load(): Promise<Emote[]> {
   return result;
 }
 
-/** Get Zwackery's self-hosted emote list (metadata + images), memoized for the whole build. */
+/**
+ * Get Zwackery's self-hosted emote list (metadata + images), memoized for the whole build.
+ */
 export function getEmotes(): Promise<Emote[]> {
   return (memo ??= load());
 }

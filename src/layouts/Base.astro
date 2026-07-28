@@ -36,10 +36,14 @@ interface VideoLD {
   published: string;
 }
 interface Props {
-  /** Optional title override; omit to use the localized default. */
+  /**
+   * Optional title override; omit to use the localized default.
+   */
   title?: string;
   videos?: VideoLD[];
-  /** False on the 404 page: noindex and no hreflang alternates. */
+  /**
+   * False on the 404 page: noindex and no hreflang alternates.
+   */
   index?: boolean;
 }
 const { title, videos = [], index = true } = Astro.props;
@@ -73,12 +77,15 @@ const lang = getLang(Astro.currentLocale);
 
           const pref = localStorage.getItem(PREF_KEY);
           if (pref) {
-            if (pref !== "en" && supported.indexOf(pref) !== -1)
+            if (pref !== "en" && supported.indexOf(pref) !== -1) {
               location.replace("/" + pref + "/");
+            }
             return;
           }
 
-          if (localStorage.getItem(REDIRECTED_KEY)) return;
+          if (localStorage.getItem(REDIRECTED_KEY)) {
+            return;
+          }
           localStorage.setItem(REDIRECTED_KEY, "1");
           const detected = (
             (navigator.languages && navigator.languages[0]) ||
@@ -87,8 +94,9 @@ const lang = getLang(Astro.currentLocale);
           )
             .split("-")[0]
             .toLowerCase();
-          if (supported.indexOf(detected) !== -1)
+          if (supported.indexOf(detected) !== -1) {
             location.replace("/" + detected + "/");
+          }
         } catch {
           /* localStorage unavailable (private browsing restriction); skip redirect */
         }
@@ -188,12 +196,17 @@ const lang = getLang(Astro.currentLocale);
       aria-modal="true"
       aria-label={t("a11y.videoPlayer")}
     >
-      <button
-        class="lightbox__close"
-        id="lightbox-close"
-        aria-label={t("a11y.closeVideo")}>✕ {t("a11y.close")}</button
-      >
-      <div class="lightbox__frame" id="lightbox-frame"></div>
+      <div class="lightbox__stage">
+        <button
+          class="lightbox__close"
+          id="lightbox-close"
+          aria-label={t("a11y.closeVideo")}>✕ {t("a11y.close")}</button
+        >
+        <div class="lightbox__frame-wrap">
+          <div class="lightbox__bloom" aria-hidden="true"></div>
+          <div class="lightbox__frame" id="lightbox-frame"></div>
+        </div>
+      </div>
     </div>
 
     <script src="../scripts/app.ts"></script>

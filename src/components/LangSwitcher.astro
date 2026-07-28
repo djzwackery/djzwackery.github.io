@@ -46,10 +46,14 @@ const t = useTranslations(Astro.currentLocale);
   const el = document.querySelector<HTMLDetailsElement>("[data-langs]");
   if (el) {
     document.addEventListener("click", (e) => {
-      if (el.open && !el.contains(e.target as Node)) el.open = false;
+      if (el.open && !el.contains(e.target as Node)) {
+        el.open = false;
+      }
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && el.open) el.open = false;
+      if (e.key === "Escape" && el.open) {
+        el.open = false;
+      }
     });
   }
 

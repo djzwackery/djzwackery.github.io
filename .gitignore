@@ -1,5 +1,6 @@
 # build output
 dist/
+public/data/
 # generated types
 .astro/
 # build-time content cache (YouTube feed + Twitch/7TV emote metadata & images; restored via actions/cache in CI)

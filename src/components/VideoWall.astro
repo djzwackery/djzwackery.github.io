@@ -15,7 +15,9 @@ interface Props {
 const { videos } = Astro.props;
 const t = useTranslations(Astro.currentLocale);
 
-/** Stop calling it "new" once nothing's been uploaded in a while. */
+/**
+ * Stop calling it "new" once nothing's been uploaded in a while.
+ */
 const NEW_BADGE_WINDOW_DAYS = 30;
 const latestIsRecent =
   videos.length > 0 &&

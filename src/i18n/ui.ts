@@ -8,7 +8,9 @@
 
 export const defaultLang = "en";
 
-/** Locales in the order they appear in the language switcher. */
+/**
+ * Locales in the order they appear in the language switcher.
+ */
 export const languages = {
   en: "English",
   ja: "日本語",
@@ -34,7 +36,9 @@ export const marqueeLive: Record<Lang, readonly string[]> = {
   it: ["SIAMO LIVE SU TWITCH", "ENTRA SUBITO", "MANI IN ARIA"],
 };
 
-/** BCP-47 tags for the html lang attribute and og:locale. */
+/**
+ * BCP-47 tags for the html lang attribute and og:locale.
+ */
 export const localeTags: Record<Lang, string> = {
   en: "en",
   ja: "ja",

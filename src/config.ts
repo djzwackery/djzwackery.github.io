@@ -8,7 +8,9 @@ export const SITE_URL = "https://djzwackery.com";
 export const DJ_NAME = "DJ Zwackery";
 export const SHOW_NAME = "House of Fun";
 
-/** Ko-fi tip jar. Set to an empty string to hide the support button. */
+/**
+ * Ko-fi tip jar. Set to an empty string to hide the support button.
+ */
 export const KOFI_URL = "https://ko-fi.com/djzwackery";
 
 /**
@@ -55,11 +57,15 @@ export const BOOKING_EMAIL = "djzwackery@hotmail.com";
  * Twitch identity used for the live embed, chat, and 7TV emote lookups.
  */
 export const TWITCH_LOGIN = "djzwackery1";
-/** Numeric Twitch user id - required by the 7TV emote API. */
+/**
+ * Numeric Twitch user id - required by the 7TV emote API.
+ */
 export const TWITCH_USER_ID = "6785771";
 export const TWITCH_URL = `https://www.twitch.tv/${TWITCH_LOGIN}`;
 export const TWITTER_HANDLE = "@djzwackery";
-/** Domains allowed to embed the Twitch player/chat. */
+/**
+ * Domains allowed to embed the Twitch player/chat.
+ */
 export const TWITCH_PARENTS = [
   "djzwackery.com",
   "www.djzwackery.com",
@@ -71,7 +77,9 @@ export type Social = {
   platform: string;
   label: string;
   url: string;
-  /** CSS custom-property name used as the hover accent. */
+  /**
+   * CSS custom-property name used as the hover accent.
+   */
   accent: string;
 };
 
