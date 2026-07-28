@@ -153,11 +153,18 @@ for (const video of videos) {
     // anything watchable, so ask for the lowest video+audio tracks directly
     // (144p + the smallest audio track) rather than "worst", which picks the
     // smallest *muxed* format — usually 360p, several times the size.
+    //
+    // player_client prefers android_vr/tv: both skip YouTube's PO-token/
+    // sign-in check entirely, unlike the default web client, which is what
+    // was tripping "Sign in to confirm you're not a bot" on CI's datacenter
+    // IP (see https://github.com/yt-dlp/yt-dlp/wiki/PO-Token-Guide).
     execFileSync(
       "yt-dlp",
       [
         "-f",
         "bestvideo[height<=144]+worstaudio/worst[height<=240]/worst",
+        "--extractor-args",
+        "youtube:player_client=android_vr,tv,web",
         "-o",
         videoPath,
         "--merge-output-format",

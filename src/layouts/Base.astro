@@ -196,16 +196,14 @@ const lang = getLang(Astro.currentLocale);
       aria-modal="true"
       aria-label={t("a11y.videoPlayer")}
     >
+      <button
+        class="lightbox__close"
+        id="lightbox-close"
+        aria-label={t("a11y.closeVideo")}>✕ {t("a11y.close")}</button
+      >
       <div class="lightbox__stage">
-        <button
-          class="lightbox__close"
-          id="lightbox-close"
-          aria-label={t("a11y.closeVideo")}>✕ {t("a11y.close")}</button
-        >
-        <div class="lightbox__frame-wrap">
-          <div class="lightbox__bloom" aria-hidden="true"></div>
-          <div class="lightbox__frame" id="lightbox-frame"></div>
-        </div>
+        <div class="lightbox__bloom" aria-hidden="true"></div>
+        <div class="lightbox__frame" id="lightbox-frame"></div>
       </div>
     </div>
 
