@@ -938,6 +938,11 @@ h3 {
   position: absolute;
   inset: -8%;
   z-index: -1;
+  /* Purely decorative (aria-hidden) and its box extends past the frame's
+     edges into what looks like backdrop — without this, clicking there hits
+     the bloom instead of .lightbox itself and silently defeats
+     click-outside-to-close (see the lightbox click handler in app.ts). */
+  pointer-events: none;
   background: var(--bloom-color, var(--magenta));
   filter: blur(clamp(28px, 6vw, 70px));
   /* Hidden until JS has real data to show — not a placeholder glow while the
