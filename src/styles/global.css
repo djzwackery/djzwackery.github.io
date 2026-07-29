@@ -228,6 +228,9 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 50;
+  /* mitigates iOS sticky-element jitter during the address-bar collapse */
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
 }
 
 .marquee__track {
@@ -1057,6 +1060,7 @@ h3 {
   pointer-events: none;
   overflow: hidden;
   z-index: -1;
+  will-change: transform; /* mitigates iOS fixed-position flicker during scroll */
 }
 
 .emote {
