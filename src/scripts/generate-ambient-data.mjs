@@ -70,6 +70,10 @@ try {
 const PEAKS_PER_SEC = 5;
 const COLORS_PER_SEC = 2;
 const AUDIO_SAMPLE_RATE = 11025;
+/**
+ * Samples per frame (COLOR_GRID_SIZE²) for {@link dominantColor}, not a visible resolution.
+ */
+const COLOR_GRID_SIZE = 8;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -166,6 +170,30 @@ function neonize(r, g, b) {
   return hslToHex(h, boostedS, clampedL);
 }
 
+/**
+ * Saturation-weighted average across a frame's sampled pixels (a small grid,
+ * not just one), so a vivid stage light or LED wall pulls the result toward
+ * itself instead of being diluted by muted/grey regions (black gear, walls,
+ * skin) the way a flat average would. The `+ 0.02` weight floor keeps a
+ * genuinely colourless frame from dividing by ~0 — it just falls back to a
+ * plain average, which is already grey anyway.
+ */
+function dominantColor(samples) {
+  let sumWeight = 0;
+  let sumR = 0;
+  let sumG = 0;
+  let sumB = 0;
+  for (const [r, g, b] of samples) {
+    const { s } = rgbToHsl(r, g, b);
+    const weight = s * s + 0.02;
+    sumWeight += weight;
+    sumR += r * weight;
+    sumG += g * weight;
+    sumB += b * weight;
+  }
+  return [sumR / sumWeight, sumG / sumWeight, sumB / sumWeight];
+}
+
 let isFirstDownload = true;
 
 for (const video of videos) {
@@ -236,8 +264,11 @@ for (const video of videos) {
     );
 
     console.log(`[process] Sampling colour for ${videoId}...`);
-    // scale=1:1:flags=area averages each frame's pixels down to one sample,
-    // rather than just picking/interpolating a corner pixel.
+    // scale=N:N:flags=area area-averages each frame down to an NxN grid
+    // (each cell itself an average of the source pixels it covers) instead
+    // of flattening the whole frame to one pixel — {@link dominantColor}
+    // needs several samples per frame to tell a vivid region from a muted
+    // one, which a single flat average can't do.
     execFileSync(
       "ffmpeg",
       [
@@ -245,7 +276,7 @@ for (const video of videos) {
         "-i",
         videoPath,
         "-vf",
-        `fps=${COLORS_PER_SEC},scale=1:1:flags=area`,
+        `fps=${COLORS_PER_SEC},scale=${COLOR_GRID_SIZE}:${COLOR_GRID_SIZE}:flags=area`,
         "-f",
         "rawvideo",
         "-pix_fmt",
@@ -284,9 +315,24 @@ for (const video of videos) {
     );
 
     const rawBuffer = await fs.readFile(rawPath);
+    const pixelsPerFrame = COLOR_GRID_SIZE * COLOR_GRID_SIZE;
+    const bytesPerFrame = pixelsPerFrame * 3;
     const colors = [];
-    for (let i = 0; i + 2 < rawBuffer.length; i += 3) {
-      colors.push(neonize(rawBuffer[i], rawBuffer[i + 1], rawBuffer[i + 2]));
+    for (
+      let offset = 0;
+      offset + bytesPerFrame <= rawBuffer.length;
+      offset += bytesPerFrame
+    ) {
+      const samples = [];
+      for (let i = 0; i < bytesPerFrame; i += 3) {
+        samples.push([
+          rawBuffer[offset + i],
+          rawBuffer[offset + i + 1],
+          rawBuffer[offset + i + 2],
+        ]);
+      }
+      const [r, g, b] = dominantColor(samples);
+      colors.push(neonize(r, g, b));
     }
 
     const payload = JSON.stringify({
