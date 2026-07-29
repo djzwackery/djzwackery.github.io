@@ -20,6 +20,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # secrets.* isn't usable directly in step `if:` conditions, only in
+      # env/with values — this is the workaround.
+      HAS_YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES != '' }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v7
@@ -64,7 +68,7 @@ jobs:
 
       - name: Setup YouTube cookies 🍪
         # Authenticated requests avoid YouTube's anti-bot wall on this runner's IP
-        if: ${{ secrets.YOUTUBE_COOKIES != '' }}
+        if: ${{ env.HAS_YOUTUBE_COOKIES == 'true' }}
         uses: AnimMouse/setup-yt-dlp/cookies@v3
         with:
           cookies: ${{ secrets.YOUTUBE_COOKIES }}
@@ -79,11 +83,11 @@ jobs:
       - name: Generate ambient-mode data 🌈
         run: npm run generate:ambient-data
         env:
-          YOUTUBE_COOKIES_ENABLED: ${{ secrets.YOUTUBE_COOKIES != '' }}
+          YOUTUBE_COOKIES_ENABLED: ${{ env.HAS_YOUTUBE_COOKIES }}
 
       - name: Refresh YouTube cookies 🔄
         # Pushes yt-dlp's rotated cookie jar back to the secret so it doesn't go stale
-        if: ${{ secrets.YOUTUBE_COOKIES != '' }}
+        if: ${{ env.HAS_YOUTUBE_COOKIES == 'true' }}
         uses: AnimMouse/setup-yt-dlp/cookies/update@v3
         with:
           cookies_secret_name: YOUTUBE_COOKIES
