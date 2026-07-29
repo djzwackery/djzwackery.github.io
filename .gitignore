@@ -4,9 +4,7 @@ public/data/
 # generated types
 .astro/
 # build-time content cache (YouTube feed + Twitch/7TV emote metadata & images; restored via actions/cache in CI)
-.cache/*
-# temporary: seeding CI's actions/cache with existing ambient data, remove once CI has cached it
-!.cache/data/
+.cache/
 
 # dependencies
 node_modules/
