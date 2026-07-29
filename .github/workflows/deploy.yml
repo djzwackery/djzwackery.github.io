@@ -79,10 +79,6 @@ jobs:
           package-manager: npm
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-
-      - name: Generate ambient-mode data 🌈
-        run: npm run generate:ambient-data
-        env:
           YOUTUBE_COOKIES_ENABLED: ${{ env.HAS_YOUTUBE_COOKIES }}
 
       - name: Refresh YouTube cookies 🔄
