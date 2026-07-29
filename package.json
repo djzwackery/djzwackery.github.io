@@ -9,7 +9,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node src/scripts/generate-ambient-data.mjs",
+    "build": "astro build",
+    "generate:ambient-data": "node src/scripts/generate-ambient-data.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",

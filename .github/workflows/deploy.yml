@@ -4,8 +4,7 @@ on:
   push:
     branches: [dev]
   schedule:
-    # 01:00 UTC = noon Melbourne (AEDT) / 1pm Melbourne (AEST); cron is fixed UTC,
-    # so this drifts an hour either side of noon across the DST switchover
+    # cron is fixed UTC; this drifts an hour either side of noon Melbourne across DST
     - cron: "0 1 * * *"
   workflow_dispatch:
 
@@ -14,7 +13,6 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment; let a newer run cancel an in-progress one.
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -30,7 +28,6 @@ jobs:
         uses: actions/cache@v6
         with:
           path: .cache
-          # rolling cache: unique key each run, restore the most recent one
           key: content-cache-${{ github.run_id }}
           restore-keys: |
             content-cache-
@@ -50,9 +47,7 @@ jobs:
           cache: npm
 
       - name: Install Deno 🦕
-        # yt-dlp needs a JS runtime to solve YouTube's extraction challenges;
-        # without one it degrades to clients that hit "Sign in to confirm
-        # you're not a bot" on datacenter IPs like this runner's.
+        # JS runtime yt-dlp needs to solve YouTube's extraction challenges
         uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
@@ -63,25 +58,16 @@ jobs:
           sudo chmod a+rx /usr/local/bin/yt-dlp
 
       - name: Install ffmpeg 🎬
-        # generate-ambient-data.mjs needs this both to merge yt-dlp's
-        # separate video+audio streams and for its own audio/colour
-        # extraction passes; not guaranteed present on ubuntu-latest.
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
-      - name: Write YouTube cookies 🍪
-        # Authenticated requests get treated far more leniently than
-        # anonymous ones, which is what was tripping "Sign in to confirm
-        # you're not a bot" on this runner's shared IP. Only written when the
-        # secret is set, so a fork/PR build without it just runs cookie-less
-        # (same as local dev) instead of failing.
-        env:
-          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
-        run: |
-          if [ -n "$YOUTUBE_COOKIES" ]; then
-            echo "$YOUTUBE_COOKIES" > youtube-cookies.txt
-          fi
+      - name: Setup YouTube cookies 🍪
+        # Authenticated requests avoid YouTube's anti-bot wall on this runner's IP
+        if: ${{ secrets.YOUTUBE_COOKIES != '' }}
+        uses: AnimMouse/setup-yt-dlp/cookies@v3
+        with:
+          cookies: ${{ secrets.YOUTUBE_COOKIES }}
 
       - name: Build Astro 🏗️
         uses: withastro/action@v6
@@ -89,6 +75,19 @@ jobs:
           package-manager: npm
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+
+      - name: Generate ambient-mode data 🌈
+        run: npm run generate:ambient-data
+        env:
+          YOUTUBE_COOKIES_ENABLED: ${{ secrets.YOUTUBE_COOKIES != '' }}
+
+      - name: Refresh YouTube cookies 🔄
+        # Pushes yt-dlp's rotated cookie jar back to the secret so it doesn't go stale
+        if: ${{ secrets.YOUTUBE_COOKIES != '' }}
+        uses: AnimMouse/setup-yt-dlp/cookies/update@v3
+        with:
+          cookies_secret_name: YOUTUBE_COOKIES
+          token: ${{ secrets.SECRETS_PAT }}
 
   deploy:
     needs: build

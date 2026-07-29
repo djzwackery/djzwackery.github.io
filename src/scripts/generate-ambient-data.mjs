@@ -18,13 +18,19 @@ const PUBLIC_DIR = join(process.cwd(), "public", "data");
 const DIST_DIR = join(process.cwd(), "dist", "data");
 
 /**
- * Written by the "Write YouTube cookies" CI step from a YOUTUBE_COOKIES
- * secret, when set; absent locally and on builds without the secret, in
- * which case yt-dlp just runs unauthenticated as before.
+ * Two ways cookies can be in play: a local `youtube-cookies.txt` (manual,
+ * for local testing — see the yt-dlp --cookies-from-browser instructions),
+ * or CI's "Setup YouTube cookies" step, which wires a secret into yt-dlp's
+ * own config rather than a file in this repo, so it's signalled via
+ * YOUTUBE_COOKIES_ENABLED instead of a path we could check for. Only the
+ * local-file case needs an explicit --cookies flag; the CI case is already
+ * applied to every yt-dlp call before this script even runs.
  */
 const COOKIES_PATH = join(process.cwd(), "youtube-cookies.txt");
-const hasCookies = existsSync(COOKIES_PATH);
-const cookieArgs = hasCookies ? ["--cookies", COOKIES_PATH] : [];
+const localCookiesExist = existsSync(COOKIES_PATH);
+const hasCookies =
+  localCookiesExist || process.env.YOUTUBE_COOKIES_ENABLED === "true";
+const cookieArgs = localCookiesExist ? ["--cookies", COOKIES_PATH] : [];
 
 /**
  * Forcing a specific player_client (tried android_vr/tv/web in various
