@@ -540,9 +540,27 @@ function createClipPlayer() {
     const v = video!;
     const bgVideo = document.querySelector<HTMLElement>(".bg-video");
 
+    const onEnded = () => dismiss();
+    const onError = () => dismiss();
+    const onCanPlay = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          overlay!.classList.add("is-visible");
+          if (bgVideo) {
+            bgVideo.style.opacity = "0";
+          }
+        });
+      });
+      v.play().catch(dismiss);
+    };
+
+    // {once:true} only detaches whichever fires; remove the rest here or they leak.
     dismiss = once(() => {
       playing = false;
       v.pause();
+      v.removeEventListener("ended", onEnded);
+      v.removeEventListener("error", onError);
+      v.removeEventListener("canplay", onCanPlay);
       overlay!.classList.remove("is-visible");
       if (bgVideo) {
         bgVideo.style.opacity = "";
@@ -551,23 +569,9 @@ function createClipPlayer() {
 
     v.src = src;
     v.playbackRate = rate;
-    v.addEventListener("ended", dismiss, { once: true });
-    v.addEventListener("error", dismiss, { once: true });
-    v.addEventListener(
-      "canplay",
-      () => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            overlay!.classList.add("is-visible");
-            if (bgVideo) {
-              bgVideo.style.opacity = "0";
-            }
-          });
-        });
-        v.play().catch(dismiss);
-      },
-      { once: true },
-    );
+    v.addEventListener("ended", onEnded, { once: true });
+    v.addEventListener("error", onError, { once: true });
+    v.addEventListener("canplay", onCanPlay, { once: true });
     // fallback in case `ended` never fires (Safari/iOS throttling)
     setTimeout(dismiss, 20000);
   }

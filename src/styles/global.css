@@ -228,6 +228,7 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 50;
+  contain: layout paint;
 }
 
 .marquee__track {
@@ -1026,7 +1027,7 @@ h3 {
   border: var(--edge) solid var(--white);
   box-shadow: 8px 8px 0 var(--acid);
   background: var(--void);
-  will-change: transform;
+  contain: layout paint;
 }
 
 .stage__player {
@@ -1057,6 +1058,7 @@ h3 {
   pointer-events: none;
   overflow: hidden;
   z-index: -1;
+  contain: layout paint;
 }
 
 .emote {
