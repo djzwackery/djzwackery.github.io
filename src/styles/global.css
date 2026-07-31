@@ -837,18 +837,21 @@ h3 {
   rotate: -4deg;
 }
 
+/* same sticker language as .card__badge, unrotated so it reads as data, not a callout */
 .card__duration {
   position: absolute;
   z-index: 2;
   inset-block-end: 0.6rem;
   inset-inline-end: 0.6rem;
-  padding: 0.15rem 0.4rem;
-  background: color-mix(in oklch, var(--void) 80%, transparent);
-  color: var(--white);
+  padding: 0.2rem 0.45rem;
+  background: var(--white);
+  color: var(--void);
   font-family: var(--font-label);
   font-weight: 700;
   font-size: var(--fs-label);
   letter-spacing: 0.03em;
+  border: 2px solid var(--void);
+  box-shadow: 3px 3px 0 var(--void);
 }
 
 .card__play {
