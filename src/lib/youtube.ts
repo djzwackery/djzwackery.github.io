@@ -31,20 +31,27 @@ export interface Video {
 }
 
 /**
- * Shape of the fields we read from a YouTube Data API v3 search result item.
+ * Shape of the fields we read from a YouTube Data API v3 playlistItems result item.
  */
-interface YouTubeSearchItem {
-  id?: { kind?: string; videoId?: string };
+interface YouTubePlaylistItem {
   snippet?: {
     title?: string;
     description?: string;
     thumbnails?: { high?: { url?: string } };
     publishedAt?: string;
+    resourceId?: { videoId?: string };
   };
 }
 
-interface YouTubeSearchResponse {
-  items?: YouTubeSearchItem[];
+interface YouTubePlaylistItemsResponse {
+  items?: YouTubePlaylistItem[];
+  error?: { message?: string };
+}
+
+interface YouTubeChannelsResponse {
+  items?: {
+    contentDetails?: { relatedPlaylists?: { uploads?: string } };
+  }[];
   error?: { message?: string };
 }
 
@@ -88,24 +95,52 @@ function decode(s: string): string {
 }
 
 /**
- * Reduce the raw search response to the fields the site actually renders.
+ * Reduce the raw playlistItems response to the fields the site actually renders.
  */
-function normalize(json: YouTubeSearchResponse): Video[] {
+function normalize(json: YouTubePlaylistItemsResponse): Video[] {
   return (json.items ?? [])
-    .filter((it): it is YouTubeSearchItem & { id: { videoId: string } } =>
-      Boolean(it.id?.kind === "youtube#video" && it.id?.videoId),
+    .filter(
+      (
+        it,
+      ): it is YouTubePlaylistItem & {
+        snippet: { resourceId: { videoId: string } };
+      } => Boolean(it.snippet?.resourceId?.videoId),
     )
     .map((it) => ({
-      id: it.id.videoId,
+      id: it.snippet.resourceId.videoId,
       title: decode(it.snippet?.title ?? "Untitled set"),
       thumb:
         it.snippet?.thumbnails?.high?.url ??
-        `https://i.ytimg.com/vi/${it.id.videoId}/hqdefault.jpg`,
+        `https://i.ytimg.com/vi/${it.snippet.resourceId.videoId}/hqdefault.jpg`,
       published: it.snippet?.publishedAt ?? new Date().toISOString(),
       viewCount: 0,
       duration: "",
       description: decode(it.snippet?.description ?? ""),
     }));
+}
+
+/**
+ * `search.list`'s index can lag real uploads badly (confirmed: it once missed
+ * the 9 latest); the uploads playlist is real-time and cheaper on quota.
+ */
+async function fetchUploadsPlaylistId(): Promise<string> {
+  const url =
+    "https://www.googleapis.com/youtube/v3/channels?" +
+    new URLSearchParams({
+      key: API_KEY!,
+      id: CHANNEL_ID,
+      part: "contentDetails",
+    });
+  const res = await fetch(url);
+  const json = (await res.json()) as YouTubeChannelsResponse;
+  if (!res.ok) {
+    throw new Error(json.error?.message ?? `HTTP ${res.status}`);
+  }
+  const uploadsId = json.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+  if (!uploadsId) {
+    throw new Error("channel has no uploads playlist");
+  }
+  return uploadsId;
 }
 
 interface VideoDetails {
@@ -183,18 +218,17 @@ async function load(): Promise<Video[]> {
   }
 
   try {
+    const uploadsPlaylistId = await fetchUploadsPlaylistId();
     const url =
-      "https://www.googleapis.com/youtube/v3/search?" +
+      "https://www.googleapis.com/youtube/v3/playlistItems?" +
       new URLSearchParams({
         key: API_KEY,
-        channelId: CHANNEL_ID,
-        part: "snippet,id",
-        order: "date",
-        type: "video",
+        playlistId: uploadsPlaylistId,
+        part: "snippet",
         maxResults: String(MAX_RESULTS),
       });
     const res = await fetch(url);
-    const json = (await res.json()) as YouTubeSearchResponse;
+    const json = (await res.json()) as YouTubePlaylistItemsResponse;
     if (!res.ok) {
       throw new Error(json.error?.message ?? `HTTP ${res.status}`);
     }
@@ -221,10 +255,7 @@ async function load(): Promise<Video[]> {
 }
 
 /**
- * Newest first, matching the channel's own "Date added (newest)" view. The
- * API's `order=date` param and the on-disk cache are both trusted to already
- * be in this order, which isn't guaranteed, so it's re-sorted explicitly
- * here rather than assumed.
+ * Newest first; re-sorted explicitly rather than trusting the API/cache order.
  */
 function sortByPublishedDesc(videos: Video[]): Video[] {
   return [...videos].sort(

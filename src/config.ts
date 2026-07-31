@@ -124,6 +124,12 @@ export const SOCIALS: Social[] = [
 ];
 
 /**
+ * Extra profile URLs for JSON-LD `sameAs` only — not rendered in the footer
+ * social rail (see SocialRail.astro, which reads SOCIALS instead).
+ */
+export const SAME_AS_EXTRA: string[] = ["https://www.mixcloud.com/zwackery/"];
+
+/**
  * Twitch CDN URL for an emote id (works for both Zwackery's channel's `emotesv2_…`
  * ids and classic numeric ids). Used only at build time, src/lib/emotes.ts
  * downloads and self-hosts these, see that file for the caching/fallback story.

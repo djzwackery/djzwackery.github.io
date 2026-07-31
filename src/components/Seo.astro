@@ -8,6 +8,7 @@ import {
   DJ_NAME,
   SHOW_NAME,
   SOCIALS,
+  SAME_AS_EXTRA,
   TWITTER_HANDLE,
   BOOKING_EMAIL,
 } from "../config";
@@ -104,7 +105,7 @@ const musicGroupLD = {
     name: "Melbourne, Australia",
   },
   email: BOOKING_EMAIL,
-  sameAs: SOCIALS.map((s) => s.url),
+  sameAs: [...SOCIALS.map((s) => s.url), ...SAME_AS_EXTRA],
 };
 
 const eventLD = upcomingGigs.map((g) => {
