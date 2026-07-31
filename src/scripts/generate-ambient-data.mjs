@@ -362,3 +362,30 @@ for (const video of videos) {
     }
   }
 }
+
+/**
+ * When every video is already cached, the loop above never calls yt-dlp, so
+ * the cookie jar never gets rewritten and CI's "refresh" step just re-uploads
+ * the same stale secret. A metadata-only request keeps the session actually
+ * exercised (and rotating) on cache-hit days too.
+ */
+if (isFirstDownload && localCookiesExist && videos.length > 0) {
+  const touchVideoId = videos[0].id;
+  console.log(
+    `[cookies] Nothing to download; touching YouTube with ${touchVideoId} to keep cookies exercised...`,
+  );
+  try {
+    execFileSync(
+      "yt-dlp",
+      [
+        "--skip-download",
+        ...clientArgs,
+        ...cookieArgs,
+        `https://www.youtube.com/watch?v=${touchVideoId}`,
+      ],
+      { stdio: "inherit" },
+    );
+  } catch (err) {
+    console.warn("[cookies] Cookie touch request failed:", err.message);
+  }
+}
