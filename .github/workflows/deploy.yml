@@ -21,8 +21,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # secrets.* isn't usable directly in step `if:` conditions, only in
-      # env/with values — this is the workaround.
       HAS_YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES != '' }}
     steps:
       - name: Checkout 🛎️
@@ -67,11 +65,10 @@ jobs:
           sudo apt-get install -y ffmpeg
 
       - name: Setup YouTube cookies 🍪
-        # Authenticated requests avoid YouTube's anti-bot wall on this runner's IP
         if: ${{ env.HAS_YOUTUBE_COOKIES == 'true' }}
-        uses: AnimMouse/setup-yt-dlp/cookies@v3
-        with:
-          cookies: ${{ secrets.YOUTUBE_COOKIES }}
+        env:
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+        run: printf '%s' "$YOUTUBE_COOKIES" > youtube-cookies.txt
 
       - name: Build Astro 🏗️
         uses: withastro/action@v6
@@ -82,12 +79,10 @@ jobs:
           YOUTUBE_COOKIES_ENABLED: ${{ env.HAS_YOUTUBE_COOKIES }}
 
       - name: Refresh YouTube cookies 🔄
-        # Pushes yt-dlp's rotated cookie jar back to the secret so it doesn't go stale
         if: ${{ env.HAS_YOUTUBE_COOKIES == 'true' }}
-        uses: AnimMouse/setup-yt-dlp/cookies/update@v3
-        with:
-          cookies_secret_name: YOUTUBE_COOKIES
-          token: ${{ secrets.SECRETS_PAT }}
+        env:
+          GH_TOKEN: ${{ secrets.SECRETS_PAT }}
+        run: gh secret set YOUTUBE_COOKIES < youtube-cookies.txt
 
   deploy:
     needs: build
