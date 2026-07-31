@@ -7,6 +7,7 @@ interface Props {
   thumb: string;
   published: string;
   viewCount: number;
+  duration: string;
   isLatest?: boolean;
 }
 const {
@@ -15,6 +16,7 @@ const {
   thumb,
   published,
   viewCount,
+  duration,
   isLatest = false,
 } = Astro.props;
 
@@ -51,6 +53,26 @@ function relativeDate(iso: string): string {
 }
 
 const relative = relativeDate(published);
+
+/**
+ * ISO-8601 duration (e.g. "PT1H42M18S") to "h:mm:ss"/"m:ss". YouTube always
+ * includes hours as a single digit, so this doesn't need to pad hours.
+ */
+function formatDuration(iso: string): string | null {
+  const match = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/.exec(iso);
+  if (!match) {
+    return null;
+  }
+  const hours = Number(match[1] ?? 0);
+  const minutes = Number(match[2] ?? 0);
+  const seconds = Number(match[3] ?? 0);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return hours > 0
+    ? `${hours}:${pad(minutes)}:${pad(seconds)}`
+    : `${minutes}:${pad(seconds)}`;
+}
+
+const formattedDuration = duration ? formatDuration(duration) : null;
 const views =
   viewCount > 0
     ? t("videos.views", {
@@ -81,6 +103,13 @@ const views =
       isLatest && (
         <span class="card__badge" aria-hidden="true">
           {t("videos.new")}
+        </span>
+      )
+    }
+    {
+      formattedDuration && (
+        <span class="card__duration" aria-hidden="true">
+          {formattedDuration}
         </span>
       )
     }

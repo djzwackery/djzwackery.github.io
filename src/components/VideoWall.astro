@@ -8,6 +8,7 @@ interface Video {
   thumb: string;
   published: string;
   viewCount: number;
+  duration: string;
 }
 interface Props {
   videos: Video[];
@@ -44,6 +45,7 @@ const latestIsRecent =
             thumb={v.thumb}
             published={v.published}
             viewCount={v.viewCount}
+            duration={v.duration}
             isLatest={i === 0 && latestIsRecent}
           />
         ))}

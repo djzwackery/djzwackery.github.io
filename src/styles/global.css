@@ -837,6 +837,20 @@ h3 {
   rotate: -4deg;
 }
 
+.card__duration {
+  position: absolute;
+  z-index: 2;
+  inset-block-end: 0.6rem;
+  inset-inline-end: 0.6rem;
+  padding: 0.15rem 0.4rem;
+  background: color-mix(in oklch, var(--void) 80%, transparent);
+  color: var(--white);
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: var(--fs-label);
+  letter-spacing: 0.03em;
+}
+
 .card__play {
   position: absolute;
   inset: 0;
