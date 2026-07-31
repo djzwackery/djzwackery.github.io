@@ -82,7 +82,12 @@ jobs:
         if: ${{ env.HAS_YOUTUBE_COOKIES == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.SECRETS_PAT }}
-        run: gh secret set YOUTUBE_COOKIES < youtube-cookies.txt
+        run: |
+          if [ -f .cache/cookies-stale ]; then
+            echo "Skipping refresh: yt-dlp hit an auth wall this run, jar may be degraded."
+            exit 0
+          fi
+          gh secret set YOUTUBE_COOKIES < youtube-cookies.txt
 
   deploy:
     needs: build

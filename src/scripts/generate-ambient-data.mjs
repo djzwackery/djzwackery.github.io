@@ -33,6 +33,18 @@ const hasCookies =
 const cookieArgs = localCookiesExist ? ["--cookies", COOKIES_PATH] : [];
 
 /**
+ * Marks the run as having hit an auth wall despite using cookies, so CI can
+ * skip pushing the (possibly now-degraded) jar back to the secret — refusing
+ * to refresh for a cycle is recoverable, overwriting a good secret with a
+ * stale jar it can't recover from on its own is not.
+ */
+const STALE_MARKER_PATH = join(process.cwd(), ".cache", "cookies-stale");
+if (existsSync(STALE_MARKER_PATH)) {
+  await fs.rm(STALE_MARKER_PATH);
+}
+let cookieAuthFailed = false;
+
+/**
  * Forcing a specific player_client (tried android_vr/tv/web in various
  * combinations) consistently 403'd on the actual media fetch, even though
  * format *resolution* succeeded — reproduced locally, so it wasn't CI's IP.
@@ -354,6 +366,9 @@ for (const video of videos) {
     console.log(`[process] Saved ambient data for ${videoId}.`);
   } catch (err) {
     console.error(`[error] Failed to process ${videoId}:`, err.message);
+    if (localCookiesExist) {
+      cookieAuthFailed = true;
+    }
   } finally {
     for (const p of [videoPath, wavPath, rawPath]) {
       if (existsSync(p)) {
@@ -387,5 +402,10 @@ if (isFirstDownload && localCookiesExist && videos.length > 0) {
     );
   } catch (err) {
     console.warn("[cookies] Cookie touch request failed:", err.message);
+    cookieAuthFailed = true;
   }
+}
+
+if (cookieAuthFailed) {
+  await fs.writeFile(STALE_MARKER_PATH, "1");
 }
