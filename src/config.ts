@@ -81,6 +81,12 @@ export type Social = {
    * CSS custom-property name used as the hover accent.
    */
   accent: string;
+  /**
+   * Excludes this entry from JSON-LD `sameAs` (see Seo.astro) without
+   * affecting the footer rail — for URLs that aren't valid identity pages,
+   * e.g. a Discord invite link, which bots can't crawl to verify.
+   */
+  excludeFromSameAs?: boolean;
 };
 
 export const SOCIALS: Social[] = [
@@ -96,6 +102,7 @@ export const SOCIALS: Social[] = [
     label: "Discord",
     url: "https://discord.gg/V5DdvGe",
     accent: "--acid",
+    excludeFromSameAs: true,
   },
   {
     platform: "instagram",

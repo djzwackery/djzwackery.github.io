@@ -105,7 +105,10 @@ const musicGroupLD = {
     name: "Melbourne, Australia",
   },
   email: BOOKING_EMAIL,
-  sameAs: [...SOCIALS.map((s) => s.url), ...SAME_AS_EXTRA],
+  sameAs: [
+    ...SOCIALS.filter((s) => !s.excludeFromSameAs).map((s) => s.url),
+    ...SAME_AS_EXTRA,
+  ],
 };
 
 const eventLD = upcomingGigs.map((g) => {
