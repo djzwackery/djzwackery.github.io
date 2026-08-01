@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.djzwackery.ambient-data-push</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>__REPO_DIR__/scripts/push-ambient-data.sh</string>
+    </array>
+    <!-- Runs every 6h while awake; launchd fires a missed StartInterval shortly
+         after wake rather than skipping it, so sleep/lid-close doesn't lose runs. -->
+    <key>StartInterval</key>
+    <integer>21600</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>__HOME__/Library/Logs/ambient-data-push.log</string>
+    <key>StandardErrorPath</key>
+    <string>__HOME__/Library/Logs/ambient-data-push.log</string>
+</dict>
+</plist>

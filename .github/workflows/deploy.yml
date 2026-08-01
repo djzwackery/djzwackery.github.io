@@ -20,8 +20,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      HAS_YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES != '' }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v7
@@ -33,6 +31,19 @@ jobs:
           key: content-cache-${{ github.run_id }}
           restore-keys: |
             content-cache-
+
+      - name: Restore ambient data cache 📼
+        # Pushed by scripts/push-ambient-data.sh from a real machine — CI's own
+        # runner IPs get blocked by YouTube regardless of cookies, so this
+        # release asset (not this repo's git history) is the source of truth.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .cache/data
+          gh release download ambient-data-cache --pattern 'ambient-data.tar.gz' --dir . --clobber
+          tar -xzf ambient-data.tar.gz -C .cache
+          rm -f ambient-data.tar.gz
 
       - name: Cache Astro image generation 🖼️
         uses: actions/cache@v6
@@ -64,30 +75,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
-      - name: Setup YouTube cookies 🍪
-        if: ${{ env.HAS_YOUTUBE_COOKIES == 'true' }}
-        env:
-          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
-        run: printf '%s' "$YOUTUBE_COOKIES" > youtube-cookies.txt
-
       - name: Build Astro 🏗️
         uses: withastro/action@v6
         with:
           package-manager: npm
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          YOUTUBE_COOKIES_ENABLED: ${{ env.HAS_YOUTUBE_COOKIES }}
-
-      - name: Refresh YouTube cookies 🔄
-        if: ${{ env.HAS_YOUTUBE_COOKIES == 'true' }}
-        env:
-          GH_TOKEN: ${{ secrets.SECRETS_PAT }}
-        run: |
-          if [ -f .cache/cookies-stale ]; then
-            echo "Skipping refresh: yt-dlp hit an auth wall this run, jar may be degraded."
-            exit 0
-          fi
-          gh secret set YOUTUBE_COOKIES < youtube-cookies.txt
 
   deploy:
     needs: build

@@ -7,6 +7,10 @@
  * locally; skips gracefully if yt-dlp isn't installed. Output lands in
  * `.cache/data`, `public/data`, and `dist/data`, mirroring the same
  * cache/public/dist pattern as the YouTube feed cache in lib/youtube.ts.
+ *
+ * CI's runner IPs get blocked regardless of cookies, so the primary path is
+ * now local: run this from a real machine (see scripts/push-ambient-data.sh),
+ * which pushes `.cache/data` as a GitHub release asset for CI to restore.
  */
 import fs from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -52,8 +56,8 @@ let cookieAuthFailed = false;
  * --extractor-args at all) is what actually works once cookies are present;
  * it evidently negotiates something our manual override was overriding
  * incorrectly. Only override the client when there's no cookies file, where
- * we do still need to dodge the "Sign in to confirm you're not a bot" wall
- * that yt-dlp's default (web-first) selection hits when unauthenticated.
+ * yt-dlp's default (web-first) selection otherwise gets rejected outright
+ * when unauthenticated.
  */
 const clientArgs = hasCookies
   ? []
@@ -72,6 +76,21 @@ if (!existsSync(CACHE_PATH)) {
 }
 
 const videos = JSON.parse(await fs.readFile(CACHE_PATH, "utf8"));
+
+/**
+ * Keeps .cache/data (and its public/dist mirrors) bounded to just the
+ * current feed, so pushing it (see scripts/push-ambient-data.sh) never
+ * grows unbounded as older videos fall out of the top MAX_RESULTS.
+ */
+const currentIds = new Set(videos.map((v) => v.id));
+for (const dir of [CACHE_DIR, PUBLIC_DIR, DIST_DIR]) {
+  for (const file of await fs.readdir(dir)) {
+    if (file.endsWith(".json") && !currentIds.has(file.slice(0, -5))) {
+      await fs.unlink(join(dir, file));
+      console.log(`[trim] Removed stale ambient data: ${file}`);
+    }
+  }
+}
 
 try {
   execFileSync("yt-dlp", ["--version"], { stdio: "ignore" });
@@ -97,10 +116,9 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * A burst of back-to-back requests from the same IP (exactly what a loop
- * over every video looks like) is itself part of what trips YouTube's bot
- * check on CI's shared runner IPs. A few seconds of jitter between videos,
- * on top of yt-dlp's own --sleep-requests below, makes the traffic look less
- * like scraping.
+ * over every video looks like) is itself part of what gets flagged. A few
+ * seconds of jitter between videos, on top of yt-dlp's own --sleep-requests
+ * below, makes the traffic look less like scraping.
  */
 const BETWEEN_VIDEOS_MIN_MS = 4000;
 const BETWEEN_VIDEOS_JITTER_MS = 5000;
@@ -380,9 +398,8 @@ for (const video of videos) {
 
 /**
  * When every video is already cached, the loop above never calls yt-dlp, so
- * the cookie jar never gets rewritten and CI's "refresh" step just re-uploads
- * the same stale secret. A metadata-only request keeps the session actually
- * exercised (and rotating) on cache-hit days too.
+ * a local cookie jar never gets exercised between runs. A metadata-only
+ * request keeps the session alive for the next local run too.
  */
 if (isFirstDownload && localCookiesExist && videos.length > 0) {
   const touchVideoId = videos[0].id;
