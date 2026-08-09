@@ -334,6 +334,8 @@ h3 {
     );
     mix-blend-mode: overlay;
     pointer-events: none;
+    /* explicit 0 so :hover sticking after a tap (iOS Safari) leaves it invisible, not stuck at the animation's un-animated opacity: 1 default */
+    opacity: 0;
     animation: fan-glitch-scanlines 0.25s steps(3, end);
   }
 }
@@ -1912,6 +1914,7 @@ body.mlg-5 .footer {
     );
     mix-blend-mode: overlay;
     pointer-events: none;
+    opacity: 0;
     animation: fan-glitch-scanlines 0.25s steps(3, end);
   }
 }
