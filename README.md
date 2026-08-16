@@ -125,9 +125,3 @@ a flat list:
 The site's English copy follows **Australian English** conventions. Use AU spellings throughout — `organise`, `colour`, `centre`, `travelling`, etc. The `html lang` attribute for English pages is `en` (not `en-AU`) for consistency across locales.
 
 All six locales (`en`, `ja`, `de`, `nl`, `fr`, `it`) must be updated together whenever a string changes. See [AGENTS.md](AGENTS.md) for the full conventions.
-
-## 📚 Additional Resources
-
-| Resource               | Description                                                               |
-| ---------------------- | ------------------------------------------------------------------------- |
-| [AGENTS.md](AGENTS.md) | Agent instructions, conventions and gotchas for working in this codebase. |
