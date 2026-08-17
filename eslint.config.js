@@ -34,9 +34,9 @@ export default defineConfig(
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
-      // No `if (x) return;` — every block gets braces, even one-liners.
+      // No `if (x) return;`; every block gets braces, even one-liners.
       curly: ["error", "all"],
-      // `/** on its own line, content indented, */` on its own line — never
+      // `/** on its own line, content indented, */` on its own line, never
       // a single-line `/** ... */` JSDoc comment.
       "jsdoc/multiline-blocks": ["error", { noSingleLineBlocks: true }],
     },

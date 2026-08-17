@@ -33,7 +33,7 @@ jobs:
             content-cache-
 
       - name: Restore ambient data cache 📼
-        # Pushed by scripts/push-ambient-data.sh from a real machine — CI's own
+        # Pushed by scripts/push-ambient-data.sh from a real machine; CI's own
         # runner IPs get blocked by YouTube regardless of cookies, so this
         # release asset (not this repo's git history) is the source of truth.
         continue-on-error: true

@@ -173,7 +173,7 @@ async function loadSource(
     ids = await fetchIds();
   } catch (err) {
     console.warn(
-      `[emotes] ${source} list fetch failed (${(err as Error).message}) — falling back to cache.`,
+      `[emotes] ${source} list fetch failed (${(err as Error).message}); falling back to cache.`,
     );
     for (const [key, entry] of Object.entries(manifest)) {
       if (key.startsWith(`${source}-`)) {

@@ -921,7 +921,7 @@ h3 {
   background: color-mix(in oklch, var(--void) 90%, transparent);
   padding: 1.25rem;
   /* Reserved so the close button (pinned to this corner) always has
-     clearance above the centred frame — see .lightbox__close. */
+     clearance above the centred frame; see .lightbox__close. */
   padding-block-start: 4.5rem;
   opacity: 0;
   visibility: hidden;

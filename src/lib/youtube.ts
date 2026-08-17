@@ -185,7 +185,7 @@ async function fetchVideoDetails(
     }
   } catch (err) {
     console.warn(
-      `[youtube] Failed to fetch video details (${(err as Error).message}) — showing videos without view counts/duration.`,
+      `[youtube] Failed to fetch video details (${(err as Error).message}); showing videos without view counts/duration.`,
     );
   }
   return details;
@@ -212,7 +212,7 @@ async function load(): Promise<Video[]> {
   if (!API_KEY) {
     const cached = await readCache();
     console.warn(
-      `[youtube] No API key set — ${cached ? "using cached feed" : "feed will be empty"}.`,
+      `[youtube] No API key set: ${cached ? "using cached feed" : "feed will be empty"}.`,
     );
     return cached ?? [];
   }
@@ -248,7 +248,7 @@ async function load(): Promise<Video[]> {
   } catch (err) {
     const cached = await readCache();
     console.warn(
-      `[youtube] Fetch failed (${(err as Error).message}) — ${cached ? "falling back to cache" : "no cache available"}.`,
+      `[youtube] Fetch failed (${(err as Error).message}): ${cached ? "falling back to cache" : "no cache available"}.`,
     );
     return cached ?? [];
   }

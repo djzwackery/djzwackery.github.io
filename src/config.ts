@@ -83,7 +83,7 @@ export type Social = {
   accent: string;
   /**
    * Excludes this entry from JSON-LD `sameAs` (see Seo.astro) without
-   * affecting the footer rail — for URLs that aren't valid identity pages,
+   * affecting the footer rail, for URLs that aren't valid identity pages,
    * e.g. a Discord invite link, which bots can't crawl to verify.
    */
   excludeFromSameAs?: boolean;
@@ -131,7 +131,7 @@ export const SOCIALS: Social[] = [
 ];
 
 /**
- * Extra profile URLs for JSON-LD `sameAs` only — not rendered in the footer
+ * Extra profile URLs for JSON-LD `sameAs` only; not rendered in the footer
  * social rail (see SocialRail.astro, which reads SOCIALS instead).
  */
 export const SAME_AS_EXTRA: string[] = ["https://www.mixcloud.com/zwackery/"];

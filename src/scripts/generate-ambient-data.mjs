@@ -23,7 +23,7 @@ const DIST_DIR = join(process.cwd(), "dist", "data");
 
 /**
  * Two ways cookies can be in play: a local `youtube-cookies.txt` (manual,
- * for local testing — see the yt-dlp --cookies-from-browser instructions),
+ * for local testing; see the yt-dlp --cookies-from-browser instructions),
  * or CI's "Setup YouTube cookies" step, which wires a secret into yt-dlp's
  * own config rather than a file in this repo, so it's signalled via
  * YOUTUBE_COOKIES_ENABLED instead of a path we could check for. Only the
@@ -38,7 +38,7 @@ const cookieArgs = localCookiesExist ? ["--cookies", COOKIES_PATH] : [];
 
 /**
  * Marks the run as having hit an auth wall despite using cookies, so CI can
- * skip pushing the (possibly now-degraded) jar back to the secret — refusing
+ * skip pushing the (possibly now-degraded) jar back to the secret: refusing
  * to refresh for a cycle is recoverable, overwriting a good secret with a
  * stale jar it can't recover from on its own is not.
  */
@@ -51,7 +51,7 @@ let cookieAuthFailed = false;
 /**
  * Forcing a specific player_client (tried android_vr/tv/web in various
  * combinations) consistently 403'd on the actual media fetch, even though
- * format *resolution* succeeded — reproduced locally, so it wasn't CI's IP.
+ * format *resolution* succeeded; reproduced locally, so it wasn't CI's IP.
  * Letting yt-dlp fall back to its own default client-selection logic (no
  * --extractor-args at all) is what actually works once cookies are present;
  * it evidently negotiates something our manual override was overriding
@@ -211,7 +211,7 @@ function neonize(r, g, b) {
  * not just one), so a vivid stage light or LED wall pulls the result toward
  * itself instead of being diluted by muted/grey regions (black gear, walls,
  * skin) the way a flat average would. The `+ 0.02` weight floor keeps a
- * genuinely colourless frame from dividing by ~0 — it just falls back to a
+ * genuinely colourless frame from dividing by ~0; it just falls back to a
  * plain average, which is already grey anyway.
  */
 function dominantColor(samples) {
@@ -264,7 +264,7 @@ for (const video of videos) {
     // We only need the audio envelope and an average-colour-per-frame, not
     // anything watchable, so ask for the lowest video+audio tracks directly
     // (144p + the smallest audio track) rather than "worst", which picks the
-    // smallest *muxed* format — usually 360p, several times the size.
+    // smallest *muxed* format, usually 360p, several times the size.
     execFileSync(
       "yt-dlp",
       [
@@ -302,7 +302,7 @@ for (const video of videos) {
     console.log(`[process] Sampling colour for ${videoId}...`);
     // scale=N:N:flags=area area-averages each frame down to an NxN grid
     // (each cell itself an average of the source pixels it covers) instead
-    // of flattening the whole frame to one pixel — {@link dominantColor}
+    // of flattening the whole frame to one pixel; {@link dominantColor}
     // needs several samples per frame to tell a vivid region from a muted
     // one, which a single flat average can't do.
     execFileSync(
