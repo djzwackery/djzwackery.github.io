@@ -22,10 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Restore content cache 💾
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: .cache
           key: content-cache-${{ github.run_id }}
@@ -46,7 +46,7 @@ jobs:
           rm -f ambient-data.tar.gz
 
       - name: Cache Astro image generation 🖼️
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: node_modules/.astro/assets
           key: astro-images-${{ hashFiles('src/assets/**') }}
@@ -54,14 +54,14 @@ jobs:
             astro-images-
 
       - name: Setup Node 🔧
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version-file: .node-version
           cache: npm
 
       - name: Install Deno 🦕
         # JS runtime yt-dlp needs to solve YouTube's extraction challenges
-        uses: denoland/setup-deno@v2
+        uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
         with:
           deno-version: v2.x
 
@@ -76,7 +76,7 @@ jobs:
           sudo apt-get install -y ffmpeg
 
       - name: Build Astro 🏗️
-        uses: withastro/action@v6
+        uses: withastro/action@e84f40bd8d2caa9e768ec82ad30dd81f0b280853 # v6
         with:
           package-manager: npm
         env:
@@ -91,4 +91,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages 🚀
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5

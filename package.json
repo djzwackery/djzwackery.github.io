@@ -1,5 +1,5 @@
 {
-  "name": "djzwackery-com",
+  "name": "@djzwackery/site",
   "description": "DJ Zwackery's official site — built with Astro, hosted on GitHub Pages.",
   "private": true,
   "type": "module",
