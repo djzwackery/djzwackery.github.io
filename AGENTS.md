@@ -1,7 +1,3 @@
-# Agents
-
-Instructions for AI agents. 
-
 ## Comments & JSDoc
 
 Write no comments by default. Add one only when the **why** is non-obvious: a hidden constraint, a workaround for a specific browser bug, a subtle invariant, or behaviour that would surprise a reader. If removing the comment wouldn't confuse a future reader, don't write it.
