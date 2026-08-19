@@ -63,13 +63,14 @@ export const TWITCH_LOGIN = "djzwackery1";
 export const TWITCH_USER_ID = "6785771";
 export const TWITCH_URL = `https://www.twitch.tv/${TWITCH_LOGIN}`;
 export const TWITTER_HANDLE = "@djzwackery";
+
 /**
  * Domains allowed to embed the Twitch player/chat.
  */
 export const TWITCH_PARENTS = [
   "djzwackery.com",
   "www.djzwackery.com",
-  "chooksta69.github.io",
+  "djzwackery.github.io",
   "localhost",
 ];
 
