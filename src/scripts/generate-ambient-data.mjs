@@ -32,8 +32,6 @@ const DIST_DIR = join(process.cwd(), "dist", "data");
  */
 const COOKIES_PATH = join(process.cwd(), "youtube-cookies.txt");
 const localCookiesExist = existsSync(COOKIES_PATH);
-const hasCookies =
-  localCookiesExist || process.env.YOUTUBE_COOKIES_ENABLED === "true";
 const cookieArgs = localCookiesExist ? ["--cookies", COOKIES_PATH] : [];
 
 /**
@@ -49,19 +47,11 @@ if (existsSync(STALE_MARKER_PATH)) {
 let cookieAuthFailed = false;
 
 /**
- * Forcing a specific player_client (tried android_vr/tv/web in various
- * combinations) consistently 403'd on the actual media fetch, even though
- * format *resolution* succeeded; reproduced locally, so it wasn't CI's IP.
- * Letting yt-dlp fall back to its own default client-selection logic (no
- * --extractor-args at all) is what actually works once cookies are present;
- * it evidently negotiates something our manual override was overriding
- * incorrectly. Only override the client when there's no cookies file, where
- * yt-dlp's default (web-first) selection otherwise gets rejected outright
- * when unauthenticated.
+ * No forced player_client: yt-dlp's own default selection works (tested
+ * with and without cookies). The prior android_vr override broke once
+ * YouTube started requiring a GVS PO token for it (yt-dlp/yt-dlp#17348).
  */
-const clientArgs = hasCookies
-  ? []
-  : ["--extractor-args", "youtube:player_client=android_vr"];
+const clientArgs = [];
 
 for (const dir of [CACHE_DIR, PUBLIC_DIR, DIST_DIR]) {
   if (!existsSync(dir)) {

@@ -107,9 +107,8 @@ const otherLocales = Object.keys(languages).filter((code) => code !== lang);
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 /**
- * Gated to the homepage, not just `index`: MusicEvent markup should only
- * appear on the page that actually lists gigs (see Gigs.astro), so it
- * doesn't leak onto other indexed pages like /press that have no gig content.
+ * Gated to isHome, not index: MusicEvent markup should only appear where
+ * gigs are actually listed (Gigs.astro), not on pages like /press.
  */
 const upcomingGigs = isHome
   ? (
@@ -127,9 +126,8 @@ const musicGroupLD = {
   url: SITE_URL,
   image: ogImage,
   /**
-   * Distinct from `image` (a photo): Google's Organization/brand logo
-   * recognition specifically wants a dedicated `logo` field, and PNG/JPG
-   * over SVG since SVG support for it is inconsistent.
+   * Distinct from `image` (a photo): Google's brand-logo recognition wants
+   * a dedicated `logo` field. PNG over SVG since SVG support is spotty.
    */
   logo: new URL("/press/logo-on-dark.png", SITE_URL).href,
   foundingLocation: {
@@ -212,6 +210,32 @@ const videoLD =
               : {}),
           },
         })),
+      }
+    : null;
+
+/**
+ * Only /press exists today, so this is a fixed two-level trail, not a
+ * generic path walker. Generalize if a second non-home page shows up.
+ */
+const breadcrumbLD =
+  index && !isHome
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: DJ_NAME,
+            item: getAbsoluteLocaleUrl(lang),
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: t("footer.press"),
+            item: canonical,
+          },
+        ],
       }
     : null;
 ---
@@ -309,6 +333,15 @@ const videoLD =
       type="application/ld+json"
       is:inline
       set:html={JSON.stringify(videoLD)}
+    />
+  )
+}
+{
+  breadcrumbLD && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(breadcrumbLD)}
     />
   )
 }

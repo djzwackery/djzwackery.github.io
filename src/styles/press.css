@@ -379,26 +379,26 @@
 }
 
 /**
- * MASCOT: a full-colour illustration, not a two-tone brand mark, so it only
- * ever sits on the void background it was drawn for. No light variant.
- * object-fit: contain (not cover, like the photo grid) since cropping a
- * full-body character would cut it off.
+ * Full-colour art, void background only, cropped to the card (uncropped
+ * source is what downloads). absolute + inset, not width/height: 100%:
+ * Safari won't size against a grid-item height that only comes from
+ * aspect-ratio, which left the mascot out of frame on iOS.
  */
 .mascot-card__preview {
-  display: grid;
-  place-items: center;
+  position: relative;
   /* same box as the photo grid so these cards read as one consistent
      size on the page - the full-body art is deliberately cropped to fit,
      the uncropped source is still what downloads */
   aspect-ratio: 4 / 5;
-  padding: 0.5rem;
   background: var(--void);
   overflow: hidden;
 }
 
 .mascot-card__preview img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 0.5rem;
+  width: calc(100% - 1rem);
+  height: calc(100% - 1rem);
   object-fit: cover;
   /* anchor to the head/shoulders - the recognisable part - rather than
      centring, which would crop the face on a figure this tall */

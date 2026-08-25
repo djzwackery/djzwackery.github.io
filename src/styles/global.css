@@ -2231,7 +2231,10 @@ body.mlg-5 .footer {
   width: auto;
   height: 28px;
   display: block;
-  transition: transform 0.15s ease;
+  margin-inline-start: 0;
+  transition:
+    transform 0.15s ease,
+    margin-inline-start 0.18s ease;
 }
 
 .footer__credit:hover,
@@ -2294,6 +2297,13 @@ body.mlg-5 .footer {
   .footer__credit-txt.is-alt {
     inset-inline-start: 0;
     inset-inline-end: auto;
+  }
+
+  /* alt text grows toward the face image here; slide the icon over by
+     the Jives -> BIG JIM width delta so they don't collide */
+  .footer__credit:hover img,
+  .footer__credit:focus-visible img {
+    margin-inline-start: 1rem;
   }
 }
 

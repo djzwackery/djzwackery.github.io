@@ -1316,6 +1316,9 @@ async function checkTwitchLive(): Promise<boolean> {
  * layering on repeat clicks) and shows the same ambient clip wash as the
  * Dutch meme, using the TFT review clip. The clip is cut short the moment
  * the sound finishes rather than running to its own (longer) natural end.
+ * On non-home pages the logo is a real link back home (see Base.astro), so
+ * a click there would just get cut off by the navigation: flag it and
+ * replay once the homepage has actually loaded instead of playing here.
  */
 (() => {
   const trigger = document.querySelector<HTMLElement>(".footer__logo");
@@ -1325,13 +1328,36 @@ async function checkTwitchLive(): Promise<boolean> {
   const audio = new Audio("/pavs.mp3");
   audio.volume = 0.5;
   audio.addEventListener("ended", () => clipPlayer.stop());
-  trigger.addEventListener("click", () => {
+
+  const play = () => {
     audio.currentTime = 0;
     audio.play().catch(() => {});
     if (!reduceMotion) {
       clipPlayer.play("/videos/tft-review.mp4");
     }
-  });
+  };
+
+  const REPLAY_KEY = "zw-footer-egg-replay";
+  if (trigger instanceof HTMLAnchorElement) {
+    trigger.addEventListener("click", () => {
+      try {
+        sessionStorage.setItem(REPLAY_KEY, "1");
+      } catch {
+        /* sessionStorage unavailable (private browsing restriction); egg just won't replay after navigating */
+      }
+    });
+  } else {
+    trigger.addEventListener("click", play);
+  }
+
+  try {
+    if (sessionStorage.getItem(REPLAY_KEY)) {
+      sessionStorage.removeItem(REPLAY_KEY);
+      play();
+    }
+  } catch {
+    /* sessionStorage unavailable; nothing to replay */
+  }
 })();
 
 /**

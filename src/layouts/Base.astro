@@ -74,6 +74,8 @@ const {
 const year = new Date().getFullYear();
 const t = useTranslations(Astro.currentLocale);
 const lang = getLang(Astro.currentLocale);
+const homeUrl = getRelativeLocaleUrl(lang);
+const isHome = Astro.url.pathname === homeUrl;
 ---
 
 <!doctype html>
@@ -163,7 +165,19 @@ const lang = getLang(Astro.currentLocale);
     <footer class="footer">
       <div class="wrap">
         <div class="footer__top">
-          <Logo class="footer__logo" title={DJ_NAME} />
+          {
+            isHome ? (
+              <Logo class="footer__logo" title={DJ_NAME} />
+            ) : (
+              <a
+                class="footer__logo"
+                href={homeUrl}
+                aria-label={t("a11y.backHome")}
+              >
+                <Logo title={DJ_NAME} />
+              </a>
+            )
+          }
           <SocialRail />
         </div>
         <div class="footer__meta">

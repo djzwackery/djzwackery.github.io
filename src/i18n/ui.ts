@@ -185,6 +185,7 @@ export const ui = {
     "a11y.close": "CLOSE",
     "a11y.pressToggleGroup": "Logo preview background",
     "a11y.copyHex": "Copy hex code {hex}",
+    "a11y.backHome": "Back to home",
 
     "notFound.error": "Error 404",
     "notFound.heading": "Lost in [[the rave]]",
@@ -330,6 +331,7 @@ export const ui = {
     "a11y.close": "閉じる",
     "a11y.pressToggleGroup": "ロゴプレビューの背景",
     "a11y.copyHex": "HEXコード {hex} をコピー",
+    "a11y.backHome": "ホームに戻る",
 
     "notFound.error": "エラー 404",
     "notFound.heading": "レイブで [[迷子]]",
@@ -478,6 +480,7 @@ export const ui = {
     "a11y.close": "SCHLIESSEN",
     "a11y.pressToggleGroup": "Hintergrund der Logo-Vorschau",
     "a11y.copyHex": "Hex-Code {hex} kopieren",
+    "a11y.backHome": "Zurück zur Startseite",
 
     "notFound.error": "Fehler 404",
     "notFound.heading": "Verloren im [[Rave]]",
@@ -625,6 +628,7 @@ export const ui = {
     "a11y.close": "SLUITEN",
     "a11y.pressToggleGroup": "Achtergrond van de logopreview",
     "a11y.copyHex": "Hexcode {hex} kopiëren",
+    "a11y.backHome": "Terug naar home",
 
     "notFound.error": "Fout 404",
     "notFound.heading": "Verdwaald in de [[rave]]",
@@ -773,6 +777,7 @@ export const ui = {
     "a11y.close": "FERMER",
     "a11y.pressToggleGroup": "Fond de l'aperçu du logo",
     "a11y.copyHex": "Copier le code hex {hex}",
+    "a11y.backHome": "Retour à l'accueil",
 
     "notFound.error": "Erreur 404",
     "notFound.heading": "Perdu dans la [[rave]]",
@@ -921,6 +926,7 @@ export const ui = {
     "a11y.close": "CHIUDI",
     "a11y.pressToggleGroup": "Sfondo dell'anteprima del logo",
     "a11y.copyHex": "Copia il codice hex {hex}",
+    "a11y.backHome": "Torna alla home",
 
     "notFound.error": "Errore 404",
     "notFound.heading": "Perso nel [[rave]]",

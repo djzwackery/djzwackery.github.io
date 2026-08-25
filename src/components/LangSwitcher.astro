@@ -6,6 +6,16 @@ import Flag from "./Flag.astro";
 
 const current = getLang(Astro.currentLocale);
 const t = useTranslations(Astro.currentLocale);
+
+/**
+ * Preserve the current page across a language switch (e.g. /press stays on
+ * /ja/press, not /ja/), same path-suffix technique as the hreflang
+ * alternates in Seo.astro.
+ */
+const localeRootPath = getRelativeLocaleUrl(current);
+const pathSuffix = Astro.url.pathname.startsWith(localeRootPath)
+  ? Astro.url.pathname.slice(localeRootPath.length)
+  : "";
 ---
 
 <details class="langs" data-langs>
@@ -23,7 +33,7 @@ const t = useTranslations(Astro.currentLocale);
         <li>
           <a
             class:list={["langs__opt", { "is-current": code === current }]}
-            href={getRelativeLocaleUrl(code)}
+            href={getRelativeLocaleUrl(code, pathSuffix)}
             hreflang={code}
             aria-current={code === current ? "true" : undefined}
           >
