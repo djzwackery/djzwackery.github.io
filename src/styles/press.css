@@ -412,6 +412,13 @@
   object-position: center top;
 }
 
+/* the full badge is a landscape lockup, not a tall figure - contain
+   instead of cover so nothing (the wordmark included) gets cropped off */
+.mascot-card__preview--contain img {
+  object-fit: contain;
+  object-position: center;
+}
+
 /**
  * EMOTE GRID
  */

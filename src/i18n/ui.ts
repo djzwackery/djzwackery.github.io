@@ -166,6 +166,9 @@ export const ui = {
     "press.mascot.back": "Facing away",
     "press.mascot.frontAlt": "DJ Zwackery mascot, facing forward",
     "press.mascot.backAlt": "DJ Zwackery mascot, facing away",
+    "press.mascot.badge": "Full badge",
+    "press.mascot.badgeAlt":
+      "DJ Zwackery mascot mixing on the decks, with the full logo lockup",
     "press.emotes.heading": "Emotes",
     "press.emotes.intro":
       "The channel's Twitch emotes, self-hosted and ready to drop into Discord, a chat overlay, or a sticker sheet.",
@@ -312,6 +315,9 @@ export const ui = {
     "press.mascot.back": "背面",
     "press.mascot.frontAlt": "DJ Zwackeryのマスコット（正面）",
     "press.mascot.backAlt": "DJ Zwackeryのマスコット（背面）",
+    "press.mascot.badge": "フルバッジ",
+    "press.mascot.badgeAlt":
+      "デッキでミックスするDJ Zwackeryのマスコットとフルロゴ",
     "press.emotes.heading": "エモート",
     "press.emotes.intro":
       "チャンネルのTwitchエモートを自前でホスティング。Discordやチャットオーバーレイ、ステッカーシートにそのまま使えます。",
@@ -461,6 +467,9 @@ export const ui = {
     "press.mascot.back": "Rückansicht",
     "press.mascot.frontAlt": "DJ-Zwackery-Maskottchen, Vorderansicht",
     "press.mascot.backAlt": "DJ-Zwackery-Maskottchen, Rückansicht",
+    "press.mascot.badge": "Komplettes Badge",
+    "press.mascot.badgeAlt":
+      "DJ-Zwackery-Maskottchen an den Decks, mit dem vollständigen Logo",
     "press.emotes.heading": "Emotes",
     "press.emotes.intro":
       "Die Twitch-Emotes des Kanals, selbst gehostet und bereit für Discord, ein Chat-Overlay oder einen Stickerbogen.",
@@ -609,6 +618,9 @@ export const ui = {
     "press.mascot.back": "Achteraanzicht",
     "press.mascot.frontAlt": "DJ Zwackery-mascotte, vooraanzicht",
     "press.mascot.backAlt": "DJ Zwackery-mascotte, achteraanzicht",
+    "press.mascot.badge": "Volledige badge",
+    "press.mascot.badgeAlt":
+      "DJ Zwackery-mascotte mixt achter de decks, met het volledige logo",
     "press.emotes.heading": "Emotes",
     "press.emotes.intro":
       "De Twitch-emotes van het kanaal, zelf gehost en klaar om te gebruiken in Discord, een chatoverlay of een stickervel.",
@@ -758,6 +770,9 @@ export const ui = {
     "press.mascot.back": "De dos",
     "press.mascot.frontAlt": "Mascotte de DJ Zwackery, de face",
     "press.mascot.backAlt": "Mascotte de DJ Zwackery, de dos",
+    "press.mascot.badge": "Badge complet",
+    "press.mascot.badgeAlt":
+      "Mascotte de DJ Zwackery en train de mixer, avec le logo complet",
     "press.emotes.heading": "Emotes",
     "press.emotes.intro":
       "Les emotes Twitch de la chaîne, hébergées en interne et prêtes à être utilisées sur Discord, en overlay de chat ou sur une planche de stickers.",
@@ -907,6 +922,9 @@ export const ui = {
     "press.mascot.back": "Di spalle",
     "press.mascot.frontAlt": "Mascotte di DJ Zwackery, di fronte",
     "press.mascot.backAlt": "Mascotte di DJ Zwackery, di spalle",
+    "press.mascot.badge": "Badge completo",
+    "press.mascot.badgeAlt":
+      "Mascotte di DJ Zwackery in consolle, con il logo completo",
     "press.emotes.heading": "Emote",
     "press.emotes.intro":
       "Le emote Twitch del canale, ospitate direttamente e pronte da usare su Discord, in un overlay della chat o su un foglio di sticker.",
