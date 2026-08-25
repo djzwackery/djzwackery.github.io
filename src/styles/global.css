@@ -2024,12 +2024,25 @@ body.mlg-5 .footer {
   font-size: 0.7rem;
 }
 
+/**
+ * .footer__meta-left and .footer__credit are the only two flex items here,
+ * so justify-content: space-between pushes credit to the far end when both
+ * fit on one line, and drops it flush to the start on its own line once
+ * they don't - correct at any width, not a threshold tuned to match one.
+ */
 .footer__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem 1.25rem;
+  flex-wrap: wrap;
+}
+
+.footer__meta-left {
   display: flex;
   align-items: center;
   gap: 0.9rem 1.25rem;
   flex-wrap: wrap;
-  container-type: inline-size;
 }
 
 .footer__copy {
@@ -2051,13 +2064,6 @@ body.mlg-5 .footer {
   max-width: 60ch;
   font-size: 0.7rem;
   opacity: 0.7;
-}
-
-/**
- * copyright + tip sit together on the left; credit is pushed to the right
- */
-.footer__credit {
-  margin-inline-start: auto;
 }
 
 .footer__kofi {
@@ -2220,7 +2226,8 @@ body.mlg-5 .footer {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 0.4rem;
+  padding-block: 0.4rem;
+  padding-inline-end: 0.4rem;
   transition: color 0.12s ease;
 }
 
@@ -2228,10 +2235,7 @@ body.mlg-5 .footer {
   width: auto;
   height: 28px;
   display: block;
-  margin-inline-start: 0;
-  transition:
-    transform 0.15s ease,
-    margin-inline-start 0.18s ease;
+  transition: transform 0.15s ease;
 }
 
 .footer__credit:hover,
@@ -2244,26 +2248,22 @@ body.mlg-5 .footer {
 }
 
 /**
- * Easter egg: the credit crossfades to "Site by bigjimjimo" on hover. While
- * .footer__credit sits pushed to the far (inline-end) side of the row, the
- * alt text is anchored to that same inline-end edge so it grows toward the
- * inline-start; the face image never moves. Once the row wraps and credit
- * is pinned to the inline-start edge instead (below), growing toward
- * inline-start would run it off-screen, so the anchor flips with it.
+ * Easter egg: the credit crossfades to "Site by bigjimjimo" on hover. Both
+ * strings share one grid cell, so the swap container is always sized to
+ * the longer one and neither the text nor the face image ever needs to
+ * move, at any width, wrapped or not.
  */
 .footer__credit-swap {
-  position: relative;
+  display: inline-grid;
 }
 
 .footer__credit-txt {
+  grid-area: 1 / 1;
   white-space: nowrap;
   transition: opacity 0.18s ease;
 }
 
 .footer__credit-txt.is-alt {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-end: 0;
   opacity: 0;
 }
 
@@ -2275,33 +2275,6 @@ body.mlg-5 .footer {
 .footer__credit:hover .footer__credit-txt.is-alt,
 .footer__credit:focus-visible .footer__credit-txt.is-alt {
   opacity: 1;
-}
-
-/**
- * .footer__meta is the query container (container-type: inline-size, set
- * above): once it's narrow enough that .footer__credit wraps onto its own
- * line, the auto-margin that pushed it to the row's end would otherwise
- * still shove it to the end of that lone line - drop it so credit flows to
- * the inline-start like everything else, and flip the hover-swap text to
- * grow toward inline-end (away from the edge it's now pinned to) instead
- * of back off the edge of the screen.
- */
-@container (max-width: 599px) {
-  .footer__credit {
-    margin-inline-start: 0;
-  }
-
-  .footer__credit-txt.is-alt {
-    inset-inline-start: 0;
-    inset-inline-end: auto;
-  }
-
-  /* alt text grows toward the face image here; slide the icon over by
-     the Jives -> BIG JIM width delta so they don't collide */
-  .footer__credit:hover img,
-  .footer__credit:focus-visible img {
-    margin-inline-start: 1rem;
-  }
 }
 
 /**

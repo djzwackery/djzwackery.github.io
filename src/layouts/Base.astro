@@ -181,24 +181,26 @@ const isHome = Astro.url.pathname === homeUrl;
           <SocialRail />
         </div>
         <div class="footer__meta">
-          <p class="footer__copy">
-            © {year}
-            {" " + DJ_NAME}
-          </p>
-          {
-            KOFI_URL && (
-              <a
-                class="footer__kofi"
-                href={KOFI_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <CoffeeIcon />
-                {t("footer.tip")}
-              </a>
-            )
-          }
-          <LangSwitcher />
+          <div class="footer__meta-left">
+            <p class="footer__copy">
+              © {year}
+              {" " + DJ_NAME}
+            </p>
+            {
+              KOFI_URL && (
+                <a
+                  class="footer__kofi"
+                  href={KOFI_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <CoffeeIcon />
+                  {t("footer.tip")}
+                </a>
+              )
+            }
+            <LangSwitcher />
+          </div>
           <a
             class="footer__credit"
             href="https://jamesiv.es"
