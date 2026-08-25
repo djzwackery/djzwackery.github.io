@@ -283,38 +283,24 @@ h3 {
   color: var(--void);
 }
 
-/**
- * VOTE-NOW STRIP (temporary - Australian Hardstyle Awards, see VoteBanner.astro)
- * A second ticker deck riding directly under .marquee, same page-furniture
- * register as the ticker rather than a floating card, so it reads as an
- * extension of the marquee instead of a competing block. void-3 per its own
- * documented role in DESIGN.md ("further-lifted panel"), one deck up from
- * the marquee's void-2.
- */
 .vote-strip {
   display: block;
-  background: var(--void-3);
-  border-block-end: var(--edge) solid var(--sun);
+  background: var(--sun);
+  border-block-end: var(--edge) solid var(--void);
   text-decoration: none;
-  transition: background 0.15s ease;
 }
 
 .vote-strip[hidden] {
   display: none;
 }
 
-.vote-strip:hover,
-.vote-strip:focus-visible {
-  background: var(--void-2);
-}
-
 .vote-strip__inner {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: wrap;
   column-gap: 0.65em;
-  row-gap: 0.3rem;
-  padding-block: 0.85rem;
+  row-gap: 0.4rem;
+  padding-block: 0.7rem;
 }
 
 .vote-strip__kicker {
@@ -322,7 +308,7 @@ h3 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--sun);
+  color: var(--void);
   font-size: var(--fs-label);
   white-space: nowrap;
 }
@@ -337,14 +323,16 @@ h3 {
   flex: 1 1 auto;
   min-width: 0;
   font-family: var(--font-label);
-  font-weight: 500;
+  font-weight: 700;
   font-size: var(--fs-small);
-  color: var(--ink-dim);
+  color: var(--void);
 }
 
 .vote-strip__heading .hl {
-  color: var(--white);
-  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--magenta);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
 }
 
 .vote-strip__cta {
@@ -356,17 +344,26 @@ h3 {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-size: var(--fs-small);
-  color: var(--white);
+  color: var(--sun);
+  background: var(--void);
+  padding: 0.45rem 0.85rem;
+  border: var(--edge) solid var(--void);
+  box-shadow: var(--shadow-hard);
   white-space: nowrap;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
 }
 
-.vote-strip__cta span {
-  transition: transform 0.15s ease;
+.vote-strip:hover .vote-strip__cta,
+.vote-strip:focus-visible .vote-strip__cta {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--void);
 }
 
-.vote-strip:hover .vote-strip__cta span,
-.vote-strip:focus-visible .vote-strip__cta span {
-  transform: translateX(3px);
+.vote-strip:active .vote-strip__cta {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 var(--void);
 }
 
 /**

@@ -46,9 +46,16 @@
   margin: 0.75rem 0 0;
 }
 
-/* same opening padding as .hero - this is the page's opening block,
-   not a mid-page .section, so it gets the same generous breathing room */
-.press-intro {
+/**
+ * Same opening padding as .hero - this is the page's opening block, not a
+ * mid-page .section, so it gets the same generous breathing room.
+ *
+ * .section.press-intro, not just .press-intro: press.css and global.css
+ * land in one merged prod stylesheet, and their bundling order isn't
+ * guaranteed (it's reversed from dev's), so this needs to outrank .section
+ * on specificity rather than rely on cascade order between the two files.
+ */
+.section.press-intro {
   padding-block: clamp(2.5rem, 6vw, 5rem);
 }
 
@@ -62,7 +69,7 @@
  * (measured against the live hero), so this only kicks in above that.
  */
 @media (min-width: 1024px) {
-  .press-intro {
+  .section.press-intro {
     padding-block-start: clamp(2.5rem, 10vw, 9rem);
   }
 }
