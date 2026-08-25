@@ -53,6 +53,10 @@ interface Props {
    * Overrides the default localized title (used by the 404 page).
    */
   title?: string;
+  /**
+   * Overrides the default localized description (used by the press page).
+   */
+  description?: string;
   videos?: VideoLD[];
   /**
    * Whether to emit hreflang alternates and structured data (false on 404).
@@ -60,13 +64,18 @@ interface Props {
   index?: boolean;
 }
 
-const { title: titleOverride, videos = [], index = true } = Astro.props;
+const {
+  title: titleOverride,
+  description: descriptionOverride,
+  videos = [],
+  index = true,
+} = Astro.props;
 
 const t = useTranslations(Astro.currentLocale);
 const lang = getLang(Astro.currentLocale);
 
 const title = titleOverride ?? `${DJ_NAME} · ${SHOW_NAME} · ${t("meta.role")}`;
-const description = t("meta.description");
+const description = descriptionOverride ?? t("meta.description");
 const ogImage = new URL("/meta.png", SITE_URL).href;
 
 const isHome = index && Astro.url.pathname === getRelativeLocaleUrl(lang);
@@ -74,18 +83,35 @@ const canonical = isHome
   ? getAbsoluteLocaleUrl(lang)
   : new URL(Astro.url.pathname, SITE_URL).href;
 
+/**
+ * hreflang alternates for any indexed page, not just home: the path suffix
+ * relative to this locale's own root (e.g. "press" or "press/") carries over
+ * unchanged to every other locale's equivalent URL, since every route is
+ * generated at the same suffix under each locale prefix (see src/pages/[lang]/).
+ */
+const localeRootPath = getRelativeLocaleUrl(lang);
+const pathSuffix = Astro.url.pathname.startsWith(localeRootPath)
+  ? Astro.url.pathname.slice(localeRootPath.length)
+  : "";
+
 const ogLocale: Record<string, string> = {
   en: "en_US",
   ja: "ja_JP",
   de: "de_DE",
   nl: "nl_NL",
   fr: "fr_FR",
+  it: "it_IT",
 };
 const otherLocales = Object.keys(languages).filter((code) => code !== lang);
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
-const upcomingGigs = index
+/**
+ * Gated to the homepage, not just `index`: MusicEvent markup should only
+ * appear on the page that actually lists gigs (see Gigs.astro), so it
+ * doesn't leak onto other indexed pages like /press that have no gig content.
+ */
+const upcomingGigs = isHome
   ? (
       (parseYaml(readFileSync(resolve("config/gigs.yaml"), "utf8")) as
         GigLD[] | null) ?? []
@@ -100,6 +126,12 @@ const musicGroupLD = {
   genre: ["Happy Hardcore", "UK Hardcore", "Hardcore", "Harder Styles"],
   url: SITE_URL,
   image: ogImage,
+  /**
+   * Distinct from `image` (a photo): Google's Organization/brand logo
+   * recognition specifically wants a dedicated `logo` field, and PNG/JPG
+   * over SVG since SVG support for it is inconsistent.
+   */
+  logo: new URL("/press/logo-on-dark.png", SITE_URL).href,
   foundingLocation: {
     "@type": "Place",
     name: "Melbourne, Australia",
@@ -206,19 +238,19 @@ const videoLD =
 }
 
 {
-  isHome && (
+  index && (
     <>
       {Object.keys(languages).map((code) => (
         <link
           rel="alternate"
           hreflang={code}
-          href={getAbsoluteLocaleUrl(code)}
+          href={getAbsoluteLocaleUrl(code, pathSuffix)}
         />
       ))}
       <link
         rel="alternate"
         hreflang="x-default"
-        href={getAbsoluteLocaleUrl("en")}
+        href={getAbsoluteLocaleUrl("en", pathSuffix)}
       />
     </>
   )

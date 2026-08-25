@@ -3,19 +3,33 @@
  * Ambient background: the looping deck-cam from djzwackery.com, compressed.
  * Sits behind everything with a dark scrim over it for legibility.
  */
+interface Props {
+  /**
+   * False on pages that want a static (non-looping) background, e.g. the
+   * press page. The scrim still renders on its own for the dot-grid texture.
+   */
+  video?: boolean;
+}
+const { video = true } = Astro.props;
 ---
 
-<video
-  class="bg-video"
-  autoplay
-  muted
-  loop
-  playsinline
-  preload="none"
-  poster="/videos/loop-poster.webp"
-  aria-hidden="true"
-  data-bg-video
->
-  <source src="/videos/loop.mp4" type="video/mp4" />
-</video>
+{
+  video ? (
+    <video
+      class="bg-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      poster="/videos/loop-poster.webp"
+      aria-hidden="true"
+      data-bg-video
+    >
+      <source src="/videos/loop.mp4" type="video/mp4" />
+    </video>
+  ) : (
+    <div class="bg-glow" aria-hidden="true" />
+  )
+}
 <div class="bg-scrim" aria-hidden="true"></div>

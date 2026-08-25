@@ -284,6 +284,92 @@ h3 {
 }
 
 /**
+ * VOTE-NOW STRIP (temporary - Australian Hardstyle Awards, see VoteBanner.astro)
+ * A second ticker deck riding directly under .marquee, same page-furniture
+ * register as the ticker rather than a floating card, so it reads as an
+ * extension of the marquee instead of a competing block. void-3 per its own
+ * documented role in DESIGN.md ("further-lifted panel"), one deck up from
+ * the marquee's void-2.
+ */
+.vote-strip {
+  display: block;
+  background: var(--void-3);
+  border-block-end: var(--edge) solid var(--sun);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.vote-strip[hidden] {
+  display: none;
+}
+
+.vote-strip:hover,
+.vote-strip:focus-visible {
+  background: var(--void-2);
+}
+
+.vote-strip__inner {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 0.65em;
+  row-gap: 0.3rem;
+  padding-block: 0.85rem;
+}
+
+.vote-strip__kicker {
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun);
+  font-size: var(--fs-label);
+  white-space: nowrap;
+}
+
+.vote-strip__sep {
+  color: var(--magenta);
+  font-size: 0.6em;
+  align-self: center;
+}
+
+.vote-strip__heading {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: var(--fs-small);
+  color: var(--ink-dim);
+}
+
+.vote-strip__heading .hl {
+  color: var(--white);
+  font-weight: 700;
+}
+
+.vote-strip__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--fs-small);
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.vote-strip__cta span {
+  transition: transform 0.15s ease;
+}
+
+.vote-strip:hover .vote-strip__cta span,
+.vote-strip:focus-visible .vote-strip__cta span {
+  transform: translateX(3px);
+}
+
+/**
  * HERO
  */
 .hero {
@@ -1946,10 +2032,21 @@ body.mlg-5 .footer {
   align-items: center;
   gap: 0.9rem 1.25rem;
   flex-wrap: wrap;
+  container-type: inline-size;
 }
 
 .footer__copy {
   margin: 0;
+}
+
+/* rides on the global `a` style (cyan, underline shifts to sun on hover) -
+   just needs to read as clickable amid the plain copyright text beside it */
+.footer__link {
+  font-weight: 700;
+}
+
+.footer__press-row {
+  margin: 1.5rem 0 0;
 }
 
 .footer__disclaimer {
@@ -2147,9 +2244,12 @@ body.mlg-5 .footer {
 }
 
 /**
- * Easter egg: the credit crossfades to "Site by bigjimjimo" on hover.
- * The alt text is anchored to the inline-end (right) edge of the swap
- * container so it grows leftward; the face image never moves.
+ * Easter egg: the credit crossfades to "Site by bigjimjimo" on hover. While
+ * .footer__credit sits pushed to the far (inline-end) side of the row, the
+ * alt text is anchored to that same inline-end edge so it grows toward the
+ * inline-start; the face image never moves. Once the row wraps and credit
+ * is pinned to the inline-start edge instead (below), growing toward
+ * inline-start would run it off-screen, so the anchor flips with it.
  */
 .footer__credit-swap {
   position: relative;
@@ -2175,6 +2275,26 @@ body.mlg-5 .footer {
 .footer__credit:hover .footer__credit-txt.is-alt,
 .footer__credit:focus-visible .footer__credit-txt.is-alt {
   opacity: 1;
+}
+
+/**
+ * .footer__meta is the query container (container-type: inline-size, set
+ * above): once it's narrow enough that .footer__credit wraps onto its own
+ * line, the auto-margin that pushed it to the row's end would otherwise
+ * still shove it to the end of that lone line - drop it so credit flows to
+ * the inline-start like everything else, and flip the hover-swap text to
+ * grow toward inline-end (away from the edge it's now pinned to) instead
+ * of back off the edge of the screen.
+ */
+@container (max-width: 599px) {
+  .footer__credit {
+    margin-inline-start: 0;
+  }
+
+  .footer__credit-txt.is-alt {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+  }
 }
 
 /**

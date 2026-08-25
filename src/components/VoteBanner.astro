@@ -1,0 +1,57 @@
+---
+import { AHA_VOTE_URL, AHA_VOTE_DEADLINE } from "../config";
+import { useTranslations, highlight } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+const votingOpen = Date.now() < new Date(AHA_VOTE_DEADLINE).getTime();
+---
+
+{
+  votingOpen && (
+    <a
+      class="vote-strip"
+      href={AHA_VOTE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-vote-banner
+      data-vote-deadline={AHA_VOTE_DEADLINE}
+    >
+      <span class="vote-strip__inner wrap">
+        <span class="vote-strip__kicker">{t("vote.kicker")}</span>
+        <span class="vote-strip__sep" aria-hidden="true">
+          ◆
+        </span>
+        <span
+          class="vote-strip__heading"
+          set:html={highlight(t("vote.heading"))}
+        />
+        <span class="vote-strip__cta">
+          {t("vote.cta")} <span aria-hidden="true">→</span>
+        </span>
+      </span>
+    </a>
+  )
+}
+
+<script>
+  /**
+   * No-ops once the strip's markup itself is build-time-gated away (see the
+   * frontmatter `votingOpen` check above) since `[data-vote-banner]` won't
+   * exist. `?vote=0` / `?vote=1` force it hidden/visible for testing the
+   * expiry state ahead of the real deadline (mirrors `?live=` in
+   * scripts/app.ts). Otherwise it removes itself client-side once the
+   * deadline passes, covering the gap between the deadline and whenever this
+   * static site next redeploys.
+   */
+  const el = document.querySelector<HTMLElement>("[data-vote-banner]");
+  if (el) {
+    const param = new URLSearchParams(location.search).get("vote");
+    if (param !== null) {
+      el.hidden = param === "0" || param === "false" || param === "off";
+    } else if (
+      Date.now() >= new Date(el.dataset.voteDeadline ?? "").getTime()
+    ) {
+      el.remove();
+    }
+  }
+</script>

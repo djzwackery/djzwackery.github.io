@@ -1,0 +1,84 @@
+---
+import { useTranslations } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+
+/**
+ * Hex values match the sRGB reference table in DESIGN.md. Colour names are
+ * kept in English everywhere, same as the brand/genre proper nouns in
+ * src/i18n/ui.ts, since these are the site's own token names, not narrative copy.
+ */
+const SWATCHES = [
+  { name: "Void", accent: "--void", hex: "#0A0410" },
+  { name: "White", accent: "--white", hex: "#FFFFFF" },
+  { name: "Magenta", accent: "--magenta", hex: "#FF1F8F" },
+  { name: "Magenta Contrast", accent: "--magenta-contrast", hex: "#E40074" },
+  { name: "Acid", accent: "--acid", hex: "#C6FF00" },
+  { name: "Cyan", accent: "--cyan", hex: "#00E5FF" },
+  { name: "Sun", accent: "--sun", hex: "#FFE600" },
+];
+---
+
+<section
+  class="section wrap press-colours"
+  id="colours"
+  aria-labelledby="colours-head"
+>
+  <div class="section__head">
+    <h2 class="screamer" id="colours-head">{t("press.colours.heading")}</h2>
+  </div>
+  <p class="press-lead">{t("press.colours.intro")}</p>
+
+  <ul class="swatches" role="list">
+    {
+      SWATCHES.map((s) => (
+        <li>
+          <button
+            type="button"
+            class="swatch"
+            style={`--swatch-color: var(${s.accent})`}
+            data-swatch
+            data-hex={s.hex}
+            data-copied-label={t("press.colours.copied")}
+            aria-label={t("a11y.copyHex", { hex: s.hex })}
+          >
+            <span class="swatch__chip" aria-hidden="true" />
+            <span class="swatch__name">{s.name}</span>
+            <span class="swatch__hex" data-swatch-hex>
+              {s.hex}
+            </span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-swatch]")
+    .forEach((btn) => {
+      const hexEl = btn.querySelector<HTMLElement>("[data-swatch-hex]");
+      if (!hexEl) {
+        return;
+      }
+      const originalText = hexEl.textContent ?? "";
+      let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+      btn.addEventListener("click", async () => {
+        const hex = btn.dataset.hex ?? "";
+        try {
+          await navigator.clipboard.writeText(hex);
+        } catch {
+          return;
+        }
+        hexEl.textContent = btn.dataset.copiedLabel ?? originalText;
+        btn.classList.add("is-copied");
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
+          hexEl.textContent = originalText;
+          btn.classList.remove("is-copied");
+        }, 1500);
+      });
+    });
+</script>

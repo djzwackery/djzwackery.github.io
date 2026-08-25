@@ -1,0 +1,61 @@
+---
+import { Image, getImage } from "astro:assets";
+import { useTranslations } from "../i18n";
+import photo1 from "../assets/hero-1-fire.jpg";
+import photo2 from "../assets/hero-2-wall.jpg";
+import photo3 from "../assets/hero-3-magenta.jpg";
+import photo4 from "../assets/hero-4-handsup.jpg";
+import photo5 from "../assets/zwack-horns.jpg";
+
+const t = useTranslations(Astro.currentLocale);
+
+const PHOTOS = [
+  { src: photo1, alt: t("hero.photo1Alt") },
+  { src: photo2, alt: t("hero.photo2Alt") },
+  { src: photo3, alt: t("hero.photo3Alt") },
+  { src: photo4, alt: t("hero.photo4Alt") },
+  { src: photo5, alt: t("press.photos.photo5Alt") },
+];
+
+/**
+ * Full-resolution JPEGs for download, separate from the smaller on-page
+ * preview below: getImage() is the documented way to get a standalone
+ * optimized URL outside <Image>/<Picture>.
+ */
+const downloads = await Promise.all(
+  PHOTOS.map((p) =>
+    getImage({ src: p.src, format: "jpeg", width: p.src.width }),
+  ),
+);
+---
+
+<section
+  class="section wrap press-photos"
+  id="photos"
+  aria-labelledby="photos-head"
+>
+  <div class="section__head">
+    <h2 class="screamer" id="photos-head">{t("press.photos.heading")}</h2>
+  </div>
+  <p class="press-lead">{t("press.photos.intro")}</p>
+
+  <ul class="photo-grid" role="list">
+    {
+      PHOTOS.map((p, i) => (
+        <li class="photo-card">
+          <Image
+            src={p.src}
+            alt={p.alt}
+            width={480}
+            height={600}
+            fit="cover"
+            class="photo-card__img"
+          />
+          <a class="btn photo-card__download" href={downloads[i].src} download>
+            {t("press.photos.download")}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

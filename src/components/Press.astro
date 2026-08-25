@@ -1,0 +1,39 @@
+---
+import Base from "../layouts/Base.astro";
+import "../styles/press.css";
+import PressLogos from "./PressLogos.astro";
+import PressColours from "./PressColours.astro";
+import PressPhotos from "./PressPhotos.astro";
+import PressMascot from "./PressMascot.astro";
+import PressEmotes from "./PressEmotes.astro";
+import PressBio from "./PressBio.astro";
+import { useTranslations, highlight } from "../i18n";
+import { DJ_NAME } from "../config";
+
+const t = useTranslations(Astro.currentLocale);
+const title = `${DJ_NAME} · ${t("press.meta.title")}`;
+---
+
+<Base
+  title={title}
+  description={t("press.meta.description")}
+  liveAware={false}
+  staticBackground
+>
+  <section class="section wrap press-intro" aria-labelledby="press-head">
+    <p class="press-intro__kicker">{t("press.kicker")}</p>
+    <h1
+      class="screamer"
+      id="press-head"
+      set:html={highlight(t("press.heading"))}
+    />
+    <p class="press-intro__lead">{t("press.intro")}</p>
+  </section>
+
+  <PressLogos />
+  <PressPhotos />
+  <PressBio />
+  <PressMascot />
+  <PressEmotes />
+  <PressColours />
+</Base>

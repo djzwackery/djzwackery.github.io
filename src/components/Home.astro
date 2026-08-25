@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import VoteBanner from "./VoteBanner.astro";
 import Hero from "./Hero.astro";
 import LiveStage from "./LiveStage.astro";
 import About from "./About.astro";
@@ -15,6 +16,7 @@ const videos = await getVideos();
 ---
 
 <Base videos={videos}>
+  <VoteBanner />
   <Hero />
   <LiveStage />
   <About />

@@ -1,0 +1,25 @@
+---
+import { useTranslations } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+
+const facts = [
+  t("about.location"),
+  "Hardcore",
+  "150+ BPM",
+  t("about.twitchPartner"),
+];
+---
+
+<section class="section wrap press-bio" id="bio" aria-labelledby="bio-head">
+  <div class="section__head">
+    <h2 class="screamer" id="bio-head">{t("press.bio.heading")}</h2>
+  </div>
+
+  <p class="press-bio__short">{t("press.bio.short")}</p>
+  <p class="press-bio__long">{t("press.bio.long")}</p>
+
+  <ul class="about__facts">
+    {facts.map((f) => <li>{f}</li>)}
+  </ul>
+</section>

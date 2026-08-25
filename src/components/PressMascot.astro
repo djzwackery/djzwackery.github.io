@@ -1,0 +1,58 @@
+---
+import { useTranslations } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+
+const POSES = [
+  {
+    file: "mascot-front",
+    width: 938,
+    height: 2969,
+    alt: t("press.mascot.frontAlt"),
+    label: t("press.mascot.front"),
+  },
+  {
+    file: "mascot-back",
+    width: 1319,
+    height: 3126,
+    alt: t("press.mascot.backAlt"),
+    label: t("press.mascot.back"),
+  },
+];
+---
+
+<section
+  class="section wrap press-mascot"
+  id="mascot"
+  aria-labelledby="mascot-head"
+>
+  <div class="section__head">
+    <h2 class="screamer" id="mascot-head">{t("press.mascot.heading")}</h2>
+  </div>
+  <p class="press-lead">{t("press.mascot.intro")}</p>
+
+  <div class="press-cards press-cards--compact">
+    {
+      POSES.map((p) => (
+        <div class="press-card">
+          <div class="mascot-card__preview">
+            <img
+              src={`/press/${p.file}.png`}
+              alt={p.alt}
+              width={p.width}
+              height={p.height}
+            />
+          </div>
+          <div class="press-card__body">
+            <p class="press-card__label">{p.label}</p>
+            <div class="press-card__actions">
+              <a class="btn" href={`/press/${p.file}.png`} download>
+                {t("press.logos.downloadPng")}
+              </a>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

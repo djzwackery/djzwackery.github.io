@@ -1424,6 +1424,16 @@ async function checkTwitchLive(): Promise<boolean> {
 
 (function pollTwitchLive() {
   /**
+   * Pages that opt out via Base.astro's `liveAware={false}` (the press page)
+   * should read the same regardless of whether Zwackery happens to be live
+   * right now, so skip the poll entirely and leave data-live at its static
+   * "false" default.
+   */
+  if (html.dataset.liveAware === "false") {
+    return;
+  }
+
+  /**
    * `?live` / `?live=1` forces the live takeover so the layout can be previewed
    * without a real stream. `?live=0` / `?live=false` forces offline.
    */

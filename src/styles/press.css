@@ -1,0 +1,469 @@
+/**
+ * Press-kit page only. Imported by Press.astro, not global.css, so none of
+ * this ships in the CSS bundle for the homepage or any other page.
+ */
+
+/**
+ * Static-page substitute for the looping video (e.g. the press page): two
+ * soft colour blooms sit where the video would, so the scrim still has
+ * something alive to darken instead of flat void. Same blurred-glow
+ * exception to the no-blur rule as the lightbox's ambient bloom - it reads
+ * as atmosphere, not a sticker material, so it's exempt.
+ */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-glow::before,
+.bg-glow::after {
+  content: "";
+  position: absolute;
+  width: 65vmax;
+  height: 65vmax;
+  border-radius: 50%;
+  filter: blur(110px);
+}
+
+.bg-glow::before {
+  inset-block-start: -20vmax;
+  inset-inline-end: -15vmax;
+  background: color-mix(in oklch, var(--magenta) 48%, transparent);
+}
+
+.bg-glow::after {
+  inset-block-end: -25vmax;
+  inset-inline-start: -20vmax;
+  background: color-mix(in oklch, var(--cyan) 40%, transparent);
+}
+
+.press-lead {
+  max-width: 60ch;
+  color: var(--ink-dim);
+  margin: 0.75rem 0 0;
+}
+
+/* same opening padding as .hero - this is the page's opening block,
+   not a mid-page .section, so it gets the same generous breathing room */
+.press-intro {
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+}
+
+/**
+ * .hero's text column sits vertically centred against its taller photo-fan
+ * sibling (align-items: center in a two-column grid), which pushes the
+ * kicker text well below its own padding-block once the grid is wide
+ * enough for that fan to dominate - .press-intro has no such sibling to
+ * centre against, so it needs the extra top padding made explicit instead.
+ * Below 1024px the two already land within a few px of each other
+ * (measured against the live hero), so this only kicks in above that.
+ */
+@media (min-width: 1024px) {
+  .press-intro {
+    padding-block-start: clamp(2.5rem, 10vw, 9rem);
+  }
+}
+
+.press-intro__kicker {
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--acid);
+  font-size: var(--fs-label);
+  margin: 0 0 0.75rem;
+}
+
+.press-intro__lead {
+  max-width: 60ch;
+  font-size: var(--fs-lead);
+  color: var(--ink-dim);
+  margin: 1.1rem 0 0;
+}
+
+/**
+ * logo preview stage + Blackout/Houselights switch (signature element):
+ * pure CSS, no JS - :has() drives the stage from the radio state.
+ */
+.logo-preview {
+  margin-top: 1.25rem;
+}
+
+.logo-switch {
+  display: inline-flex;
+  border: var(--edge) solid var(--void);
+  background: var(--void-2);
+  box-shadow: var(--shadow-hard);
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.logo-switch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.logo-switch__option {
+  cursor: pointer;
+  padding: 0.75rem 1.4rem;
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--fs-small);
+  color: var(--ink-dim);
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
+}
+
+.logo-switch__input:checked + .logo-switch__option {
+  background: var(--acid);
+  color: var(--void);
+}
+
+.logo-switch__input:focus-visible + .logo-switch__option {
+  outline: var(--edge) solid var(--acid);
+  outline-offset: -3px;
+}
+
+.logo-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: clamp(2rem, 6vw, 4rem);
+  border: var(--edge) solid var(--void);
+  background: var(--void);
+  box-shadow: var(--shadow-hard);
+  transition: background-color 0.2s ease;
+}
+
+.logo-stage__img {
+  width: min(100%, 420px);
+  height: auto;
+}
+
+.logo-stage__img--light {
+  display: none;
+}
+
+.logo-preview:has(#press-bg-light:checked) .logo-stage {
+  background: var(--white);
+}
+
+.logo-preview:has(#press-bg-light:checked) .logo-stage__img--dark {
+  display: none;
+}
+
+.logo-preview:has(#press-bg-light:checked) .logo-stage__img--light {
+  display: block;
+}
+
+/**
+ * shared hard-shadow card material: logo variants + the wide-lockup placeholder
+ */
+.press-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+/* cards with a tall/narrow preview (mascot): cap the width so they don't
+   stretch to fill the row and tower over everything else on the page */
+.press-cards--compact {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 220px));
+  justify-content: start;
+}
+
+.press-card {
+  display: flex;
+  flex-direction: column;
+  border: var(--edge) solid var(--void-3);
+  background: var(--void-2);
+  box-shadow: var(--shadow-hard);
+}
+
+.press-card__preview {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  padding: 1.5rem;
+}
+
+.press-card__preview--dark {
+  background: var(--void);
+}
+
+.press-card__preview--light {
+  background: var(--white);
+}
+
+.press-card__preview img {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+}
+
+.press-card__body {
+  padding: 1.1rem 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.press-card__label {
+  margin: 0;
+  font-weight: 700;
+  font-size: var(--fs-item);
+}
+
+.press-card__hint {
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--ink-dim);
+}
+
+.press-card__actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.press-card__actions .btn {
+  padding: 0.55rem 1rem;
+  box-shadow: 4px 4px 0 var(--void);
+}
+
+/**
+ * Sub-heading inside a section (e.g. the wide lockup within Logo): a lighter
+ * divider than a full new .section, since it's a variant of what's above,
+ * not a new topic.
+ */
+.press-subhead {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: var(--edge) solid var(--void-3);
+}
+
+.press-subhead__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.press-subhead__note {
+  margin: 0;
+  color: var(--ink-dim);
+  max-width: 60ch;
+}
+
+/**
+ * COLOUR SWATCHES
+ */
+.swatches {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.swatch {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  border: var(--edge) solid var(--void);
+  background: var(--void-2);
+  box-shadow: var(--shadow-hard);
+  padding: 1rem;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.swatch:hover,
+.swatch:focus-visible {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--void);
+}
+
+.swatch:active {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 var(--void);
+}
+
+.swatch__chip {
+  display: block;
+  width: 100%;
+  height: 56px;
+  background: var(--swatch-color);
+  border: 2px solid var(--void);
+}
+
+.swatch__name {
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--fs-small);
+}
+
+.swatch__hex {
+  font-family: var(--font-label);
+  font-size: var(--fs-label);
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+}
+
+.swatch.is-copied .swatch__hex {
+  color: var(--acid);
+}
+
+/**
+ * PHOTO GRID
+ */
+.photo-grid {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.4rem;
+}
+
+.photo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.photo-card__img {
+  width: 100%;
+  /* explicit `auto`, not just omitted: without it the width/height HTML
+     attributes win the cascade outright and aspect-ratio is never consulted */
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: var(--edge) solid var(--void);
+  box-shadow: var(--shadow-hard);
+}
+
+.photo-card__download {
+  align-self: flex-start;
+  padding: 0.55rem 1rem;
+  box-shadow: 4px 4px 0 var(--void);
+}
+
+/**
+ * MASCOT: a full-colour illustration, not a two-tone brand mark, so it only
+ * ever sits on the void background it was drawn for. No light variant.
+ * object-fit: contain (not cover, like the photo grid) since cropping a
+ * full-body character would cut it off.
+ */
+.mascot-card__preview {
+  display: grid;
+  place-items: center;
+  /* same box as the photo grid so these cards read as one consistent
+     size on the page - the full-body art is deliberately cropped to fit,
+     the uncropped source is still what downloads */
+  aspect-ratio: 4 / 5;
+  padding: 0.5rem;
+  background: var(--void);
+  overflow: hidden;
+}
+
+.mascot-card__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* anchor to the head/shoulders - the recognisable part - rather than
+     centring, which would crop the face on a figure this tall */
+  object-position: center top;
+}
+
+/**
+ * EMOTE GRID
+ */
+.emote-grid {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.emote-tile {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  background: var(--void-2);
+  border: 2px solid var(--void);
+  box-shadow: 3px 3px 0 var(--void);
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.emote-tile img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.emote-tile:hover,
+.emote-tile:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--magenta);
+}
+
+.emote-tile:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--magenta);
+}
+
+.press-emotes__empty {
+  margin-top: 1.5rem;
+  color: var(--ink-dim);
+}
+
+/**
+ * BIO
+ */
+.press-bio__short {
+  margin: 0 0 1rem;
+  font-size: var(--fs-lead);
+  color: var(--white);
+  max-width: 60ch;
+}
+
+.press-bio__long {
+  margin: 0;
+  color: var(--ink-dim);
+  max-width: 60ch;
+}

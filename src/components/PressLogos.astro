@@ -1,0 +1,148 @@
+---
+import { useTranslations } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+---
+
+<section
+  class="section wrap press-logos"
+  id="logos"
+  aria-labelledby="logos-head"
+>
+  <div class="section__head">
+    <h2 class="screamer" id="logos-head">{t("press.logos.heading")}</h2>
+  </div>
+  <p class="press-lead">{t("press.logos.intro")}</p>
+
+  <div class="logo-preview">
+    <fieldset class="logo-switch" aria-label={t("a11y.pressToggleGroup")}>
+      <input
+        type="radio"
+        id="press-bg-dark"
+        name="press-logo-bg"
+        value="dark"
+        class="logo-switch__input"
+        checked
+      />
+      <label for="press-bg-dark" class="logo-switch__option"
+        >{t("press.logos.toggleDark")}</label
+      >
+      <input
+        type="radio"
+        id="press-bg-light"
+        name="press-logo-bg"
+        value="light"
+        class="logo-switch__input"
+      />
+      <label for="press-bg-light" class="logo-switch__option"
+        >{t("press.logos.toggleLight")}</label
+      >
+    </fieldset>
+
+    <div class="logo-stage">
+      <img
+        class="logo-stage__img logo-stage__img--dark"
+        src="/press/logo-on-dark.svg"
+        alt={t("press.logos.onDarkLabel")}
+        width="490"
+        height="255"
+      />
+      <img
+        class="logo-stage__img logo-stage__img--light"
+        src="/press/logo-on-light.svg"
+        alt={t("press.logos.onLightLabel")}
+        width="490"
+        height="255"
+      />
+    </div>
+  </div>
+
+  <div class="press-cards">
+    <div class="press-card">
+      <div class="press-card__preview press-card__preview--dark">
+        <img src="/press/logo-on-dark.svg" alt="" width="490" height="255" />
+      </div>
+      <div class="press-card__body">
+        <p class="press-card__label">{t("press.logos.onDarkLabel")}</p>
+        <p class="press-card__hint">{t("press.logos.onDarkHint")}</p>
+        <div class="press-card__actions">
+          <a class="btn" href="/press/logo-on-dark.svg" download
+            >{t("press.logos.downloadSvg")}</a
+          >
+          <a class="btn" href="/press/logo-on-dark.png" download
+            >{t("press.logos.downloadPng")}</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="press-card">
+      <div class="press-card__preview press-card__preview--light">
+        <img src="/press/logo-on-light.svg" alt="" width="490" height="255" />
+      </div>
+      <div class="press-card__body">
+        <p class="press-card__label">{t("press.logos.onLightLabel")}</p>
+        <p class="press-card__hint">{t("press.logos.onLightHint")}</p>
+        <div class="press-card__actions">
+          <a class="btn" href="/press/logo-on-light.svg" download
+            >{t("press.logos.downloadSvg")}</a
+          >
+          <a class="btn" href="/press/logo-on-light.png" download
+            >{t("press.logos.downloadPng")}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="press-subhead">
+    <h3 class="press-subhead__title">{t("press.logos.wideLabel")}</h3>
+    <p class="press-subhead__note">{t("press.logos.wideHint")}</p>
+  </div>
+
+  <div class="press-cards">
+    <div class="press-card">
+      <div class="press-card__preview press-card__preview--dark">
+        <img
+          src="/press/logo-wide-on-dark.svg"
+          alt=""
+          width="631"
+          height="178"
+        />
+      </div>
+      <div class="press-card__body">
+        <p class="press-card__label">{t("press.logos.onDarkLabel")}</p>
+        <div class="press-card__actions">
+          <a class="btn" href="/press/logo-wide-on-dark.svg" download
+            >{t("press.logos.downloadSvg")}</a
+          >
+          <a class="btn" href="/press/logo-wide-on-dark.png" download
+            >{t("press.logos.downloadPng")}</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="press-card">
+      <div class="press-card__preview press-card__preview--light">
+        <img
+          src="/press/logo-wide-on-light.svg"
+          alt=""
+          width="603"
+          height="157"
+        />
+      </div>
+      <div class="press-card__body">
+        <p class="press-card__label">{t("press.logos.onLightLabel")}</p>
+        <div class="press-card__actions">
+          <a class="btn" href="/press/logo-wide-on-light.svg" download
+            >{t("press.logos.downloadSvg")}</a
+          >
+          <a class="btn" href="/press/logo-wide-on-light.png" download
+            >{t("press.logos.downloadPng")}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

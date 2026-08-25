@@ -1,0 +1,41 @@
+---
+import { useTranslations } from "../i18n";
+import { getEmotes } from "../lib/emotes";
+
+const t = useTranslations(Astro.currentLocale);
+
+const emotes = await getEmotes();
+const twitchEmotes = emotes.filter((e) => e.source === "twitch");
+---
+
+<section
+  class="section wrap press-emotes"
+  id="emotes"
+  aria-labelledby="emotes-head"
+>
+  <div class="section__head">
+    <h2 class="screamer" id="emotes-head">{t("press.emotes.heading")}</h2>
+  </div>
+  <p class="press-lead">{t("press.emotes.intro")}</p>
+
+  {
+    twitchEmotes.length === 0 ? (
+      <p class="press-emotes__empty">{t("press.emotes.empty")}</p>
+    ) : (
+      <ul class="emote-grid" role="list">
+        {twitchEmotes.map((e) => (
+          <li>
+            <a
+              class="emote-tile"
+              href={`/emotes/${e.file}`}
+              download
+              aria-label={`${t("press.photos.download")} ${e.file}`}
+            >
+              <img src={`/emotes/${e.file}`} alt="" loading="lazy" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>

@@ -14,6 +14,16 @@ export const SHOW_NAME = "House of Fun";
 export const KOFI_URL = "https://ko-fi.com/djzwackery";
 
 /**
+ * Australian Hardstyle Awards vote-now banner (see VoteBanner.astro).
+ * Temporary, data-driven: delete both once voting closes.
+ * AHA_VOTE_DEADLINE is midnight AEST *ending* 8 September, i.e. the instant
+ * it becomes the 9th - Melbourne is on AEST (not AEDT) in September, DST
+ * doesn't start until October.
+ */
+export const AHA_VOTE_URL = "https://aushardstyleawards.com.au";
+export const AHA_VOTE_DEADLINE = "2026-09-09T00:00:00+10:00";
+
+/**
  * Words that scroll across the LED marquee. Factual descriptors, not quotes.
  * Brand names and genre tags stay in English across all locales (see
  * src/i18n/ui.ts); MARQUEE_FOLLOW_TWITCH_TOKEN marks where the localized

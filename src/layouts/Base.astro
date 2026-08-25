@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import "../styles/global.css";
 import Seo from "../components/Seo.astro";
 import Marquee from "../components/Marquee.astro";
@@ -40,20 +41,47 @@ interface Props {
    * Optional title override; omit to use the localized default.
    */
   title?: string;
+  /**
+   * Optional description override; omit to use the localized default.
+   */
+  description?: string;
   videos?: VideoLD[];
   /**
    * False on the 404 page: noindex and no hreflang alternates.
    */
   index?: boolean;
+  /**
+   * False on the press page: it should read the same whether or not
+   * Zwackery happens to be live right now, so the Twitch live-poll is
+   * skipped entirely and the marquee/background stay in their idle state.
+   */
+  liveAware?: boolean;
+  /**
+   * True on the press page: swaps the looping ambient video for the static
+   * scrim only, since a promoter grabbing assets shouldn't get a looping
+   * background video.
+   */
+  staticBackground?: boolean;
 }
-const { title, videos = [], index = true } = Astro.props;
+const {
+  title,
+  description,
+  videos = [],
+  index = true,
+  liveAware = true,
+  staticBackground = false,
+} = Astro.props;
 const year = new Date().getFullYear();
 const t = useTranslations(Astro.currentLocale);
 const lang = getLang(Astro.currentLocale);
 ---
 
 <!doctype html>
-<html lang={localeTags[lang]} data-live="false">
+<html
+  lang={localeTags[lang]}
+  data-live="false"
+  data-live-aware={liveAware ? null : "false"}
+>
   <head>
     <meta charset="utf-8" />
     <script is:inline>
@@ -116,11 +144,16 @@ const lang = getLang(Astro.currentLocale);
         <link rel="preload" as="image" href="/dutch.webp" fetchpriority="low" />
       )
     }
-    <Seo title={title} videos={videos} index={index} />
+    <Seo
+      title={title}
+      description={description}
+      videos={videos}
+      index={index}
+    />
   </head>
   <body>
     <a class="skip-link" href="#videos">{t("a11y.skipToSets")}</a>
-    <BackgroundVideo />
+    <BackgroundVideo video={!staticBackground} />
     <Marquee />
 
     <main id="main">
@@ -134,7 +167,10 @@ const lang = getLang(Astro.currentLocale);
           <SocialRail />
         </div>
         <div class="footer__meta">
-          <p class="footer__copy">© {year} {DJ_NAME}</p>
+          <p class="footer__copy">
+            © {year}
+            {" " + DJ_NAME}
+          </p>
           {
             KOFI_URL && (
               <a
@@ -172,6 +208,11 @@ const lang = getLang(Astro.currentLocale);
             />
           </a>
         </div>
+        <p class="footer__press-row">
+          <a class="footer__link" href={getRelativeLocaleUrl(lang, "press")}>
+            {t("footer.press")}
+          </a>
+        </p>
         <p class="footer__disclaimer">{t("footer.disclaimer")}</p>
       </div>
     </footer>

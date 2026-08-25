@@ -1,0 +1,19 @@
+---
+/**
+ * Localized press pages: /ja/press, /de/press, /nl/press, /fr/press, /it/press.
+ * The default locale (en) is served from src/pages/press.astro.
+ */
+import Press from "../../components/Press.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "ja" } },
+    { params: { lang: "de" } },
+    { params: { lang: "nl" } },
+    { params: { lang: "fr" } },
+    { params: { lang: "it" } },
+  ];
+}
+---
+
+<Press />
