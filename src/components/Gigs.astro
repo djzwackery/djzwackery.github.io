@@ -47,17 +47,28 @@ function fullDate(iso: string) {
 }
 ---
 
-{
-  upcoming.length > 0 && (
-    <section class="section wrap gigs" id="gigs" aria-labelledby="gigs-head">
-      <div class="section__head">
-        <h2
-          class="screamer"
-          id="gigs-head"
-          set:html={highlight(t("gigs.heading"))}
-        />
-      </div>
+<section class="section wrap gigs" id="gigs" aria-labelledby="gigs-head">
+  <div class="section__head">
+    <h2
+      class="screamer"
+      id="gigs-head"
+      set:html={highlight(t("gigs.heading"))}
+    />
+  </div>
 
+  {
+    upcoming.length === 0 && (
+      <div class="gigs-empty">
+        <p class="gigs-empty__text">{t("gigs.empty")}</p>
+        <a class="btn btn--magenta" href="#contact">
+          {t("gigs.emptyCta")}
+        </a>
+      </div>
+    )
+  }
+
+  {
+    upcoming.length > 0 && (
       <ul class="gig-list">
         {upcoming.map((g) => {
           const { day, mon } = fmt(g.date);
@@ -100,6 +111,6 @@ function fullDate(iso: string) {
           );
         })}
       </ul>
-    </section>
-  )
-}
+    )
+  }
+</section>

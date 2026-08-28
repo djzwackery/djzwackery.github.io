@@ -89,6 +89,8 @@ export const ui = {
     "gigs.heading": "Catch him in the [[flesh]]",
     "gigs.details": "Details",
     "gigs.onSale": "On sale soon",
+    "gigs.empty": "Dates to be announced.",
+    "gigs.emptyCta": "Book Zwackery",
 
     "videos.heading": "Latest from the [[House of Fun]]",
     "videos.empty":
@@ -241,6 +243,8 @@ export const ui = {
     "gigs.heading": "生で [[会おう]]",
     "gigs.details": "詳細",
     "gigs.onSale": "近日発売",
+    "gigs.empty": "日程は近日発表。",
+    "gigs.emptyCta": "Zwackeryをブッキング",
 
     "videos.heading": "[[House of Fun]] の最新セット",
     "videos.empty":
@@ -391,6 +395,8 @@ export const ui = {
     "gigs.heading": "Erlebe ihn [[hautnah]]",
     "gigs.details": "Details",
     "gigs.onSale": "Bald erhältlich",
+    "gigs.empty": "Termine folgen in Kürze.",
+    "gigs.emptyCta": "Zwackery buchen",
 
     "videos.heading": "Neues aus dem [[House of Fun]]",
     "videos.empty":
@@ -545,6 +551,8 @@ export const ui = {
     "gigs.heading": "Zie hem in het [[echt]]",
     "gigs.details": "Details",
     "gigs.onSale": "Binnenkort te koop",
+    "gigs.empty": "Datums volgen binnenkort.",
+    "gigs.emptyCta": "Zwackery boeken",
 
     "videos.heading": "Nieuwste uit het [[House of Fun]]",
     "videos.empty":
@@ -698,6 +706,8 @@ export const ui = {
     "gigs.heading": "Retrouve-le en [[vrai]]",
     "gigs.details": "Détails",
     "gigs.onSale": "Bientôt en vente",
+    "gigs.empty": "Dates à venir.",
+    "gigs.emptyCta": "Booker Zwackery",
 
     "videos.heading": "Les nouveautés du [[House of Fun]]",
     "videos.empty":
@@ -852,6 +862,8 @@ export const ui = {
     "gigs.heading": "Vedilo [[in carne e ossa]]",
     "gigs.details": "Dettagli",
     "gigs.onSale": "In vendita a breve",
+    "gigs.empty": "Date in arrivo.",
+    "gigs.emptyCta": "Prenota Zwackery",
 
     "videos.heading": "Le novità della [[House of Fun]]",
     "videos.empty":

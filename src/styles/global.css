@@ -1818,6 +1818,27 @@ body.mlg-5 .footer {
   color: var(--sun);
 }
 
+/* same card material as a real .gig row, so the empty state reads as a slot
+   in the same system rather than a different kind of message */
+.gigs-empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  background: var(--void-2);
+  border: var(--edge) solid var(--void-3);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-hard);
+}
+
+.gigs-empty__text {
+  margin: 0;
+  max-width: 40ch;
+  font-size: var(--fs-body);
+  color: var(--ink-dim);
+}
+
 @media (max-width: 560px) {
   .gig {
     grid-template-columns: auto 1fr;
