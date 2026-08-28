@@ -2,13 +2,17 @@
 
 > Hardcore DJ from Melbourne, Australia, playing Happy Hardcore, UK Hardcore, and hard dance at 150+ BPM under the banner "House of Fun." Twitch Partner, streams live on Twitch, and posts a new set to YouTube most weeks.
 
-DJ Zwackery is djzwackery.com's single-page site: bio, live status, upcoming gigs, a set archive, and a booking contact form all live on the one page, linked below by section. The live badge and embedded Twitch player update automatically, with no page reload, whenever he goes live. Structured data (schema.org MusicGroup, Event, VideoObject) is embedded in the page for machine-readable bio, gig, and video details.
+djzwackery.com has two pages. The homepage is a single-page bio/gigs/videos/contact hub, linked below by section; a separate press kit page has downloadable brand assets for promoters and media. The live badge and embedded Twitch player on the homepage update automatically, with no page reload, whenever he goes live. Structured data (schema.org MusicGroup, Event, VideoObject, BreadcrumbList) is embedded across both pages for machine-readable bio, gig, video, and page details.
 
 ## Sections
 
 - [About](https://djzwackery.com/#about): bio, genre, location, Twitch Partner status
 - [Gigs](https://djzwackery.com/#gigs): upcoming live shows with ticket links, auto-hides past dates
 - [Latest sets](https://djzwackery.com/#videos): YouTube set archive embedded on-site
+
+## Press kit
+
+- [Press kit](https://djzwackery.com/press): logos (dark/light backgrounds, plus a wide lockup), downloadable press photos, mascot art, self-hosted Twitch/7TV emotes, the brand colour palette, and a ready-to-paste bio. For promoters, press, and anyone putting DJ Zwackery on a flyer or write-up.
 
 ## Links
 

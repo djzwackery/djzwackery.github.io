@@ -11,6 +11,7 @@ import {
   SAME_AS_EXTRA,
   TWITTER_HANDLE,
   BOOKING_EMAIL,
+  AHA_VOTE_DEADLINE,
 } from "../config";
 import { useTranslations, getLang } from "../i18n";
 import { languages } from "../i18n/ui";
@@ -62,6 +63,12 @@ interface Props {
    * Whether to emit hreflang alternates and structured data (false on 404).
    */
   index?: boolean;
+  /**
+   * The visible trail Breadcrumb.astro renders (see Base.astro), reused
+   * here so the BreadcrumbList JSON-LD can never drift out of sync with it.
+   * Null/omitted on the homepage and on pages that opt out of indexing.
+   */
+  breadcrumb?: { name: string; path: string }[] | null;
 }
 
 const {
@@ -69,6 +76,7 @@ const {
   description: descriptionOverride,
   videos = [],
   index = true,
+  breadcrumb,
 } = Astro.props;
 
 const t = useTranslations(Astro.currentLocale);
@@ -79,9 +87,6 @@ const description = descriptionOverride ?? t("meta.description");
 const ogImage = new URL("/meta.png", SITE_URL).href;
 
 const isHome = index && Astro.url.pathname === getRelativeLocaleUrl(lang);
-const canonical = isHome
-  ? getAbsoluteLocaleUrl(lang)
-  : new URL(Astro.url.pathname, SITE_URL).href;
 
 /**
  * hreflang alternates for any indexed page, not just home: the path suffix
@@ -93,6 +98,15 @@ const localeRootPath = getRelativeLocaleUrl(lang);
 const pathSuffix = Astro.url.pathname.startsWith(localeRootPath)
   ? Astro.url.pathname.slice(localeRootPath.length)
   : "";
+
+/**
+ * Same call as the self-referencing hreflang entry below, not
+ * Astro.url.pathname directly. The raw request path has no trailing slash
+ * ("/press"), but hreflang and the sitemap both use one ("/press/").
+ * Google treats a canonical that disagrees with its own hreflang entry as
+ * a real conflict.
+ */
+const canonical = getAbsoluteLocaleUrl(lang, pathSuffix);
 
 const ogLocale: Record<string, string> = {
   en: "en_US",
@@ -139,6 +153,13 @@ const musicGroupLD = {
     ...SOCIALS.filter((s) => !s.excludeFromSameAs).map((s) => s.url),
     ...SAME_AS_EXTRA,
   ],
+  /**
+   * Only while voting is open (same deadline as VoteBanner.astro), so this
+   * doesn't linger as a stale credit once it closes.
+   */
+  ...(Date.now() < new Date(AHA_VOTE_DEADLINE).getTime()
+    ? { award: "Best Rising Talent nominee, Australian Hardstyle Awards 2026" }
+    : {}),
 };
 
 const eventLD = upcomingGigs.map((g) => {
@@ -214,28 +235,20 @@ const videoLD =
     : null;
 
 /**
- * Only /press exists today, so this is a fixed two-level trail, not a
- * generic path walker. Generalize if a second non-home page shows up.
+ * Sourced from the same `breadcrumb` array Base.astro passes to the visible
+ * Breadcrumb.astro trail, so the two can never disagree with each other.
  */
 const breadcrumbLD =
-  index && !isHome
+  index && breadcrumb
     ? {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: DJ_NAME,
-            item: getAbsoluteLocaleUrl(lang),
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: t("footer.press"),
-            item: canonical,
-          },
-        ],
+        itemListElement: breadcrumb.map((item, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: item.name,
+          item: new URL(item.path, SITE_URL).href,
+        })),
       }
     : null;
 ---

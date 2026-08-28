@@ -189,6 +189,7 @@ export const ui = {
     "a11y.pressToggleGroup": "Logo preview background",
     "a11y.copyHex": "Copy hex code {hex}",
     "a11y.backHome": "Back to home",
+    "a11y.breadcrumb": "Breadcrumb",
 
     "notFound.error": "Error 404",
     "notFound.heading": "Lost in [[the rave]]",
@@ -338,6 +339,7 @@ export const ui = {
     "a11y.pressToggleGroup": "ロゴプレビューの背景",
     "a11y.copyHex": "HEXコード {hex} をコピー",
     "a11y.backHome": "ホームに戻る",
+    "a11y.breadcrumb": "パンくずリスト",
 
     "notFound.error": "エラー 404",
     "notFound.heading": "レイブで [[迷子]]",
@@ -437,7 +439,7 @@ export const ui = {
     "press.logos.intro":
       "Zwei Versionen des Schriftzugs: eine für dunkle, eine für helle Hintergründe. Kipp den Schalter, um beide zu sehen.",
     "press.logos.toggleDark": "Blackout",
-    "press.logos.toggleLight": "Houselight",
+    "press.logos.toggleLight": "Houselights",
     "press.logos.onDarkLabel": "Für dunkle Hintergründe",
     "press.logos.onDarkHint":
       "Weiß auf Club-Schwarz. Der Standard auf dieser Seite.",
@@ -469,7 +471,7 @@ export const ui = {
     "press.mascot.backAlt": "DJ-Zwackery-Maskottchen, Rückansicht",
     "press.mascot.badge": "Komplettes Badge",
     "press.mascot.badgeAlt":
-      "DJ-Zwackery-Maskottchen an den Decks, mit dem vollständigen Logo",
+      "DJ-Zwackery-Maskottchen beim Mixen an den Decks, mit dem vollständigen Logo",
     "press.emotes.heading": "Emotes",
     "press.emotes.intro":
       "Die Twitch-Emotes des Kanals, selbst gehostet und bereit für Discord, ein Chat-Overlay oder einen Stickerbogen.",
@@ -490,6 +492,7 @@ export const ui = {
     "a11y.pressToggleGroup": "Hintergrund der Logo-Vorschau",
     "a11y.copyHex": "Hex-Code {hex} kopieren",
     "a11y.backHome": "Zurück zur Startseite",
+    "a11y.breadcrumb": "Brotkrümelnavigation",
 
     "notFound.error": "Fehler 404",
     "notFound.heading": "Verloren im [[Rave]]",
@@ -641,6 +644,7 @@ export const ui = {
     "a11y.pressToggleGroup": "Achtergrond van de logopreview",
     "a11y.copyHex": "Hexcode {hex} kopiëren",
     "a11y.backHome": "Terug naar home",
+    "a11y.breadcrumb": "Kruimelpad",
 
     "notFound.error": "Fout 404",
     "notFound.heading": "Verdwaald in de [[rave]]",
@@ -672,7 +676,8 @@ export const ui = {
     "hero.fanAriaLabel": "Photos de DJ Zwackery en live",
 
     "vote.kicker": "Australian Hardstyle Awards",
-    "vote.heading": "Nommé pour [[Best Rising Talent]] en Happy Hardcore.",
+    "vote.heading":
+      "Nommé pour [[Best Rising Talent]], catégorie Happy Hardcore.",
     "vote.cta": "Votez maintenant",
 
     "status.offline": "Hors ligne",
@@ -727,9 +732,9 @@ export const ui = {
     "footer.disclaimer":
       "Notre CDN enregistre ton adresse IP pour la sécurité. Le formulaire de contact et les contenus YouTube/Twitch intégrés partagent des données avec leurs fournisseurs — rien n'est vendu ni pisté à des fins publicitaires.",
     "footer.siteBy": "Site par {name}",
-    "footer.press": "Kit presse",
+    "footer.press": "Kit de presse",
 
-    "press.meta.title": "Kit presse",
+    "press.meta.title": "Kit de presse",
     "press.meta.description":
       "Logos, photos, couleurs de marque et emotes pour quiconque booke DJ Zwackery, écrit sur lui ou le met sur un flyer. Prends ce dont tu as besoin.",
     "press.kicker": "Pour les organisateurs & la presse",
@@ -772,7 +777,7 @@ export const ui = {
     "press.mascot.backAlt": "Mascotte de DJ Zwackery, de dos",
     "press.mascot.badge": "Badge complet",
     "press.mascot.badgeAlt":
-      "Mascotte de DJ Zwackery en train de mixer, avec le logo complet",
+      "Mascotte de DJ Zwackery en train de mixer aux platines, avec le logo complet",
     "press.emotes.heading": "Emotes",
     "press.emotes.intro":
       "Les emotes Twitch de la chaîne, hébergées en interne et prêtes à être utilisées sur Discord, en overlay de chat ou sur une planche de stickers.",
@@ -793,6 +798,7 @@ export const ui = {
     "a11y.pressToggleGroup": "Fond de l'aperçu du logo",
     "a11y.copyHex": "Copier le code hex {hex}",
     "a11y.backHome": "Retour à l'accueil",
+    "a11y.breadcrumb": "Fil d'Ariane",
 
     "notFound.error": "Erreur 404",
     "notFound.heading": "Perdu dans la [[rave]]",
@@ -824,7 +830,8 @@ export const ui = {
     "hero.fanAriaLabel": "Foto di DJ Zwackery dal vivo",
 
     "vote.kicker": "Australian Hardstyle Awards",
-    "vote.heading": "Candidato a [[Best Rising Talent]] in Happy Hardcore.",
+    "vote.heading":
+      "Candidato a [[Best Rising Talent]], categoria Happy Hardcore.",
     "vote.cta": "Vota ora",
 
     "status.offline": "Offline",
@@ -879,9 +886,9 @@ export const ui = {
     "footer.disclaimer":
       "La nostra CDN registra il tuo indirizzo IP per motivi di sicurezza. Il modulo di contatto e i contenuti YouTube/Twitch incorporati condividono dati con i loro fornitori — nulla viene venduto o tracciato a scopo pubblicitario.",
     "footer.siteBy": "Sito di {name}",
-    "footer.press": "Press kit",
+    "footer.press": "Cartella stampa",
 
-    "press.meta.title": "Press kit",
+    "press.meta.title": "Cartella stampa",
     "press.meta.description":
       "Loghi, foto, colori del brand ed emote per chi deve prenotare DJ Zwackery, scrivere di lui o metterlo su un volantino. Prendi quello che ti serve.",
     "press.kicker": "Per promoter e stampa",
@@ -924,7 +931,7 @@ export const ui = {
     "press.mascot.backAlt": "Mascotte di DJ Zwackery, di spalle",
     "press.mascot.badge": "Badge completo",
     "press.mascot.badgeAlt":
-      "Mascotte di DJ Zwackery in consolle, con il logo completo",
+      "Mascotte di DJ Zwackery mentre mixa in consolle, con il logo completo",
     "press.emotes.heading": "Emote",
     "press.emotes.intro":
       "Le emote Twitch del canale, ospitate direttamente e pronte da usare su Discord, in un overlay della chat o su un foglio di sticker.",
@@ -945,6 +952,7 @@ export const ui = {
     "a11y.pressToggleGroup": "Sfondo dell'anteprima del logo",
     "a11y.copyHex": "Copia il codice hex {hex}",
     "a11y.backHome": "Torna alla home",
+    "a11y.breadcrumb": "Percorso di navigazione",
 
     "notFound.error": "Errore 404",
     "notFound.heading": "Perso nel [[rave]]",

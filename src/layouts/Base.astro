@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import "../styles/global.css";
 import Seo from "../components/Seo.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 import Marquee from "../components/Marquee.astro";
 import BackgroundVideo from "../components/BackgroundVideo.astro";
 import SocialRail from "../components/SocialRail.astro";
@@ -76,6 +77,19 @@ const t = useTranslations(Astro.currentLocale);
 const lang = getLang(Astro.currentLocale);
 const homeUrl = getRelativeLocaleUrl(lang);
 const isHome = Astro.url.pathname === homeUrl;
+/**
+ * Only /press exists as a secondary route today; generalize this and the
+ * JSON-LD it feeds in Seo.astro if a second one shows up.
+ */
+const breadcrumb = isHome
+  ? null
+  : [
+      { name: DJ_NAME, path: homeUrl },
+      {
+        name: t("footer.press"),
+        path: getRelativeLocaleUrl(lang, "press"),
+      },
+    ];
 ---
 
 <!doctype html>
@@ -151,6 +165,7 @@ const isHome = Astro.url.pathname === homeUrl;
       description={description}
       videos={videos}
       index={index}
+      breadcrumb={breadcrumb}
     />
   </head>
   <body>
@@ -159,6 +174,7 @@ const isHome = Astro.url.pathname === homeUrl;
     <Marquee />
 
     <main id="main">
+      {breadcrumb && <Breadcrumb items={breadcrumb} />}
       <slot />
     </main>
 
