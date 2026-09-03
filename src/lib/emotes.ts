@@ -118,28 +118,52 @@ async function ensureImage(
   }
 }
 
-async function fetchTwitchIds(): Promise<string[]> {
+async function gql<T>(query: string): Promise<T> {
   const res = await fetch("https://gql.twitch.tv/gql", {
     method: "POST",
     headers: {
       "Client-ID": "kimne78kx3ncx6brgo4mv6wki5h1ko",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      query: `{ user(login: "${TWITCH_LOGIN}") { subscriptionProducts { emotes { id } } } }`,
-    }),
+    body: JSON.stringify({ query }),
   });
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
   }
-  const json = (await res.json()) as {
-    data?: {
-      user?: { subscriptionProducts?: { emotes?: { id: string }[] }[] };
-    };
-  };
-  const ids = (json.data?.user?.subscriptionProducts ?? [])
-    .flatMap((p) => p.emotes ?? [])
-    .map((e) => e.id);
+  return (await res.json()) as T;
+}
+
+/**
+ * Subscriber emotes (subscriptionProducts) and follower emotes
+ * (channel.localEmoteSets) are two separate GQL fields; a channel can have
+ * both, and follower emotes were missing entirely before this merged them.
+ */
+async function fetchTwitchIds(): Promise<string[]> {
+  const [subJson, followerJson] = await Promise.all([
+    gql<{
+      data?: {
+        user?: { subscriptionProducts?: { emotes?: { id: string }[] }[] };
+      };
+    }>(
+      `{ user(login: "${TWITCH_LOGIN}") { subscriptionProducts { emotes { id } } } }`,
+    ),
+    gql<{
+      data?: {
+        user?: {
+          channel?: { localEmoteSets?: { emotes?: { id: string }[] }[] };
+        };
+      };
+    }>(
+      `{ user(login: "${TWITCH_LOGIN}") { channel { localEmoteSets { emotes { id } } } } }`,
+    ),
+  ]);
+  const subIds = (subJson.data?.user?.subscriptionProducts ?? []).flatMap(
+    (p) => p.emotes ?? [],
+  );
+  const followerIds = (
+    followerJson.data?.user?.channel?.localEmoteSets ?? []
+  ).flatMap((s) => s.emotes ?? []);
+  const ids = [...subIds, ...followerIds].map((e) => e.id);
   if (ids.length === 0) {
     throw new Error("no emotes returned");
   }

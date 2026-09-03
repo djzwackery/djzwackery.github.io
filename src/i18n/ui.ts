@@ -176,6 +176,14 @@ export const ui = {
       "The channel's Twitch emotes, self-hosted and ready to drop into Discord, a chat overlay, or a sticker sheet.",
     "press.emotes.empty":
       "No emotes cached yet. Check back after the next deploy.",
+    "press.badges.heading": "Subscriber badges",
+    "press.badges.intro":
+      "Every subscriber milestone as SVG, plus PNG at 18, 36 and 72px, straight off Twitch's own upload spec.",
+    "press.badges.svg": "SVG",
+    "press.badges.base": "Subscriber",
+    "press.badges.months": "{count} months",
+    "press.badges.year1": "1 year",
+    "press.badges.years": "{count} years",
     "press.bio.heading": "The one-liner",
     "press.bio.short":
       "DJ Zwackery is a hardcore DJ from Melbourne, streaming House of Fun live on Twitch every week.",
@@ -328,6 +336,14 @@ export const ui = {
       "チャンネルのTwitchエモートを自前でホスティング。Discordやチャットオーバーレイ、ステッカーシートにそのまま使えます。",
     "press.emotes.empty":
       "現在キャッシュされているエモートはありません。次回のデプロイ後にご確認ください。",
+    "press.badges.heading": "サブスクライバーバッジ",
+    "press.badges.intro":
+      "サブスクライバーの全マイルストーンをSVGで、さらに18・36・72pxのPNGも。Twitchのアップロード仕様そのまま使えます。",
+    "press.badges.svg": "SVG",
+    "press.badges.base": "サブスクライバー",
+    "press.badges.months": "{count}ヶ月",
+    "press.badges.year1": "1年",
+    "press.badges.years": "{count}年",
     "press.bio.heading": "ひとこと紹介",
     "press.bio.short":
       "DJ Zwackeryはメルボルン発のハードコアDJ。House of Funを毎週Twitchでライブ配信中。",
@@ -483,6 +499,14 @@ export const ui = {
       "Die Twitch-Emotes des Kanals, selbst gehostet und bereit für Discord, ein Chat-Overlay oder einen Stickerbogen.",
     "press.emotes.empty":
       "Aktuell sind keine Emotes im Cache. Schau nach dem nächsten Deploy noch mal vorbei.",
+    "press.badges.heading": "Abo-Badges",
+    "press.badges.intro":
+      "Jeder Abo-Meilenstein als SVG, dazu PNG in 18, 36 und 72px, direkt nach Twitchs eigener Upload-Vorgabe.",
+    "press.badges.svg": "SVG",
+    "press.badges.base": "Abonnent",
+    "press.badges.months": "{count} Monate",
+    "press.badges.year1": "1 Jahr",
+    "press.badges.years": "{count} Jahre",
     "press.bio.heading": "Der Einzeiler",
     "press.bio.short":
       "DJ Zwackery ist ein Hardcore-DJ aus Melbourne und streamt House of Fun jede Woche live auf Twitch.",
@@ -637,6 +661,14 @@ export const ui = {
       "De Twitch-emotes van het kanaal, zelf gehost en klaar om te gebruiken in Discord, een chatoverlay of een stickervel.",
     "press.emotes.empty":
       "Er zijn nog geen emotes gecachet. Kom terug na de volgende deploy.",
+    "press.badges.heading": "Abonneebadges",
+    "press.badges.intro":
+      "Elke abonneemijlpaal als SVG, plus PNG op 18, 36 en 72px, precies volgens Twitch's eigen upload-eisen.",
+    "press.badges.svg": "SVG",
+    "press.badges.base": "Abonnee",
+    "press.badges.months": "{count} maanden",
+    "press.badges.year1": "1 jaar",
+    "press.badges.years": "{count} jaar",
     "press.bio.heading": "De one-liner",
     "press.bio.short":
       "DJ Zwackery is een hardcore-dj uit Melbourne en streamt House of Fun elke week live op Twitch.",
@@ -793,6 +825,14 @@ export const ui = {
       "Les emotes Twitch de la chaîne, hébergées en interne et prêtes à être utilisées sur Discord, en overlay de chat ou sur une planche de stickers.",
     "press.emotes.empty":
       "Aucune emote en cache pour le moment. Reviens après le prochain déploiement.",
+    "press.badges.heading": "Badges d'abonné",
+    "press.badges.intro":
+      "Chaque palier d'abonné en SVG, plus du PNG en 18, 36 et 72px, conforme aux exigences de Twitch pour l'upload.",
+    "press.badges.svg": "SVG",
+    "press.badges.base": "Abonné",
+    "press.badges.months": "{count} mois",
+    "press.badges.year1": "1 an",
+    "press.badges.years": "{count} ans",
     "press.bio.heading": "La phrase d'accroche",
     "press.bio.short":
       "DJ Zwackery est un DJ hardcore de Melbourne qui diffuse House of Fun en live sur Twitch chaque semaine.",
@@ -949,6 +989,14 @@ export const ui = {
       "Le emote Twitch del canale, ospitate direttamente e pronte da usare su Discord, in un overlay della chat o su un foglio di sticker.",
     "press.emotes.empty":
       "Nessuna emote in cache al momento. Ricontrolla dopo il prossimo deploy.",
+    "press.badges.heading": "Badge da abbonato",
+    "press.badges.intro":
+      "Ogni traguardo da abbonato in SVG, più PNG da 18, 36 e 72px, secondo le specifiche di upload di Twitch.",
+    "press.badges.svg": "SVG",
+    "press.badges.base": "Abbonato",
+    "press.badges.months": "{count} mesi",
+    "press.badges.year1": "1 anno",
+    "press.badges.years": "{count} anni",
     "press.bio.heading": "La riga di presentazione",
     "press.bio.short":
       "DJ Zwackery è un DJ hardcore di Melbourne che trasmette House of Fun in diretta su Twitch ogni settimana.",

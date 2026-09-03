@@ -6,6 +6,7 @@ import PressColours from "./PressColours.astro";
 import PressPhotos from "./PressPhotos.astro";
 import PressMascot from "./PressMascot.astro";
 import PressEmotes from "./PressEmotes.astro";
+import PressBadges from "./PressBadges.astro";
 import PressBio from "./PressBio.astro";
 import { useTranslations, highlight } from "../i18n";
 import { DJ_NAME } from "../config";
@@ -35,5 +36,6 @@ const title = `${DJ_NAME} · ${t("press.meta.title")}`;
   <PressBio />
   <PressMascot />
   <PressEmotes />
+  <PressBadges />
   <PressColours />
 </Base>

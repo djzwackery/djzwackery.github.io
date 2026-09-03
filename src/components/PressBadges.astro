@@ -1,0 +1,108 @@
+---
+import { readdirSync } from "node:fs";
+import { resolve } from "node:path";
+import { useTranslations } from "../i18n";
+
+const t = useTranslations(Astro.currentLocale);
+
+/**
+ * Tier 1 only. Twitch's own upload spec wants three PNG sizes (18/36/72px)
+ * per milestone, so each ships alongside a single (72px-sourced) SVG.
+ */
+const BADGES_DIR = resolve("public/press/badges");
+const SVG_RE = /^zw-m(\d+)-.+-t1\.svg$/;
+
+function monthsToLabel(months: number): string {
+  if (months === 0) {
+    return t("press.badges.base");
+  }
+  if (months < 12) {
+    return t("press.badges.months", { count: String(months) });
+  }
+  const years = months / 12;
+  if (years === 1) {
+    return t("press.badges.year1");
+  }
+  const label = Number.isInteger(years) ? String(years) : years.toFixed(1);
+  return t("press.badges.years", { count: label });
+}
+
+interface Badge {
+  months: number;
+  label: string;
+  svg: string;
+  png18: string;
+  png36: string;
+  png72: string;
+}
+
+const files = readdirSync(BADGES_DIR);
+const badges: Badge[] = files
+  .map((file) => SVG_RE.exec(file))
+  .filter((m): m is RegExpExecArray => m !== null)
+  .map((m) => {
+    const months = Number(m[1]);
+    const stem = m[0].replace(/\.svg$/, "");
+    return {
+      months,
+      label: monthsToLabel(months),
+      svg: m[0],
+      png18: `${stem}-18.png`,
+      png36: `${stem}-36.png`,
+      png72: `${stem}-72.png`,
+    };
+  })
+  .sort((a, b) => a.months - b.months);
+---
+
+<section
+  class="section wrap press-badges"
+  id="badges"
+  aria-labelledby="badges-head"
+>
+  <div class="section__head">
+    <h2 class="screamer" id="badges-head">{t("press.badges.heading")}</h2>
+  </div>
+  <p class="press-lead">{t("press.badges.intro")}</p>
+
+  <ul class="badge-grid" role="list">
+    {
+      badges.map((b) => (
+        <li class="badge-tile">
+          <img src={`/press/badges/${b.png72}`} alt="" loading="lazy" />
+          <span class="badge-tile__label">{b.label}</span>
+          <span class="badge-tile__formats">
+            <a
+              href={`/press/badges/${b.svg}`}
+              download
+              aria-label={`${t("press.photos.download")} ${b.label} SVG`}
+            >
+              {t("press.badges.svg")}
+            </a>
+            <a
+              href={`/press/badges/${b.png18}`}
+              download
+              aria-label={`${t("press.photos.download")} ${b.label} PNG 18px`}
+            >
+              18
+            </a>
+            <a
+              href={`/press/badges/${b.png36}`}
+              download
+              aria-label={`${t("press.photos.download")} ${b.label} PNG 36px`}
+            >
+              36
+            </a>
+            <a
+              href={`/press/badges/${b.png72}`}
+              download
+              aria-label={`${t("press.photos.download")} ${b.label} PNG 72px`}
+            >
+              72
+            </a>
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
