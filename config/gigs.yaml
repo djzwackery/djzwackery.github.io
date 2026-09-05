@@ -1,19 +1,17 @@
-# Upcoming gigs.
+# Upcoming gigs. Past dates are hidden automatically; an empty list shows
+# a placeholder and call to action to book.
 #
-# Each entry: date (ISO "YYYY-MM-DD"), location, and an optional url for
-# tickets/details. `event` and `venue` are both optional, whichever is set
-# is shown, and if both are set they're shown together as "Event • Venue".
-# `image` is also optional: a fully-qualified URL to an externally-hosted
-# flyer/poster (e.g. from the ticketing site), used only in the JSON-LD, not
-# rendered on the page. There's no local asset pipeline for it, so it's
-# skipped entirely unless the value looks like a real URL (starts with
-# "http"). `organizer` is also optional, used only in the JSON-LD: the
-# promoter/event brand running the show, e.g. "Rubix Warehouse" or a
-# promotions crew name. Only set it to "DJ Zwackery" if he's actually
-# self-promoting that one; leave it unset for a normal lineup booking rather
-# than defaulting it to him, since that would misrepresent who's organizing
-# the event. Past dates are hidden automatically. If the list is empty, the
-# "Catch him in the flesh" section is removed from the site entirely.
+# - date: "2026-01-01"                       # ISO YYYY-MM-DD
+#   event: Event Name                        # The name of the event
+#   venue: Venue Name                        # optional; shown as "Event • Venue" if both set
+#   location: City, Country
+#   url: https://example.com/tickets         # optional
+#   image: https://example.com/flyer.jpg     # optional, JSON-LD only; must be a full URL
+#   organizer: Promoter Name                 # optional, JSON-LD only; don't default to DJ Zwackery
+#   organizerUrl: https://example.com        # optional, JSON-LD only; site or socials
+#   price: "25.00"                           # optional, JSON-LD only; string, update as tiers sell out
+#   priceCurrency: AUD                       # optional, JSON-LD only
+
 - date: "2026-09-26"
   event: Hardcore Evolution
   venue: Rubix Warehouse
@@ -21,3 +19,7 @@
   url: https://events.humanitix.com/hardcore-evolution
   image: https://images.humanitix.com/i/f5b77aaa-1591-4984-9bed-7668222ac0f9.jpg@responsive-2400.webp
   organizer: Unnamed Productions
+  organizerUrl: https://www.instagram.com/unnamed.productions/
+  # Second Release tier, as of 2026-09-05. Update when it sells out.
+  price: "38.50"
+  priceCurrency: AUD

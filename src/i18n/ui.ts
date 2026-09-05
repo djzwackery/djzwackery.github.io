@@ -91,6 +91,7 @@ export const ui = {
     "gigs.onSale": "On sale soon",
     "gigs.empty": "Dates to be announced.",
     "gigs.emptyCta": "Book Zwackery",
+    "gigs.eventDescription": "Catch {dj} live at {label} in {location}.",
 
     "videos.heading": "Latest from the [[House of Fun]]",
     "videos.empty":
@@ -253,6 +254,7 @@ export const ui = {
     "gigs.onSale": "近日発売",
     "gigs.empty": "日程は近日発表。",
     "gigs.emptyCta": "Zwackeryをブッキング",
+    "gigs.eventDescription": "{location}の{label}で{dj}に生で会おう。",
 
     "videos.heading": "[[House of Fun]] の最新セット",
     "videos.empty":
@@ -413,6 +415,7 @@ export const ui = {
     "gigs.onSale": "Bald erhältlich",
     "gigs.empty": "Termine folgen in Kürze.",
     "gigs.emptyCta": "Zwackery buchen",
+    "gigs.eventDescription": "Erlebe {dj} live bei {label} in {location}.",
 
     "videos.heading": "Neues aus dem [[House of Fun]]",
     "videos.empty":
@@ -577,6 +580,7 @@ export const ui = {
     "gigs.onSale": "Binnenkort te koop",
     "gigs.empty": "Datums volgen binnenkort.",
     "gigs.emptyCta": "Zwackery boeken",
+    "gigs.eventDescription": "Zie {dj} live op {label} in {location}.",
 
     "videos.heading": "Nieuwste uit het [[House of Fun]]",
     "videos.empty":
@@ -740,6 +744,7 @@ export const ui = {
     "gigs.onSale": "Bientôt en vente",
     "gigs.empty": "Dates à venir.",
     "gigs.emptyCta": "Booker Zwackery",
+    "gigs.eventDescription": "Retrouve {dj} en live à {label}, {location}.",
 
     "videos.heading": "Les nouveautés du [[House of Fun]]",
     "videos.empty":
@@ -904,6 +909,7 @@ export const ui = {
     "gigs.onSale": "In vendita a breve",
     "gigs.empty": "Date in arrivo.",
     "gigs.emptyCta": "Prenota Zwackery",
+    "gigs.eventDescription": "Vedi {dj} live a {label}, {location}.",
 
     "videos.heading": "Le novità della [[House of Fun]]",
     "videos.empty":

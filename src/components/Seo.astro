@@ -48,6 +48,17 @@ interface GigLD {
    * The promoter/event brand, when it isn't Zwackery himself; omitted from the JSON-LD if unset.
    */
   organizer?: string;
+  /**
+   * The organizer's website or socials; only used when `organizer` is set.
+   */
+  organizerUrl?: string;
+  /**
+   * String, not number, to preserve exact decimal formatting (e.g. "38.50").
+   * Only added to the JSON-LD `offers` block when both this and
+   * `priceCurrency` are set.
+   */
+  price?: string;
+  priceCurrency?: string;
 }
 interface Props {
   /**
@@ -168,6 +179,11 @@ const eventLD = upcomingGigs.map((g) => {
     "@context": "https://schema.org",
     "@type": "MusicEvent",
     name: `${DJ_NAME} at ${label}`,
+    description: t("gigs.eventDescription", {
+      dj: DJ_NAME,
+      label,
+      location: g.location,
+    }),
     startDate: g.date,
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -186,7 +202,13 @@ const eventLD = upcomingGigs.map((g) => {
       image: ogImage,
     },
     ...(g.organizer
-      ? { organizer: { "@type": "Organization", name: g.organizer } }
+      ? {
+          organizer: {
+            "@type": "Organization",
+            name: g.organizer,
+            ...(g.organizerUrl ? { url: g.organizerUrl } : {}),
+          },
+        }
       : {}),
     ...(g.url ? { url: g.url } : {}),
     ...(g.image?.startsWith("http") ? { image: g.image } : {}),
@@ -196,6 +218,9 @@ const eventLD = upcomingGigs.map((g) => {
             "@type": "Offer",
             url: g.url,
             availability: "https://schema.org/InStock",
+            ...(g.price && g.priceCurrency
+              ? { price: g.price, priceCurrency: g.priceCurrency }
+              : {}),
           },
         }
       : {}),
